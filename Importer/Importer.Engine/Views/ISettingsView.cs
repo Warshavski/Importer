@@ -3,13 +3,12 @@
 namespace Importer.Engine.Views
 {
     /// <summary>
-    ///     interface for settings view
+    /// interface for settings view
     /// </summary>
     public interface ISettingsView : IView
     {
         /* Connection string for SQL Server
          * Initialize from app.config
-         * 
          */
         string Server { get; set; }
         string Catalog { get; set; }
@@ -17,6 +16,5 @@ namespace Importer.Engine.Views
         string Pass { get; set; }
 
         bool IsWindowsSecurity { get; set; }
-        bool IsLoading { get; set; }
     }
 }

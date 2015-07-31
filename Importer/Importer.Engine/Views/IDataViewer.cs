@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using Importer.Engine.Views.Common;
+﻿using System.Data;
 using Importer.Engine.Models;
+using Importer.Engine.Views.Common;
 
 namespace Importer.Engine.Views
 {
@@ -15,7 +11,5 @@ namespace Importer.Engine.Views
         DataTable TableData { get; set; }
 
         int RowsCount { get; set; }
-
-        bool IsLoading { get; set; }
     }
 }

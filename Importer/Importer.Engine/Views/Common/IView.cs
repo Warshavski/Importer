@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace Importer.Engine.Views.Common
 {
     /// <summary>
@@ -15,6 +11,7 @@ namespace Importer.Engine.Views.Common
         void ShowWarningMessage(string message);
         void ShowErrorMessage(string message);
 
+        bool IsLoading { get; set; }
         //void Show();
         //void Close();
     }
