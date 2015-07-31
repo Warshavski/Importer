@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C4B12F83-25AC-4C4B-934E-E1EAC0B3EAA6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Importer.Engine</RootNamespace>
+    <AssemblyName>Importer.Engine</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Common\Column.cs" />
+    <Compile Include="Models\Common\CommonData.cs" />
+    <Compile Include="Models\Common\PropertyInfo.cs" />
+    <Compile Include="Models\Common\Table.cs" />
+    <Compile Include="Models\Files\DbfCreator.cs" />
+    <Compile Include="Models\Files\DbfFile.cs" />
+    <Compile Include="Models\Files\ExcelCreator.cs" />
+    <Compile Include="Models\Files\ExcelFile.cs" />
+    <Compile Include="Models\Files\ICreator.cs" />
+    <Compile Include="Models\Files\IFile.cs" />
+    <Compile Include="Models\Files\SqlCreator.cs" />
+    <Compile Include="Models\Files\SqlFile.cs" />
+    <Compile Include="Models\Importers\ExcelReader.cs" />
+    <Compile Include="Models\Importers\ICopy.cs" />
+    <Compile Include="Models\Importers\SqlCopy.cs" />
+    <Compile Include="Presenters\DataViewerPresenter.cs" />
+    <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\SettingsPresenter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Common\IView.cs" />
+    <Compile Include="Views\IDataViewer.cs" />
+    <Compile Include="Views\IMainView.cs" />
+    <Compile Include="Views\ISettingsView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\TODO.txt" />
+    <Content Include="Presenters\_readme.txt" />
+    <Content Include="Views\_readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

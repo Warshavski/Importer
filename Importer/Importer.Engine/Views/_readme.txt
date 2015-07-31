@@ -1,0 +1,1 @@
+﻿All of these intefaces must be realize in UI application
