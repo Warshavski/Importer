@@ -13,9 +13,9 @@ namespace Importer.Engine.Models.Importers
 
     public class SqlCopy : ICopy
     {
-        private const int _batchSize = 1000;
-        private const int _notifyAfter = 1;
-        //private const int _timeout = 0; 
+        private const int BATCH_SIZE = 1000;
+        private const int NOTIFY_AFTER = 1;
+        //private const int TIMEOUT = 0; 
 
         private SqlBulkCopy _sqlCopy = null;
         private CopyProgress _ChangeInStatus;
@@ -27,8 +27,8 @@ namespace Importer.Engine.Models.Importers
             _ChangeInStatus = ChangeInStatus;
 
             // initialization of _sqlCopy 
-            _sqlCopy.NotifyAfter = _notifyAfter;
-            _sqlCopy.BatchSize = _batchSize;
+            _sqlCopy.NotifyAfter = NOTIFY_AFTER;
+            _sqlCopy.BatchSize = BATCH_SIZE;
             _sqlCopy.SqlRowsCopied += new SqlRowsCopiedEventHandler(OnSqlRowsCopied);
         }
 
