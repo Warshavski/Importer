@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
 using Importer.Engine.Models;
-using Importer.Engine.Properties;
+using Importer.Engine.Models.Importers;
 using Importer.Engine.Views;
+using Importer.Engine.Views.Common;
 
 namespace Importer.Engine.Presenters
 {
@@ -17,23 +15,27 @@ namespace Importer.Engine.Presenters
     delegate void WorkCompleted();
 
     /* TODO : 
-     * 1.- done - Create delegate for BackgroundWorker 
-     * 2.- done - Create method that initialize Sql server instance
-     * 3.- done - Create method that select tables from Sql server
-     * 4.- done - Create method that select columns from Sql table
-     * 5. Create import method
-     */
+    * 1.- done - Create delegate for BackgroundWorker 
+    * 2.- done - Create method that initialize Sql server instance
+    * 3.- done - Create method that select tables from Sql server
+    * 4.- done - Create method that select columns from Sql table
+    * 5.- done - Create import method
+    * 6. refactoring (go harder)
+    */
 
     /// <summary>
-    ///     presenter for main view
+    /// presenter for main view
     /// </summary>
     public class MainPresenter
     {
+        private const bool IS_SOURCE = true;
+
         // instace of IMainView interface
         private readonly IMainView _view;
 
         private BackgroundWork _DoWork;
         private WorkCompleted _FinishWork;
+        private CopyProgress _ChangeProgressStatus;
 
         // MainPresenter main constructor
         public MainPresenter(IMainView view)
@@ -43,47 +45,48 @@ namespace Importer.Engine.Presenters
             _FinishWork = null;
         }
 
+        /* TODO : Add loading targer file types */
         // load list of supported source files
-        public void LoadFileTypeList()
+        public void LoadFileTypesList()
         {
             // create list of supported source files
             IList<ICreator> listOfFiles = new List<ICreator>()
             {
-                // dbf files
-                new DbfCreator(),
                 // excel files
                 new ExcelCreator(),
+                // dbf files
+                new DbfCreator(),
             };
 
             // bind list of supported source file to view container
-            _view.FileTypeList = listOfFiles;
+            _view.FileTypesList = listOfFiles;
         }
 
         // load extended properties for each class that implement ICreator interface
         public void LoadExtendedProperties()
         {
             // bind extended properties to view container
-            _view.ExtendedProperties = _view.SelectedFileType.GetProperties();
+            _view.ExtendedProperties = _view.SelectedSourceFileType.GetProperties();
         }
 
         public FileBrowse GetFileBrowser()
         {
             // return type of file browser
-            return _view.SelectedFileType.FileBrowse;
+            return _view.SelectedSourceFileType.FileBrowse;
         }
 
         // initialize source file (from what we import data)
         public void InitializeSourceFile()
         {
             // create instance of file 
-            IFile file = _view.SelectedFileType.CreateInstance(
+            IFile file = _view.SelectedSourceFileType.CreateInstance(
                     _view.FilePath, _view.SelectedProperty);
             try
             {
                 // test connection
                 if (file.TestConnection())
                 {
-                    file.InitializeTables();
+                    file.InitializeTables(IS_SOURCE);
                     _view.SourceTablesList = file.TableList;
                 }
                
@@ -101,7 +104,7 @@ namespace Importer.Engine.Presenters
                 file = null;
             }
         }
-        
+
         // TODO : rebuild (still too ugly)
         public void LoadTargetTables()
         {
@@ -110,21 +113,30 @@ namespace Importer.Engine.Presenters
                 // initialize backgroundWorker
                 InitializeBackgroundWorker();
 
-
                 // create SqlCreator
-                SqlCreator creator = null; 
+                SqlCreator creator = null;
 
                 // create IFile instance
                 IFile sqlFile = null;
 
                 _view.IsLoading = true;
+                //_view.IsBlocks = false;
 
                 // initilize delegate that executing in background
                 _DoWork = delegate
                 {
                     /* create main connection string
-                     * Persist Security Info=True; - !!! NOT SAFE !!!, but with this option GetData() method can work
-                     * TODO : (think how to rebuild Table class, m.b. exclude GetData() method)  */
+                     * ************************ !!! WARNING !!! !!! NOT SAFE !!! ************************
+                     *                                                                                  *
+                     *   Persist Security Info=True; - but with this option GetData() method can work   *
+                     *                                                                                  *
+                     * ************************ !!! WARNING !!! !!! NOT SAFE !!! ************************
+                     * 
+                     * ----------------------------------------------------------------------------------
+                     * 
+                     * TODO : (think how to rebuild Table class, m.b. exclude GetData() method)  
+                     * 
+                     *************************************************************************************/
                     string connectionString = string.Format("Data Source={0}; Initial Catalog={1}; Persist Security Info=True; User={2}; Password={3};",
                         Properties.Settings.Default.Server, Properties.Settings.Default.Catalog, Properties.Settings.Default.User, Properties.Settings.Default.Pass);
 
@@ -144,14 +156,14 @@ namespace Importer.Engine.Presenters
                             connectionString, properties[1]);
 
                     // initialize sqlFile tables
-                    sqlFile.InitializeTables();
+                    sqlFile.InitializeTables(!IS_SOURCE);
                 };
 
                 // initilize delegate that executing when background operation is complete
                 _FinishWork = delegate
                 {
                     // bind initialized tables to view container
-                    _view.TargetTableList = sqlFile.TableList;
+                    _view.TargetTablesList = sqlFile.TableList;
 
                     // delete link to creator
                     creator = null;
@@ -191,6 +203,61 @@ namespace Importer.Engine.Presenters
             _view.TargetTableColumnsList = _view.SelectedTargetTable.Columns;
         }
 
+
+        public List<ColumnsMapping> _mappings = new List<ColumnsMapping>();
+        public void SetMapping(string sourceColumn, string targetColumn)
+        {
+            if (sourceColumn != Column.EmptyColumn)
+                _mappings.Add(new ColumnsMapping(sourceColumn, targetColumn));
+        }
+
+        public void Import()
+        {
+            // initialize backgroundWorker
+            InitializeBackgroundWorker();
+
+            _ChangeProgressStatus = delegate(int value)
+            {
+                _view.ExecutionStatusValue = value;
+                _view.ExecutionStatusText = string.Format("Loaded : {0}", value);
+            };
+
+            _view.ProgressBarStyle = ProgressStyle.Blocks;
+            _view.IsLoading = true;
+
+            _DoWork = delegate
+            {
+                try
+                {
+                    SqlCopy importer = new SqlCopy(_ChangeProgressStatus);
+                    importer.Import(_view.SelectedSourceTable, _view.SelectedTargetTable,
+                        _mappings.ToArray(), _view.IsTruncate);
+                }
+                finally
+                {
+                    _mappings.Clear();
+                }
+            };
+
+            _FinishWork = delegate
+            {
+                _view.ExecutionStatusText = "Complete";
+                _view.ShowNoticeMessage("Done!");
+                _view.IsLoading = false;
+                _view.ExecutionStatusValue = 0;
+
+                // dispose backgroungWorker instance
+                _backgroundWorker.Dispose();
+                // delete link to backgroundWorker instance
+                _backgroundWorker = null;
+            };
+
+            if (!_backgroundWorker.IsBusy)
+                // start backgroungWorker
+                _backgroundWorker.RunWorkerAsync();
+
+        }
+
         // create backgroundWorker instance
         private BackgroundWorker _backgroundWorker = null;
         private void InitializeBackgroundWorker()
@@ -203,15 +270,16 @@ namespace Importer.Engine.Presenters
 
             // set DoWork EventHandler
             _backgroundWorker.DoWork +=
-              new DoWorkEventHandler(BackgroundWorker_DoWork);
+                new DoWorkEventHandler(BackgroundWorker_DoWork);
+
             // set ProgressChanged EventHandler
             _backgroundWorker.ProgressChanged +=
-              new ProgressChangedEventHandler(BackgroundWorker_ProgressChanged);
+                new ProgressChangedEventHandler(BackgroundWorker_ProgressChanged);
+
             // set RunWorkerCompleted EventHandler
             _backgroundWorker.RunWorkerCompleted +=
-              new RunWorkerCompletedEventHandler(BackgroundWorker_RunWorkerCompleted);
+                new RunWorkerCompletedEventHandler(BackgroundWorker_RunWorkerCompleted);
         }
-      
 
         #region Backgroung worker EventHandlers
        

@@ -56,7 +56,7 @@ namespace Importer.Engine.Presenters
                 try
                 {
                     _view.TableData = data;
-                    _view.RowsCount = data.Rows.Count;
+                    _view.TotalRows = data.Rows.Count;
                 }
                 finally
                 {
