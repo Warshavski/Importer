@@ -34,6 +34,9 @@ namespace Importer.Engine.Views
         // store selected file type
         ICreator SelectedSourceFileType { get; set; }
 
+        // sets true - if needed to truncate table, false - if not
+        bool IsTruncate { get; set; }
+
         // path to file 
         string FilePath { get; set; }
     }
