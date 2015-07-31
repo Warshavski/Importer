@@ -100,5 +100,14 @@ namespace Importer.UI.WinView.Forms
             }
         }
         #endregion
+
+        #region This Form EventHandlers
+
+        private void EventHandler_okButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        #endregion
     }
 }
