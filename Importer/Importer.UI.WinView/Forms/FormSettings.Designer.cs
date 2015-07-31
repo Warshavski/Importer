@@ -71,7 +71,7 @@
             this.rbSqlTrust.TabStop = true;
             this.rbSqlTrust.Text = "Использовать проверку подлинности SQL Server";
             this.rbSqlTrust.UseVisualStyleBackColor = true;
-            this.rbSqlTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
+            //this.rbSqlTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
             // 
             // rbWindowsTrust
             // 
@@ -84,7 +84,7 @@
             this.rbWindowsTrust.TabStop = true;
             this.rbWindowsTrust.Text = "Использовать проверку подлинности Windows";
             this.rbWindowsTrust.UseVisualStyleBackColor = true;
-            this.rbWindowsTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
+            //this.rbWindowsTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
             // 
             // pnlSqlTrust
             // 
@@ -178,7 +178,7 @@
             this.btnTestConnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTestConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnTestConnect.UseVisualStyleBackColor = true;
-            this.btnTestConnect.Click += new System.EventHandler(this.EventHandler_btnTestConnect_Click);
+            //this.btnTestConnect.Click += new System.EventHandler(this.EventHandler_btnTestConnect_Click);
             // 
             // btnSaveProperties
             // 
@@ -192,7 +192,7 @@
             this.btnSaveProperties.Text = "Сохранить";
             this.btnSaveProperties.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnSaveProperties.UseVisualStyleBackColor = true;
-            this.btnSaveProperties.Click += new System.EventHandler(this.EventHandler_btnSaveProperties_Click);
+            //this.btnSaveProperties.Click += new System.EventHandler(this.EventHandler_btnSaveProperties_Click);
             // 
             // pictureBox1
             // 
