@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.Engine", "Importer.Engine\Importer.Engine.csproj", "{C4B12F83-25AC-4C4B-934E-E1EAC0B3EAA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.UI.WinView", "Importer.UI.WinView\Importer.UI.WinView.csproj", "{ACA2D149-62C5-4976-8A5B-BAE41EBDB6A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{C4B12F83-25AC-4C4B-934E-E1EAC0B3EAA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4B12F83-25AC-4C4B-934E-E1EAC0B3EAA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4B12F83-25AC-4C4B-934E-E1EAC0B3EAA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACA2D149-62C5-4976-8A5B-BAE41EBDB6A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA2D149-62C5-4976-8A5B-BAE41EBDB6A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA2D149-62C5-4976-8A5B-BAE41EBDB6A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA2D149-62C5-4976-8A5B-BAE41EBDB6A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
