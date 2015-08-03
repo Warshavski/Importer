@@ -4,7 +4,7 @@ using Importer.Engine.Views.Common;
 
 namespace Importer.Engine.Views
 {
-    public interface IDataViewer : IView
+    public interface IDataViewer : IView, ILoading
     {
         Table SelectedTable { get; set; }
 

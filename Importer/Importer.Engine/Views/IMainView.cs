@@ -7,7 +7,7 @@ namespace Importer.Engine.Views
     /// <summary>
     /// interface for main view
     /// </summary>
-    public interface IMainView : IView
+    public interface IMainView : IView, ILoading
     {
         // list of supported file types
         IList<ICreator> FileTypesList { get; set; }
