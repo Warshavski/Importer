@@ -12,11 +12,11 @@ namespace Importer.Engine.Models
         public string DisplayName { get { return _displayName; } }
 
         // value of each extended property
-        private string _value = string.Empty;
-        public string Value { get { return _value; } }
+        private object _value = null;
+        public object Value { get { return _value; } }
 
         // default constructor
-        internal PropertyInfo(string displayName, string value)
+        internal PropertyInfo(string displayName, object value)
         {
             _displayName = displayName;
             _value = value;
