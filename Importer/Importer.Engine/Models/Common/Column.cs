@@ -3,6 +3,7 @@ namespace Importer.Engine.Models
 {
     /* TODO : 
      *   1. - done - Add constructor that initialize all properties by variables 
+     *   2. - done - Rework empty column propery (return Column instance);
      */
 
     /// <summary>
@@ -10,17 +11,17 @@ namespace Importer.Engine.Models
     /// </summary>
     public class Column
     {
+        private const string EMPTY_DATA = "empty data";
+
         // Empty column value
-        private const string EMPTY_COLUMN = "<empty>";
-        public static string EmptyColumn
+        private static readonly Column _emptyColumn = new Column("<empty>", 0);
+        public static Column EmptyColumn
         {
             get
             {
-                return EMPTY_COLUMN;
+                return _emptyColumn;
             }
         }
-        
-        private const string EMPTY_DATA = "empty data";
 
         #region Properties
 

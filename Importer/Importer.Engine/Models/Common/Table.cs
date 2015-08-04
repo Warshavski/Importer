@@ -8,6 +8,7 @@ namespace Importer.Engine.Models
      *  1. - done - Create one class for table collection)
      *  2. Exclude GetData method
      *  3. - done - Allocate a separate method for columns list initialization
+     *  4. Add empty table constant
      */
 
     /// <summary>
@@ -15,7 +16,19 @@ namespace Importer.Engine.Models
     /// </summary>
     public class Table
     {
+        private Dictionary<int, string> _dataTypes = null;
+
         #region Properties
+
+        // empty column
+        private static readonly Table _emptyTable = new Table("<select table>");
+        public static Table EmptyTable
+        {
+            get
+            {
+                return _emptyTable;
+            }
+        }
 
         // name of data provider 
         private string _providerName = string.Empty;
@@ -109,6 +122,40 @@ namespace Importer.Engine.Models
             _isSourceTable = isSourceTable;
 
             InitializeColumns(connection);
+
+            
+        }
+
+        internal Table(string tableName)
+        {
+            _tableName = tableName;
+        }
+
+        private string GetDataTypeName(int key)
+        {
+            return _dataTypes[key];
+        }
+
+        private int GetDataTypeLength(string length)
+        {
+            int len = -1;
+            int.TryParse(length, out len);
+            return len;
+        }
+
+        private Column ConstructColumn(DataRow dtColumnsRow, int index)
+        {
+            string columnName = (string)dtColumnsRow["COLUMN_NAME"];
+            string dataType = string.Empty;
+
+            if (_providerName == "System.Data.OleDb")
+                dataType = GetDataTypeName((int)dtColumnsRow["DATA_TYPE"]);
+            else
+                dataType = (string)dtColumnsRow["DATA_TYPE"];
+
+            int length = GetDataTypeLength(dtColumnsRow["CHARACTER_MAXIMUM_LENGTH"].ToString());
+            return new Column(columnName, index, dataType, length);
+            //int length = GetDataTypeLength(dtColumnsRow["DATA
         }
 
         /// <summary>
@@ -117,6 +164,41 @@ namespace Importer.Engine.Models
         /// <param name="connection">DbConnection</param>
         private void InitializeColumns(DbConnection connection)
         {
+
+            _dataTypes = new Dictionary<int, string>();
+            _dataTypes.Add(20, "DBTYPE_I8");
+            _dataTypes.Add(128, "DBTYPE_BYTES");
+            _dataTypes.Add(11, "DBTYPE_BOOL");
+            _dataTypes.Add(8, "DBTYPE_BSTR");
+            _dataTypes.Add(136, "DBTYPE_HCHAPTER");
+            _dataTypes.Add(129, "DBTYPE_STR");
+            _dataTypes.Add(6, "DBTYPE_CY");
+            _dataTypes.Add(7, "DBTYPE_DATE");
+            _dataTypes.Add(133, "DBTYPE_DBDATE");
+            _dataTypes.Add(134, "DBTYPE_DBTIME");
+            _dataTypes.Add(135, "DBTYPE_DBTIMESTAMP");
+            _dataTypes.Add(14, "DBTYPE_DECIMAL");
+            _dataTypes.Add(5, "DBTYPE_R8");
+            _dataTypes.Add(0, "DBTYPE_EMPTY");
+            _dataTypes.Add(10, "DBTYPE_ERROR");
+            _dataTypes.Add(64, "DBTYPE_FILETIME");
+            _dataTypes.Add(72, "DBTYPE_GUID");
+            _dataTypes.Add(9, "DBTYPE_IDISPATCH");
+            _dataTypes.Add(3, "DBTYPE_I4");
+            _dataTypes.Add(13, "DBTYPE_IUNKNOWN");
+            _dataTypes.Add(131, "DBTYPE_NUMERIC");
+            _dataTypes.Add(138, "DBTYPE_PROP_VARIANT");
+            _dataTypes.Add(4, "DBTYPE_R4");
+            _dataTypes.Add(2, "DBTYPE_I2");
+            _dataTypes.Add(16, "DBTYPE_I1");
+            _dataTypes.Add(21, "DBTYPE_UI8");
+            _dataTypes.Add(19, "DBTYPE_UI4");
+            _dataTypes.Add(18, "DBTYPE_UI2");
+            _dataTypes.Add(17, "DBTYPE_UI1");
+            _dataTypes.Add(132, "DBTYPE_UDT");
+            _dataTypes.Add(12, "DBTYPE_VARIANT");
+            _dataTypes.Add(130, "DBTYPE_WSTR");
+
             // create new link to empty List<Column>
             _columnList = new List<Column>();
 
@@ -130,12 +212,12 @@ namespace Importer.Engine.Models
             // if column in source file
             if (_isSourceTable)
                 // add first column as empty column
-                _columnList.Add(new Column(Column.EmptyColumn, index));
+                _columnList.Add(Column.EmptyColumn);
 
             // add new values to List<Column> by initializing each column
             foreach (DataRow dtColumnsRow in dtColumns.Rows)
             {
-                _columnList.Add(new Column((string)dtColumnsRow["COLUMN_NAME"], index));
+                _columnList.Add(ConstructColumn(dtColumnsRow, index));
                 ++index;
             }
 
