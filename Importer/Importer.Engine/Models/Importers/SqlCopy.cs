@@ -64,14 +64,9 @@ namespace Importer.Engine.Models.Importers
                     {
                         targetConnection.Open();
 
-                        if (truncate)
-                        {
-                            commandText = string.Format("TRUNCATE TABLE dbo.[{0}]", targetTable.Name);
-                            CommonData.CreateCommand(commandText, targetConnection).ExecuteNonQuery();
-                        }
-
                         using (SqlBulkCopy bulkCopy = new SqlBulkCopy(targetConnection.ConnectionString))
                         {
+                            bulkCopy.DestinationTableName = targetTable.Name;
                             bulkCopy.BatchSize = BATCH_SIZE;
                             bulkCopy.NotifyAfter = NOTIFY_AFTER;
                             bulkCopy.SqlRowsCopied += new SqlRowsCopiedEventHandler(OnSqlRowsCopied);
@@ -80,6 +75,13 @@ namespace Importer.Engine.Models.Importers
                             foreach (ColumnsMapping element in columnsMapping)
                                 bulkCopy.ColumnMappings.Add(
                                     new SqlBulkCopyColumnMapping(element.SourceColumn, element.TargetColumn));
+
+                            if (truncate)
+                            {
+                                commandText = string.Format("TRUNCATE TABLE dbo.[{0}]", targetTable.Name);
+                                CommonData.CreateCommand(commandText, targetConnection).ExecuteNonQuery();
+                            }
+
                             bulkCopy.WriteToServer(reader);
                         }
                         targetConnection.Close();
