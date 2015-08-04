@@ -70,5 +70,6 @@
 		6. Initizlize all connection strings by DbConnectionStringBuilder
 		7. Add empty table constant in table list initialization function
 			and add bool parameter like in table columns list initialization
+		8. Add Save/Load column mapping functions (create *.txt file)
 		
 	
