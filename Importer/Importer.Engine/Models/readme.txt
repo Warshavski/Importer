@@ -71,5 +71,9 @@
 		7. Add empty table constant in table list initialization function
 			and add bool parameter like in table columns list initialization
 		8. Add Save/Load column mapping functions (create *.txt file)
+05.08.2015
+	 TODO :
+		 1. Add search function to DataViewer
+		 2. Replace all foreach loops into for loops
 		
 	
