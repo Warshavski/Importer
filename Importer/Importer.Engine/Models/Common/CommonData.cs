@@ -61,5 +61,41 @@ namespace Importer.Engine.Models
             // Return the connection.
             return command;
         }
+
+        /// <summary>
+        /// get data from table 
+        /// **********************!!! WARNING NOT SAFE !!!**********************
+        /// *                                                                  *
+        /// *  if connection to SQl server with server security                *
+        /// *  need to add "Persist Security Info=True;" in connection string  *
+        /// *                                                                  *
+        /// **********************!!! WARNING NOT SAFE !!!**********************
+        /// </summary>
+        /// <returns>table data</returns>
+        public static DataTable GetData(Table table)
+        {
+            // create empty DataTable that going to contain table data
+            DataTable data = new DataTable();
+
+            // create DbConnection using provider name and connection string 
+            using (DbConnection connection = CommonData.CreateDbConnection(table.ProviderName, table.ConnectionString))
+            {
+                // create select command text 
+                string selectCommandText = string.Format("SELECT * FROM [{0}]", table.Name);
+
+                // open connection
+                connection.Open();
+                // create DbDatareader
+                using (DbDataReader reader = CommonData.CreateCommand(selectCommandText, connection).ExecuteReader())
+                    // load table data from DbDataReader to empty DataTable
+                    data.Load(reader);
+                // close connection
+                connection.Close();
+            }
+
+            // return result
+            return data;
+        }
+
     }
 }
