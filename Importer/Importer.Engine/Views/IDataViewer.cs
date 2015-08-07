@@ -10,6 +10,6 @@ namespace Importer.Engine.Views
 
         DataTable TableData { get; set; }
 
-        int TotalRows { get; set; }
+        long TotalRows { get; set; }
     }
 }
