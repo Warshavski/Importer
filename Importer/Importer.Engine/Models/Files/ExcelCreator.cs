@@ -27,6 +27,7 @@ namespace Importer.Engine.Models
 
         public PropertyInfo[] GetProperties()
         {
+            // if connectionString created by ConnectionStringBuilder (' ') in value must be deleted
             /************* Excel extended properties : *************
              *                                                     *
              *   Value :          "'Excel 8.0; HDR=YES'; "         *
@@ -38,13 +39,13 @@ namespace Importer.Engine.Models
              *   Display name :   "Microsoft Excel 2007"           *
              *                                                     *
              * *****************************************************/
-
+            
             return new PropertyInfo[] 
             {
                 new PropertyInfo("Microsoft Excel 97-2003",
-                    "'Excel 8.0; HDR=YES'; "),
+                    "Excel 8.0; HDR=YES;"),
                 new PropertyInfo("Microsoft Excel 2007",
-                    "'Excel 12.0 Xml; HDR=YES'; ")
+                    "Excel 12.0 Xml; HDR=YES;")
             };
         }
 
