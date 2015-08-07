@@ -17,9 +17,10 @@ namespace Importer.Engine.Presenters
     * 4.- done - Create method that select columns from Sql table
     * 5.- done - Create import method
     * 6. Refactoring (go harder)
-    * 7. Do something with backgroundWorker and delegates (rework)
-    *    7.1. Separate backgroudWorkers for each async operation
-    *    7.1. All backgroudWorkers as anonymous methods
+    * 7.- done - Do something with backgroundWorker and delegates (rework)
+    *       - done - 7.1. Separate backgroudWorkers for each async operation
+    *       - done - 7.1. All backgroudWorkers as anonymous methods
+    * 8. Add loading target file types 
     */
 
     /// <summary>
@@ -27,32 +28,22 @@ namespace Importer.Engine.Presenters
     /// </summary>
     public class MainPresenter
     {
-        #region Delegates
+        private delegate void AbortProcess();
 
-        //delegate object BackgroundWork();
-        //delegate void WorkCompleted();
-
-        //private WorkCompleted _FinishWork;
-        //private CopyProgress _ChangeProgressStatus;
-
-        #endregion
+        private AbortProcess _Abort;
+        private CopyProgress _ChangeProgressStatus;
 
         private const bool IS_SOURCE = true;
 
         // instace of IMainView interface
         private readonly IMainView _view;
 
-        //private BackgroundWork _DoWork;
-
         // Main constructor
         public MainPresenter(IMainView view)
         {
             _view = view;
-            //_DoWork = null;
-            //_FinishWork = null;
         }
 
-        /* TODO : Add loading targer file types */
         // load list of supported source files
         public void LoadFileTypesList()
         {
@@ -100,14 +91,9 @@ namespace Importer.Engine.Presenters
                 {
                     // hmmmm...
                     _view.ShowErrorMessage(file.ConnectionString);
+                    //_view.ShowErrorMessage(
+                    //string.Format("Connection error\n{0}\n{1}", e.Message, e.Source));
                 }
-            }
-            // catch connection exception
-            catch (DbException e)
-            {
-                // show error message in view
-                _view.ShowErrorMessage(
-                    string.Format("Connection error\n{0}\n{1}", e.Message, e.Source));
             }
             finally
             {
@@ -119,40 +105,33 @@ namespace Importer.Engine.Presenters
         // TODO : rebuild (still too ugly)
         public void LoadTargetTables()
         {
-            // initialize backgroundWorker
-            //InitializeBackgroundWorker();
-
-            // create SqlCreator
-            SqlCreator creator = null;
-
-            // create IFile instance
-            IFile sqlFile = null;
-
+            // prepare UI for background load
             _view.ExecutionStatusText = "Loading target tables list...";
             _view.ProgressBarStyle = ProgressStyle.Marguee;
             _view.IsLoading = true;
-            //_view.IsBlocks = false;
 
-            var backgroungTest = new BackgroundWorker();
+            // create backgroungWorker instance
+            var backgroungWork = new BackgroundWorker();
             //backgroungTest.WorkerReportsProgress = true;
-            
-            backgroungTest.DoWork += (sender, e) =>
+
+            // set backgroundWorker event handlers using lambda expression
+            backgroungWork.DoWork += (sender, e) =>
             {
+                // create SqlCreator
+                SqlCreator creator = null;
+
+                // create IFile instance
+                IFile sqlFile = null;
+
                 try
                 {
-                    /* create main connection string
+                   /* create main connection string
+                    * TODO : work with connection strings replace to Engine
                     * ************************ !!! WARNING !!! !!! NOT SAFE !!! ************************
                     *                                                                                  *
                     *   Persist Security Info=True; - but with this option GetData() method can work   *
                     *                                                                                  *
-                    * ************************ !!! WARNING !!! !!! NOT SAFE !!! ************************
-                    * 
-                    * ----------------------------------------------------------------------------------
-                    * 
-                    * TODO : (think how to rebuild Table class, m.b. exclude GetData() method)  
-                    * 
-                    *************************************************************************************/
-                    // replace to Engine
+                    * ************************ !!! WARNING !!! !!! NOT SAFE !!! ************************/
                     string connectionString = string.Format("Data Source={0}; Initial Catalog={1}; Persist Security Info=True; User={2}; Password={3};",
                                 Properties.Settings.Default.Server, Properties.Settings.Default.Catalog, Properties.Settings.Default.User, Properties.Settings.Default.Pass);
 
@@ -186,7 +165,7 @@ namespace Importer.Engine.Presenters
                 }
             };
 
-            backgroungTest.RunWorkerCompleted += (sender , e) => 
+            backgroungWork.RunWorkerCompleted += (sender , e) => 
             {
                 if (e.Result is List<Table>)
                 {
@@ -196,20 +175,21 @@ namespace Importer.Engine.Presenters
                 else
                 {
                     _view.ExecutionStatusText = "Error";
-                    //?? StringBuilder insted of string.Format ??
+                    //TODO : ?? StringBuilder insted of string.Format ??
                     var errorEx = e.Result as Exception;
                     _view.ShowErrorMessage(string.Format("{0}\n{1}\n{2}",
                         errorEx.Message, errorEx.Source, errorEx.StackTrace));
                 }
                 _view.IsLoading = false;
 
-                backgroungTest.Dispose();
-                backgroungTest = null;
+                backgroungWork.Dispose();
+                backgroungWork = null;
             };
 
-            if (!backgroungTest.IsBusy)
+            // check if backgroundWorker is already running
+            if (!backgroungWork.IsBusy)
                 // start backgroungWorker
-                backgroungTest.RunWorkerAsync();
+                backgroungWork.RunWorkerAsync();
         }
 
         public void LoadSourceColumns()
@@ -227,77 +207,89 @@ namespace Importer.Engine.Presenters
                 _view.TargetTableColumnsList = _view.SelectedTargetTable.Columns;
         }
 
-        SqlCopy importer;
         public void Import()
         {
-            /* Under reconstruction
-             * 
-            // initialize backgroundWorker
-            InitializeBackgroundWorker();
-
-            _ChangeProgressStatus = delegate(long rowsCopied, long rowsTotal)
-            {
-                _view.ExecutionStatusValue = (int)(rowsCopied * 100 / rowsTotal);
-                //_view.ExecutionStatusText = string.Format("Loaded : {0} of {1}", rowsCopied, rowsTotal);
-            };
-
-            importer = new SqlCopy(_ChangeProgressStatus);
-
             _view.ExecutionStatusText = "Import in progress...";
             _view.ProgressBarStyle = ProgressStyle.Blocks;
             _view.IsLoading = true;
 
-            _DoWork = delegate
+            var backgroungTest = new BackgroundWorker();
+            backgroungTest.WorkerSupportsCancellation = true;
+           
+
+            SqlCopy importer = null;
+            
+            _ChangeProgressStatus = (rowsCopied, rowsTotal) =>
+            {
+                _view.ExecutionStatusValue = (int)(rowsCopied * 100 / rowsTotal);
+            };
+
+            backgroungTest.DoWork += (sender, e) =>
             {
                 try
                 {
-                    //SqlCopy importer = new SqlCopy(_ChangeProgressStatus);
+                    importer = new SqlCopy(_ChangeProgressStatus);
                     importer.Import(_view.SelectedSourceTable, _view.SelectedTargetTable,
-                        _view.Mappings.ToArray(), _view.IsTruncate);
-                    return true;
+                            _view.Mappings.ToArray(), _view.IsTruncate);
+
+                    e.Result = true;
                 }
                 catch (Exception ex)
                 {
-                    return ex;
+                    e.Result = ex;
                 }
                 finally
                 {
-                    //_mappings.Clear();
+                    importer = null;
                 }
             };
 
-           
-            if (!_backgroundWorker.IsBusy)
-                // start backgroungWorker
-                _backgroundWorker.RunWorkerAsync();
-            */
+            backgroungTest.RunWorkerCompleted += (sender, e) =>
+            {
+                if (e.Result is bool)
+                {
+                    _view.ExecutionStatusText = "Import complete!";
+                    _view.ShowNoticeMessage("Import complete!");
+                }
+                else if (e.Result is Exception)
+                {
+                    var errorEx = e.Result as Exception;
+                    _view.ShowErrorMessage(string.Format("{0}\n{1}\n{2}",
+                        errorEx.Message, errorEx.Source, errorEx.StackTrace));
+                }
+                else if (e.Cancelled)
+                {
+                    _view.ExecutionStatusText = "Import canceled";
+                }
+               
+                _view.IsLoading = false;
+                _view.ExecutionStatusValue = 0;
 
-            /*
-           _FinishWork = delegate
-           {
-               _view.ExecutionStatusText = "Import complete!";
-               _view.ShowNoticeMessage("Done!");
-               _view.IsLoading = false;
-               _view.ExecutionStatusValue = 0;
+                backgroungTest.Dispose();
+                backgroungTest = null;
+            };
 
-               // dispose backgroungWorker instance
-               _backgroundWorker.Dispose();
-               // delete link to backgroundWorker instance
-               _backgroundWorker = null;
-           };
-           */
+            /* this throw exception
+             * TODO : fix it */ 
+            _Abort = () =>
+            {
+                if (backgroungTest.IsBusy)
+                {
+                    importer.Abort = true;
+                    backgroungTest.CancelAsync();
+                }
+            };
+
+            if (!backgroungTest.IsBusy)
+                backgroungTest.RunWorkerAsync();
         }
 
         public void Abort()
         {
-            importer.Abort = true;
+            _Abort();
         }
     }
 }
-
-
-
-
 
 /* Table data loading
       private DataTable _dtTableData = null;
