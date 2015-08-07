@@ -13,11 +13,14 @@ namespace Importer.Engine.Models
         /// </summary>
         /// <param name="filePath">Data source and catalog name (Data Source={source string}; Initial Catalog={catalog name};)</param>
         /// <param name="property">Extended property (windows or server security)</param>
-        internal SqlFile(string filePath, PropertyInfo property)
+        internal SqlFile(string dataSource, PropertyInfo property)
         {
+            /* think how to use ConnectionStringBuilder 
+             * (m.b. create some properties in config file)
+             * (or rework IFile interface and all file constructors)s */ 
             // initialize connection string
             _connectionString = string.Format(
-                "{0} {1}", filePath, property.Value);
+                "{0} {1}", dataSource, property.Value);
             // initialize table list by null value
             _tableList = null;
         }
@@ -39,8 +42,8 @@ namespace Importer.Engine.Models
         }
 
         // create table list property
-        private IList<Table> _tableList = null;
-        public IList<Table> TableList
+        private List<Table> _tableList = null;
+        public List<Table> TableList
         {
             get { return _tableList; }
         }
@@ -95,7 +98,8 @@ namespace Importer.Engine.Models
         }
 
         /// <summary>
-        /// initialize tables
+        /// initialize tables (common method for all IFile classes)
+        /// m.b. create abstract class
         /// </summary>
         public void InitializeTables(bool isSource)
         {
@@ -109,7 +113,9 @@ namespace Importer.Engine.Models
                 connection.Open();
                 //create and get information about tables from connection schema 
                 DataTable dtTables = connection.GetSchema("Tables");
-               
+
+                _tableList.Add(Table.EmptyTable);
+
                 // foreach element in 
                 foreach (DataRow dtTablesRow in dtTables.Rows)
                     _tableList.Add(new Table((string)dtTablesRow["TABLE_NAME"], connection, PROVIDER_NAME, isSource));

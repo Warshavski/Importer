@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Importer.Engine.Models.Importers
 {
-    public delegate void CopyProgress(int value);
+    public delegate void CopyProgress(long rowsCopied, long rowsTotal);
 
     public struct ColumnsMapping
     {
