@@ -1,107 +1,100 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Importer.Engine.Models;
-using Importer.Engine.Views;
-using Importer.Engine.Views.Common;
 using System.ComponentModel;
 using System.Data;
+using Importer.Engine.Models;
+using Importer.Engine.Views;
 
 namespace Importer.Engine.Presenters
 {
     public class DataViewerPresenter
     {
         private readonly IDataViewer _view = null;
+        private readonly Table _selectedTable = null;
 
-        BackgroundWorker _backgroundWorker = null;
-
-        BackgroundWork _DoWork;
-        WorkCompleted _FinishWork;
-
-        public DataViewerPresenter(IDataViewer view)
+        public DataViewerPresenter(IDataViewer view, Table selectedTable)
         {
-            // initialize backgroundWorker
-             _backgroundWorker = new BackgroundWorker();
-
-            // set report progress property
-            _backgroundWorker.WorkerReportsProgress = true;
-
-            // set DoWork EventHandler
-            _backgroundWorker.DoWork +=
-              new DoWorkEventHandler(BackgroundWorker_DoWork);
-            // set ProgressChanged EventHandler
-            _backgroundWorker.ProgressChanged +=
-              new ProgressChangedEventHandler(BackgroundWorker_ProgressChanged);
-            // set RunWorkerCompleted EventHandler
-            _backgroundWorker.RunWorkerCompleted +=
-              new RunWorkerCompletedEventHandler(BackgroundWorker_RunWorkerCompleted);
-
             _view = view;
+            _selectedTable = selectedTable;
         }
 
         public void LoadData()
         {
+            _view.ExecutionStatusText = "Loading data...";
             _view.IsLoading = true;
 
-            DataTable data = null;
+            var backgroundWorker = new BackgroundWorker();
 
-            _DoWork = delegate
-            {
-                data = _view.SelectedTable.GetData();
-            };
-
-            _FinishWork = delegate
+            backgroundWorker.DoWork += (sender, e) =>
             {
                 try
                 {
-                    _view.TableData = data;
-                    _view.TotalRows = data.Rows.Count;
+                    e.Result = CommonData.GetData(_selectedTable);
                 }
-                finally
+                catch (Exception ex)
                 {
-                    _view.IsLoading = false;
-                    _backgroundWorker.Dispose();
-                    _backgroundWorker = null;
+                    e.Result = ex;
                 }
             };
 
-            if (!_backgroundWorker.IsBusy)
-                _backgroundWorker.RunWorkerAsync();
+            backgroundWorker.RunWorkerCompleted += (sender, e) =>
+            {
+                if (e.Result is DataTable)
+                {
+                    _view.TableData = e.Result as DataTable;
+                    _view.TotalRows = (e.Result as DataTable).Rows.Count;
+                }
+                else if (e.Result is Exception)
+                {
+                    var errorEx = e.Result as Exception;
+                    _view.ExecutionStatusText = "Error!";
+                    _view.ShowErrorMessage(string.Format("{0}\n{1}\n{2}",
+                        errorEx.Message, errorEx.Source, errorEx.StackTrace));
+                }
+                _view.IsLoading = false;
+
+                backgroundWorker.Dispose();
+                backgroundWorker = null;
+            };
+
+            if (!backgroundWorker.IsBusy)
+                backgroundWorker.RunWorkerAsync();
         }
 
-        #region Backgroung worker EventHandlers
-
-        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        public void DisposeData()
         {
-            /* This method runs in a background thread.
-             * 
-             * while (work not done) 
-             * {
-             *     // Do some work here
-             *     _backgroundWorker.ReportProgress(percentage_done, user_state);
-             *     
-             *     // You don't need to calculate the percentage number if you don't
-             *     // need it in BackgroundWorker_ProgressChanged.
-             * }
-             * // You can set e.Result = to some result;
-             */
-            _DoWork();
+            //_view.TableData.Dispose();
+            _view.TableData = null;
         }
-
-        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // This method runs in the UI thread.
-            // Report progress using the value e.ProgressPercentage and e.UserState
-        }
-
-        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // This method runs in the UI thread.
-            // Work is finished! You can display the work done by using e.Result
-            _FinishWork();
-        }
-
-        #endregion
     } 
 }
+
+
+
+/*
+DataTable data = null;
+
+_DoWork = delegate
+{
+   data = _selectedTable.GetData(); //_view.SelectedTable.GetData();
+};
+
+_FinishWork = delegate
+{
+   try
+   {
+       _view.TableData = data;
+       _view.TotalRows = data.Rows.Count;
+   }
+   catch (Exception er)
+   {
+       _view.ExecutionStatusText = "Error!";
+       _view.ShowErrorMessage(er.Message + '\n' + er.Source + '\n' + er.StackTrace);
+   }
+   finally
+   {
+       _view.IsLoading = false;
+       _backgroundWorker.Dispose();
+       _backgroundWorker = null;
+   }
+};
+*/
