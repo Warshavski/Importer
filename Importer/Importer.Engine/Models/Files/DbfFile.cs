@@ -10,12 +10,21 @@ namespace Importer.Engine.Models
         // name of data provider
         private const string PROVIDER_NAME = "System.Data.OleDb";
 
-        internal DbfFile(string filePath, PropertyInfo property)
+        internal DbfFile(string dataSource, PropertyInfo property)
         {
-            _connectionString = string.Format(
-              @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; User ID=Admin; Password=; Extended Properties={1}; ",
-              filePath, property.Value);
+            /* *.dbf connection string
+             *  @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; User ID=Admin; Password=; Extended Properties={1};"
+             */
 
+            // hmmmm... think for better way to construct connection string at all
+            OleDbConnectionStringBuilder connectionBuilder = new OleDbConnectionStringBuilder();
+            connectionBuilder.DataSource = dataSource;
+            connectionBuilder.Provider = "Microsoft.Jet.OLEDB.4.0";
+            connectionBuilder.Add("User ID", "Admin");
+            connectionBuilder.Add("Extended Properties", property.Value);
+
+            _connectionString = connectionBuilder.ConnectionString;
+            
             _tableList = null;
         }
 
@@ -27,8 +36,8 @@ namespace Importer.Engine.Models
             get { return _connectionString; }
         }
 
-        private IList<Table> _tableList = null;
-        public IList<Table> TableList
+        private List<Table> _tableList = null;
+        public List<Table> TableList
         {
             get { return _tableList; }
         }
@@ -66,6 +75,9 @@ namespace Importer.Engine.Models
                 _tableList = new List<Table>();
 
                 connection.Open();
+                
+                _tableList.Add(Table.EmptyTable);
+
                 // get information about tables from connection schema 
                 DataTable dtTables = connection.GetSchema("Tables");
                 // initialization of OleDbTable class and add it into table collection
@@ -117,9 +129,9 @@ namespace Importer.Engine.Models
  */
 
 /*  Field Descriptor (dBASE 7)
- * +---------+--------+-----------------
- * | Address | Length | Assignment
- * +---------+--------+-----------------
+ * +---------+--------+-----------------------------------------------------+
+ * | Address | Length | Assignment                                          |
+ * +---------+--------+-----------------------------------------------------+
  *  0   0x00   (32)    Field name
  *  32  0x20   (1)     Field type
  *  33  0x21   (1)     Full field length

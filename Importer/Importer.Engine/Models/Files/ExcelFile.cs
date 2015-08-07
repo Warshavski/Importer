@@ -9,12 +9,19 @@ namespace Importer.Engine.Models
     {
         private const string PROVIDER_NAME = "System.Data.OleDb";
 
-        internal ExcelFile(string filePath, PropertyInfo property)
+        internal ExcelFile(string dataSource, PropertyInfo property)
         {
-            // initialize base class connection string 
-            _connectionString = string.Format(
-              @"Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties={1}; ",
-              filePath, property.Value);
+            /* excel file connection string
+             * @"Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties={1}; 
+             */
+            
+            // same as DbfFile constructor, must be better way to construct connectionString
+            OleDbConnectionStringBuilder connectionBuilder = new OleDbConnectionStringBuilder();
+            connectionBuilder.DataSource = dataSource;
+            connectionBuilder.Provider = "Microsoft.ACE.OLEDB.12.0";
+            connectionBuilder.Add("Extended Properties", property.Value);
+            
+            _connectionString = connectionBuilder.ConnectionString;
 
             _tableList = null;
         }
@@ -27,8 +34,8 @@ namespace Importer.Engine.Models
             get { return _connectionString; }
         }
 
-        private IList<Table> _tableList = null;
-        public IList<Table> TableList
+        private List<Table> _tableList = null;
+        public List<Table> TableList
         {
             get { return _tableList; }
         }
@@ -49,6 +56,10 @@ namespace Importer.Engine.Models
             }
         }
 
+        /// <summary>
+        /// Initialize tables
+        /// </summary>
+        /// <param name="isSource"></param>
         public void InitializeTables(bool isSource)
         {
             // create OleDb connection
@@ -60,6 +71,9 @@ namespace Importer.Engine.Models
                 connection.Open();
                 // get information about tables from connection schema
                 DataTable dtTables = connection.GetSchema("Tables");
+                
+                _tableList.Add(Table.EmptyTable);
+
                 // initialization of OleDbTable class and add it into table collection
                 foreach (DataRow dtTablesRow in dtTables.Rows)
                     _tableList.Add(new Table((string)dtTablesRow["TABLE_NAME"], connection, PROVIDER_NAME, isSource));
