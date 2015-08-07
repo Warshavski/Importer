@@ -2,16 +2,19 @@
 
 namespace Importer.Engine.Models
 {
+    /* TODO :
+     *   1. ??? Change interface on abstract class. ??? */
     public interface IFile
     {
         // connection string for each file
         string ConnectionString { get; }
 
         // list of tables in each file
-        IList<Table> TableList { get; }
+        List<Table> TableList { get; }
 
         /// <summary>
-        /// testing connection
+        /// testing connection 
+        /// same function realization in all classes (must be common)
         /// </summary>
         /// <returns>
         /// true - if connection succeeded
@@ -21,6 +24,8 @@ namespace Importer.Engine.Models
 
         /// <summary>
         /// initialize tables
+        /// ??abstact class??
+        /// same function realization in all classes (must be common)
         /// </summary>
         /// <param name="isSource">if is source file</param>
         void InitializeTables(bool isSource);
