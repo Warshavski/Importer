@@ -4,6 +4,7 @@ namespace Importer.Engine.Models
     /* TODO : 
      *   1. - done - Add constructor that initialize all properties by variables 
      *   2. - done - Rework empty column propery (return Column instance);
+     *   3. - ??? struct instead of class ???
      */
 
     /// <summary>
@@ -12,6 +13,8 @@ namespace Importer.Engine.Models
     public class Column
     {
         private const string EMPTY_DATA = "empty data";
+
+        #region Properties
 
         // Empty column value
         private static readonly Column _emptyColumn = new Column("<empty>", 0);
@@ -22,8 +25,6 @@ namespace Importer.Engine.Models
                 return _emptyColumn;
             }
         }
-
-        #region Properties
 
         // index of each column in collection
         private int _index = -1;
