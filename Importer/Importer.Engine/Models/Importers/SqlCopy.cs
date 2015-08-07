@@ -10,9 +10,10 @@ namespace Importer.Engine.Models.Importers
       *   4. Add import method for tables with fewer rows
       *   5. - done - Rewrite SqlBulk import method
       *   6. Add something for operation status indications
-     *    7. ?? Add SqlBulkCopyOptions in SqlBulkCopy constructor ??
-     *    8. ?? Errors and copy abort ??
-      */
+      *   7. ?? Add SqlBulkCopyOptions in SqlBulkCopy constructor ??
+      *   8. ?? Errors and copy abort ??
+      *   9. How to set SqlBulkCopy events
+      */   
 
     public class SqlCopy : ICopy
     {
@@ -23,27 +24,39 @@ namespace Importer.Engine.Models.Importers
 
         #endregion
 
-        #region Class delegates
+        private CopyProgress _ProgressChange;
 
-        private CopyProgress _ChangeInStatus;
+        private bool _abort = false;
+        public bool Abort
+        {
+            set { _abort = value; }
+        }
 
-        #endregion
-
-        private int _rowsTotal = -1;
+        private long _rowsTotal = -1;
 
         #region Constructors
 
-        public SqlCopy(CopyProgress ChangeInStatus)
+        public SqlCopy(CopyProgress ProgressChange)
         {
-            _ChangeInStatus = ChangeInStatus;
+            _ProgressChange = ProgressChange;
         }
 
         #endregion
 
         private void OnSqlRowsCopied(object sender, SqlRowsCopiedEventArgs e)
         {
+            _ProgressChange(e.RowsCopied, _rowsTotal);
+            e.Abort = _abort;
+            //if (SqlRowsCopied != null)
+
+
+            /*
             // (int)((100 * e.RowsCopied) / [total rows])
-            _ChangeInStatus((int)((100 * e.RowsCopied) / _rowsTotal));
+            if (_abort)
+                e.Abort = true;
+            else 
+                _ChangeInStatus(e.RowsCopied, _rowsTotal);
+             */
         }
 
         #region Public members
