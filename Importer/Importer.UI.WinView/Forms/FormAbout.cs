@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -103,7 +99,7 @@ namespace Importer.UI.WinView.Forms
 
         #region This Form EventHandlers
 
-        private void EventHandler_okButton_Click(object sender, EventArgs e)
+        private void OnOkButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }

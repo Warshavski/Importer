@@ -71,7 +71,7 @@
             this.rbSqlTrust.TabStop = true;
             this.rbSqlTrust.Text = "Использовать проверку подлинности SQL Server";
             this.rbSqlTrust.UseVisualStyleBackColor = true;
-            //this.rbSqlTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
+            this.rbSqlTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
             // 
             // rbWindowsTrust
             // 
@@ -84,7 +84,7 @@
             this.rbWindowsTrust.TabStop = true;
             this.rbWindowsTrust.Text = "Использовать проверку подлинности Windows";
             this.rbWindowsTrust.UseVisualStyleBackColor = true;
-            //this.rbWindowsTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
+            this.rbWindowsTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
             // 
             // pnlSqlTrust
             // 
@@ -97,11 +97,11 @@
             this.pnlSqlTrust.Size = new System.Drawing.Size(358, 68);
             this.pnlSqlTrust.TabIndex = 11;
             // 
-            // tbPass
+            // txtBoxPass
             // 
             this.txtBoxPass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBoxPass.Location = new System.Drawing.Point(126, 37);
-            this.txtBoxPass.Name = "tbPass";
+            this.txtBoxPass.Name = "txtBoxPass";
             this.txtBoxPass.Size = new System.Drawing.Size(221, 20);
             this.txtBoxPass.TabIndex = 5;
             this.txtBoxPass.UseSystemPasswordChar = true;
@@ -115,11 +115,11 @@
             this.lblPass.TabIndex = 2;
             this.lblPass.Text = "Пароль :";
             // 
-            // tbUserName
+            // txtBoxUserName
             // 
             this.txtBoxUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBoxUserName.Location = new System.Drawing.Point(126, 10);
-            this.txtBoxUserName.Name = "tbUserName";
+            this.txtBoxUserName.Name = "txtBoxUserName";
             this.txtBoxUserName.Size = new System.Drawing.Size(221, 20);
             this.txtBoxUserName.TabIndex = 4;
             // 
@@ -149,11 +149,11 @@
             this.lblCatalogName.TabIndex = 9;
             this.lblCatalogName.Text = "База данных :";
             // 
-            // tbServerName
+            // txtBoxServerName
             // 
             this.txtBoxServerName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBoxServerName.Location = new System.Drawing.Point(103, 128);
-            this.txtBoxServerName.Name = "tbServerName";
+            this.txtBoxServerName.Name = "txtBoxServerName";
             this.txtBoxServerName.Size = new System.Drawing.Size(200, 20);
             this.txtBoxServerName.TabIndex = 0;
             // 
@@ -178,7 +178,7 @@
             this.btnTestConnect.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTestConnect.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnTestConnect.UseVisualStyleBackColor = true;
-            //this.btnTestConnect.Click += new System.EventHandler(this.EventHandler_btnTestConnect_Click);
+            this.btnTestConnect.Click += new System.EventHandler(this.OnBtnTestConnect_Click);
             // 
             // btnSaveProperties
             // 
@@ -192,7 +192,7 @@
             this.btnSaveProperties.Text = "Сохранить";
             this.btnSaveProperties.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnSaveProperties.UseVisualStyleBackColor = true;
-            //this.btnSaveProperties.Click += new System.EventHandler(this.EventHandler_btnSaveProperties_Click);
+            this.btnSaveProperties.Click += new System.EventHandler(this.OnBtnSaveProperties_Click);
             // 
             // pictureBox1
             // 

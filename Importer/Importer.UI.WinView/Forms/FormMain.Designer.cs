@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+            this.statusStripBtnCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButtonFile = new System.Windows.Forms.ToolStripDropDownButton();
@@ -41,12 +41,21 @@
             this.toolStripDropDownButtonHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlMain = new System.Windows.Forms.Panel();
+            this.btnSaveMappings = new System.Windows.Forms.Button();
+            this.btnMappingsLoad = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvColumnsMapping = new System.Windows.Forms.DataGridView();
+            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataTypeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.linkedColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.isSelectedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.indexColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grBoxTargetFile = new System.Windows.Forms.GroupBox();
+            this.btnCreateTable = new System.Windows.Forms.Button();
             this.cmBoxTargetTablesList = new System.Windows.Forms.ComboBox();
             this.lblTargetTable = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnLoadTargetTablesList = new System.Windows.Forms.Button();
             this.btnShowTargetData = new System.Windows.Forms.Button();
             this.btnTargetFileSettings = new System.Windows.Forms.Button();
             this.cmBoxTargetFileTypes = new System.Windows.Forms.ComboBox();
@@ -63,10 +72,12 @@
             this.lblFilePath = new System.Windows.Forms.Label();
             this.txtBoxFilePath = new System.Windows.Forms.TextBox();
             this.btnBrowse = new System.Windows.Forms.Button();
+            this.ofdFileBrowse = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.statusStripMain.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.pnlMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvColumnsMapping)).BeginInit();
             this.grBoxTargetFile.SuspendLayout();
             this.grBoxSourceFile.SuspendLayout();
             this.SuspendLayout();
@@ -75,7 +86,7 @@
             // 
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.statusStripButtonCancel,
+            this.statusStripBtnCancel,
             this.toolStripProgressBar1});
             this.statusStripMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStripMain.Location = new System.Drawing.Point(0, 533);
@@ -90,17 +101,18 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(109, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
-            // statusStripButtonCancel
+            // statusStripBtnCancel
             // 
-            this.statusStripButtonCancel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.statusStripButtonCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.statusStripButtonCancel.Image = ((System.Drawing.Image)(resources.GetObject("statusStripButtonCancel.Image")));
-            this.statusStripButtonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.statusStripButtonCancel.Name = "statusStripButtonCancel";
-            this.statusStripButtonCancel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statusStripButtonCancel.Size = new System.Drawing.Size(43, 20);
-            this.statusStripButtonCancel.Text = "Cancel";
-            this.statusStripButtonCancel.Visible = false;
+            this.statusStripBtnCancel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.statusStripBtnCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripBtnCancel.Image = ((System.Drawing.Image)(resources.GetObject("statusStripBtnCancel.Image")));
+            this.statusStripBtnCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.statusStripBtnCancel.Name = "statusStripBtnCancel";
+            this.statusStripBtnCancel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.statusStripBtnCancel.Size = new System.Drawing.Size(43, 20);
+            this.statusStripBtnCancel.Text = "Cancel";
+            this.statusStripBtnCancel.Visible = false;
+            this.statusStripBtnCancel.Click += new System.EventHandler(this.OnStatusStripBtnCancel_Click);
             // 
             // toolStripProgressBar1
             // 
@@ -170,8 +182,10 @@
             // 
             // pnlMain
             // 
+            this.pnlMain.Controls.Add(this.btnSaveMappings);
+            this.pnlMain.Controls.Add(this.btnMappingsLoad);
             this.pnlMain.Controls.Add(this.btnImport);
-            this.pnlMain.Controls.Add(this.dataGridView1);
+            this.pnlMain.Controls.Add(this.dgvColumnsMapping);
             this.pnlMain.Controls.Add(this.grBoxTargetFile);
             this.pnlMain.Controls.Add(this.chBoxTruncate);
             this.pnlMain.Controls.Add(this.grBoxSourceFile);
@@ -180,6 +194,28 @@
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(661, 508);
             this.pnlMain.TabIndex = 1;
+            // 
+            // btnSaveMappings
+            // 
+            this.btnSaveMappings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveMappings.Location = new System.Drawing.Point(358, 481);
+            this.btnSaveMappings.Name = "btnSaveMappings";
+            this.btnSaveMappings.Size = new System.Drawing.Size(100, 23);
+            this.btnSaveMappings.TabIndex = 25;
+            this.btnSaveMappings.Text = "Save mappings";
+            this.btnSaveMappings.UseVisualStyleBackColor = true;
+            this.btnSaveMappings.Click += new System.EventHandler(this.OnBtnSaveMappings_Click);
+            // 
+            // btnMappingsLoad
+            // 
+            this.btnMappingsLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMappingsLoad.Location = new System.Drawing.Point(464, 481);
+            this.btnMappingsLoad.Name = "btnMappingsLoad";
+            this.btnMappingsLoad.Size = new System.Drawing.Size(100, 23);
+            this.btnMappingsLoad.TabIndex = 24;
+            this.btnMappingsLoad.Text = "Load mappings";
+            this.btnMappingsLoad.UseVisualStyleBackColor = true;
+            this.btnMappingsLoad.Click += new System.EventHandler(this.OnBtnMappingsLoad_Click);
             // 
             // btnImport
             // 
@@ -190,29 +226,83 @@
             this.btnImport.TabIndex = 23;
             this.btnImport.Text = "Import";
             this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.OnBtnImport_Click);
             // 
-            // dataGridView1
+            // dgvColumnsMapping
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.dgvColumnsMapping.AllowUserToAddRows = false;
+            this.dgvColumnsMapping.AllowUserToDeleteRows = false;
+            this.dgvColumnsMapping.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 247);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(649, 230);
-            this.dataGridView1.TabIndex = 22;
+            this.dgvColumnsMapping.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvColumnsMapping.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvColumnsMapping.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameColumn,
+            this.dataTypeColumn,
+            this.lengthColumn,
+            this.linkedColumn,
+            this.isSelectedColumn,
+            this.indexColumn});
+            this.dgvColumnsMapping.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dgvColumnsMapping.Location = new System.Drawing.Point(6, 247);
+            this.dgvColumnsMapping.Name = "dgvColumnsMapping";
+            this.dgvColumnsMapping.Size = new System.Drawing.Size(649, 230);
+            this.dgvColumnsMapping.TabIndex = 22;
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameColumn.DataPropertyName = "Name";
+            this.nameColumn.HeaderText = "Column name";
+            this.nameColumn.Name = "nameColumn";
+            // 
+            // dataTypeColumn
+            // 
+            this.dataTypeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataTypeColumn.DataPropertyName = "DataType";
+            this.dataTypeColumn.HeaderText = "Data type";
+            this.dataTypeColumn.Name = "dataTypeColumn";
+            // 
+            // lengthColumn
+            // 
+            this.lengthColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.lengthColumn.DataPropertyName = "Length";
+            this.lengthColumn.HeaderText = "Length";
+            this.lengthColumn.Name = "lengthColumn";
+            // 
+            // linkedColumn
+            // 
+            this.linkedColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.linkedColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
+            this.linkedColumn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.linkedColumn.HeaderText = "Source columns";
+            this.linkedColumn.Name = "linkedColumn";
+            // 
+            // isSelectedColumn
+            // 
+            this.isSelectedColumn.DataPropertyName = "IsSelected";
+            this.isSelectedColumn.HeaderText = "Selected";
+            this.isSelectedColumn.Name = "isSelectedColumn";
+            this.isSelectedColumn.Visible = false;
+            // 
+            // indexColumn
+            // 
+            this.indexColumn.DataPropertyName = "Index";
+            this.indexColumn.HeaderText = "Index";
+            this.indexColumn.Name = "indexColumn";
+            this.indexColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.indexColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.indexColumn.Visible = false;
             // 
             // grBoxTargetFile
             // 
             this.grBoxTargetFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.grBoxTargetFile.Controls.Add(this.btnCreateTable);
             this.grBoxTargetFile.Controls.Add(this.cmBoxTargetTablesList);
             this.grBoxTargetFile.Controls.Add(this.lblTargetTable);
-            this.grBoxTargetFile.Controls.Add(this.button1);
+            this.grBoxTargetFile.Controls.Add(this.btnLoadTargetTablesList);
             this.grBoxTargetFile.Controls.Add(this.btnShowTargetData);
             this.grBoxTargetFile.Controls.Add(this.btnTargetFileSettings);
             this.grBoxTargetFile.Controls.Add(this.cmBoxTargetFileTypes);
@@ -224,6 +314,16 @@
             this.grBoxTargetFile.TabStop = false;
             this.grBoxTargetFile.Text = "Target file :";
             // 
+            // btnCreateTable
+            // 
+            this.btnCreateTable.Location = new System.Drawing.Point(268, 192);
+            this.btnCreateTable.Name = "btnCreateTable";
+            this.btnCreateTable.Size = new System.Drawing.Size(80, 23);
+            this.btnCreateTable.TabIndex = 21;
+            this.btnCreateTable.Text = "Create table";
+            this.btnCreateTable.UseVisualStyleBackColor = true;
+            this.btnCreateTable.Click += new System.EventHandler(this.OnBtnCreateTable_Click);
+            // 
             // cmBoxTargetTablesList
             // 
             this.cmBoxTargetTablesList.FormattingEnabled = true;
@@ -231,6 +331,7 @@
             this.cmBoxTargetTablesList.Name = "cmBoxTargetTablesList";
             this.cmBoxTargetTablesList.Size = new System.Drawing.Size(150, 21);
             this.cmBoxTargetTablesList.TabIndex = 19;
+            this.cmBoxTargetTablesList.SelectionChangeCommitted += new System.EventHandler(this.OnCmBoxTargetTablesList_SelectionChangeCommitted);
             // 
             // lblTargetTable
             // 
@@ -241,14 +342,15 @@
             this.lblTargetTable.TabIndex = 18;
             this.lblTargetTable.Text = "Target table : ";
             // 
-            // button1
+            // btnLoadTargetTablesList
             // 
-            this.button1.Location = new System.Drawing.Point(111, 84);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(145, 23);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Load target table list";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnLoadTargetTablesList.Location = new System.Drawing.Point(111, 84);
+            this.btnLoadTargetTablesList.Name = "btnLoadTargetTablesList";
+            this.btnLoadTargetTablesList.Size = new System.Drawing.Size(145, 23);
+            this.btnLoadTargetTablesList.TabIndex = 17;
+            this.btnLoadTargetTablesList.Text = "Load target table list";
+            this.btnLoadTargetTablesList.UseVisualStyleBackColor = true;
+            this.btnLoadTargetTablesList.Click += new System.EventHandler(this.OnBtnLoadTargetTablesList_Click);
             // 
             // btnShowTargetData
             // 
@@ -258,6 +360,7 @@
             this.btnShowTargetData.TabIndex = 20;
             this.btnShowTargetData.Text = "Show data";
             this.btnShowTargetData.UseVisualStyleBackColor = true;
+            this.btnShowTargetData.Click += new System.EventHandler(this.OnBtnShowTargetData_Click);
             // 
             // btnTargetFileSettings
             // 
@@ -267,6 +370,7 @@
             this.btnTargetFileSettings.TabIndex = 16;
             this.btnTargetFileSettings.Text = "Settings";
             this.btnTargetFileSettings.UseVisualStyleBackColor = true;
+            this.btnTargetFileSettings.Click += new System.EventHandler(this.OnBtnTargetFileSettings_Click);
             // 
             // cmBoxTargetFileTypes
             // 
@@ -322,6 +426,7 @@
             this.cmBoxSourceTablesList.Name = "cmBoxSourceTablesList";
             this.cmBoxSourceTablesList.Size = new System.Drawing.Size(150, 21);
             this.cmBoxSourceTablesList.TabIndex = 11;
+            this.cmBoxSourceTablesList.SelectionChangeCommitted += new System.EventHandler(this.OnCmBoxSourceTablesList_SelectionChangeCommitted);
             // 
             // lblSourceTable
             // 
@@ -340,6 +445,7 @@
             this.btnShowSourceData.TabIndex = 12;
             this.btnShowSourceData.Text = "Show data";
             this.btnShowSourceData.UseVisualStyleBackColor = true;
+            this.btnShowSourceData.Click += new System.EventHandler(this.OnBtnShowSourceData_Click);
             // 
             // lblExtendedProperty
             // 
@@ -365,6 +471,7 @@
             this.cmBoxSourceFileTypes.Name = "cmBoxSourceFileTypes";
             this.cmBoxSourceFileTypes.Size = new System.Drawing.Size(150, 21);
             this.cmBoxSourceFileTypes.TabIndex = 4;
+            this.cmBoxSourceFileTypes.SelectionChangeCommitted += new System.EventHandler(this.OnCmBoxSourceFileTypes_SelectionChangeCommitted);
             // 
             // lblSourceFileTypes
             // 
@@ -399,6 +506,12 @@
             this.btnBrowse.TabIndex = 7;
             this.btnBrowse.Text = "Browse...";
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.OnBtnBrowse_Click);
+            // 
+            // ofdFileBrowse
+            // 
+            this.ofdFileBrowse.FileName = "openFileDialog1";
+            this.ofdFileBrowse.FileOk += new System.ComponentModel.CancelEventHandler(this.OnOfdSourceFileBrowse_FileOk);
             // 
             // FormMain
             // 
@@ -410,13 +523,14 @@
             this.Controls.Add(this.statusStripMain);
             this.Name = "FormMain";
             this.Text = "FormMain";
+            this.Load += new System.EventHandler(this.OnFormMain_Load);
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
             this.pnlMain.ResumeLayout(false);
             this.pnlMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvColumnsMapping)).EndInit();
             this.grBoxTargetFile.ResumeLayout(false);
             this.grBoxTargetFile.PerformLayout();
             this.grBoxSourceFile.ResumeLayout(false);
@@ -452,15 +566,26 @@
         private System.Windows.Forms.Label lblSourceTable;
         private System.Windows.Forms.ComboBox cmBoxTargetTablesList;
         private System.Windows.Forms.Label lblTargetTable;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnLoadTargetTablesList;
         private System.Windows.Forms.Button btnShowTargetData;
         private System.Windows.Forms.Button btnTargetFileSettings;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton statusStripButtonCancel;
+        private System.Windows.Forms.ToolStripButton statusStripBtnCancel;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvColumnsMapping;
+        private System.Windows.Forms.OpenFileDialog ofdFileBrowse;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataTypeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lengthColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn linkedColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isSelectedColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn indexColumn;
+        private System.Windows.Forms.Button btnCreateTable;
+        private System.Windows.Forms.Button btnMappingsLoad;
+        private System.Windows.Forms.Button btnSaveMappings;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDataViewer));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripBtnClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -41,7 +41,7 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
+            this.toolStripBtnClose,
             this.toolStripStatusLabel1});
             this.statusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStrip1.Location = new System.Drawing.Point(0, 451);
@@ -50,15 +50,16 @@
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripButton1
+            // toolStripBtnClose
             // 
-            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(37, 20);
-            this.toolStripButton1.Text = "Close";
+            this.toolStripBtnClose.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripBtnClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnClose.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnClose.Image")));
+            this.toolStripBtnClose.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnClose.Name = "toolStripBtnClose";
+            this.toolStripBtnClose.Size = new System.Drawing.Size(37, 20);
+            this.toolStripBtnClose.Text = "Close";
+            this.toolStripBtnClose.Click += new System.EventHandler(this.OnToolStripBtnClose_Click);
             // 
             // toolStripStatusLabel1
             // 
@@ -68,7 +69,8 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Location = new System.Drawing.Point(46, 215);
             this.progressBar1.MarqueeAnimationSpeed = 75;
             this.progressBar1.Name = "progressBar1";
@@ -100,7 +102,8 @@
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormDataViewer";
             this.Text = "FormDataViewer";
-            this.SizeChanged += new System.EventHandler(this.EventHandler_FormDataViewer_SizeChanged);
+            this.Load += new System.EventHandler(this.OnFormDataViewer_Load);
+            this.SizeChanged += new System.EventHandler(this.OnFormDataViewer_SizeChanged);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -112,7 +115,7 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripBtnClose;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.DataGridView dataGridView1;
