@@ -71,7 +71,7 @@
             this.rbSqlTrust.TabStop = true;
             this.rbSqlTrust.Text = "Использовать проверку подлинности SQL Server";
             this.rbSqlTrust.UseVisualStyleBackColor = true;
-            this.rbSqlTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
+            this.rbSqlTrust.CheckedChanged += new System.EventHandler(this.OnTrust_CheckedChanged);
             // 
             // rbWindowsTrust
             // 
@@ -84,7 +84,7 @@
             this.rbWindowsTrust.TabStop = true;
             this.rbWindowsTrust.Text = "Использовать проверку подлинности Windows";
             this.rbWindowsTrust.UseVisualStyleBackColor = true;
-            this.rbWindowsTrust.CheckedChanged += new System.EventHandler(this.EventHandler_Trust_CheckedChanged);
+            this.rbWindowsTrust.CheckedChanged += new System.EventHandler(this.OnTrust_CheckedChanged);
             // 
             // pnlSqlTrust
             // 
