@@ -31,9 +31,9 @@ namespace Importer.Engine.Models.Importers
 
             string commandText = string.Format("select * from [{0}] ", "JNVLP");
 
-            _excelConnection = CommonData.CreateDbConnection("System.Data.OleDb", filepath);
+            _excelConnection = DataAccess.CreateDbConnection("System.Data.OleDb", filepath);
 
-            using (DbDataReader reader = CommonData.CreateCommand(commandText, _excelConnection).ExecuteReader())
+            using (DbDataReader reader = DataAccess.CreateCommand(commandText, _excelConnection).ExecuteReader())
             {
                 reader.GetValue(0);
 

@@ -66,14 +66,14 @@ namespace Importer.Engine.Models.Importers
             _rowsTotal = sourceTable.RowsCount;
             string commandText = string.Empty;
             
-            using (DbConnection sourceConnection = CommonData.CreateDbConnection(sourceTable.ProviderName, sourceTable.ConnectionString))
+            using (DbConnection sourceConnection = DataAccess.CreateDbConnection(sourceTable.ProviderName, sourceTable.ConnectionString))
             {
                 commandText = string.Format("SELECT * FROM [{0}]", sourceTable.Name);
 
                 sourceConnection.Open();
-                using (DbDataReader reader = CommonData.CreateCommand(commandText, sourceConnection).ExecuteReader())
+                using (DbDataReader reader = DataAccess.CreateCommand(commandText, sourceConnection).ExecuteReader())
                 {
-                    using (DbConnection targetConnection = CommonData.CreateDbConnection(targetTable.ProviderName, targetTable.ConnectionString))
+                    using (DbConnection targetConnection = DataAccess.CreateDbConnection(targetTable.ProviderName, targetTable.ConnectionString))
                     {
                         targetConnection.Open();
 
@@ -92,7 +92,7 @@ namespace Importer.Engine.Models.Importers
                             if (truncate)
                             {
                                 commandText = string.Format("TRUNCATE TABLE dbo.[{0}]", targetTable.Name);
-                                CommonData.CreateCommand(commandText, targetConnection).ExecuteNonQuery();
+                                DataAccess.CreateCommand(commandText, targetConnection).ExecuteNonQuery();
                             }
 
                             bulkCopy.WriteToServer(reader);

@@ -63,7 +63,7 @@ namespace Importer.Engine.Models
         public void InitializeTables(bool isSource)
         {
             // create OleDb connection
-            using (DbConnection connection = CommonData.CreateDbConnection(PROVIDER_NAME, _connectionString))
+            using (DbConnection connection = DataAccess.CreateDbConnection(PROVIDER_NAME, _connectionString))
             {
                 // create link to empty List<SourceTable>
                 _tableList = new List<Table>();

@@ -47,7 +47,7 @@ namespace Importer.Engine.Models
             try
             {
                 // trying to create connection
-                using (var connection = CommonData.CreateDbConnection(PROVIDER_NAME, _connectionString))
+                using (var connection = DataAccess.CreateDbConnection(PROVIDER_NAME, _connectionString))
                 {
                     // trying to open connection
                     connection.Open();
@@ -68,7 +68,7 @@ namespace Importer.Engine.Models
         public void InitializeTables(bool isSource)
         {
             // create OleDbConnection 
-            using (DbConnection connection = CommonData.CreateDbConnection(PROVIDER_NAME, _connectionString))
+            using (DbConnection connection = DataAccess.CreateDbConnection(PROVIDER_NAME, _connectionString))
             {
                 // initialize base SourceTable collection
                 // create link to empty List<SourceTable>

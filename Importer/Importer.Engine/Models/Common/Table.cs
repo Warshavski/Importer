@@ -228,10 +228,10 @@ namespace Importer.Engine.Models
             string commandText = string.Format("SELECT COUNT(*) FROM [{0}]", tableName);
             
             // create db connection
-            using (DbConnection dbConnection = CommonData.CreateDbConnection(_providerName, _connectionString))
+            using (DbConnection dbConnection = DataAccess.CreateDbConnection(_providerName, _connectionString))
             {
                 // create command 
-                using (DbCommand command = CommonData.CreateCommand(commandText, dbConnection))
+                using (DbCommand command = DataAccess.CreateCommand(commandText, dbConnection))
                 {
                     // open db connectiom
                     dbConnection.Open();

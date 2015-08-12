@@ -28,7 +28,7 @@ namespace Importer.Engine.Presenters
             {
                 try
                 {
-                    e.Result = CommonData.GetData(_selectedTable);
+                    e.Result = DataAccess.GetData(_selectedTable);
                 }
                 catch (Exception ex)
                 {
