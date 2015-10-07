@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Importer.Engine.Models
+namespace Importer.Engine.Test.Common
 {
     /// <summary>
     /// class for extended properties
@@ -16,7 +16,7 @@ namespace Importer.Engine.Models
         public object Value { get { return _value; } }
 
         // default constructor
-        public PropertyInfo(string displayName, object value)
+        internal PropertyInfo(string displayName, object value)
         {
             _displayName = displayName;
             _value = value;

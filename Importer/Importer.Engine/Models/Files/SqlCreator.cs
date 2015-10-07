@@ -8,12 +8,12 @@ namespace Importer.Engine.Models
     /* TODO :
      *   1. Create properties template
      */
-    internal class SqlCreator : ICreator
+    public class SqlCreator : ICreator
     {
         /// <summary>
         /// default constructor
         /// </summary>
-        internal SqlCreator()
+        public SqlCreator()
         { 
             
         }

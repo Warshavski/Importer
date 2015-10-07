@@ -8,29 +8,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Importer.Engine.Properties {
-    
-    
+namespace Importer.Engine.Properties
+{
+
+
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "9.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default 
+
+        public static Settings Default
         {
-            get 
+            get
             {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
-        public string Server 
+        public string Server
         {
-            get 
+            get
             {
                 return ((string)(this["Server"]));
             }
@@ -39,13 +41,13 @@ namespace Importer.Engine.Properties {
                 this["Server"] = value;
             }
         }
-        
+
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("rls")]
-        public string Catalog 
+        public string Catalog
         {
-            get 
+            get
             {
                 return ((string)(this["Catalog"]));
             }
@@ -54,13 +56,13 @@ namespace Importer.Engine.Properties {
                 this["Catalog"] = value;
             }
         }
-        
+
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string User 
+        public string User
         {
-            get 
+            get
             {
                 return ((string)(this["User"]));
             }
@@ -69,13 +71,13 @@ namespace Importer.Engine.Properties {
                 this["User"] = value;
             }
         }
-        
+
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Pass 
+        public string Pass
         {
-            get 
+            get
             {
                 return ((string)(this["Pass"]));
             }
@@ -84,13 +86,13 @@ namespace Importer.Engine.Properties {
                 this["Pass"] = value;
             }
         }
-        
+
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WIS 
+        public bool WIS
         {
-            get 
+            get
             {
                 return ((bool)(this["WIS"]));
             }

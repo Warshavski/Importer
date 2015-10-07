@@ -7,7 +7,7 @@ namespace Importer.Engine.Models
     /// Create connection
     /// Create command
     /// </summary>
-    internal static class DataAccess
+    public static class DataAccess
     {
         public static DbConnection CreateDbConnection(string providerName, string connectionString)
         {

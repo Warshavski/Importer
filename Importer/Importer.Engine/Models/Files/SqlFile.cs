@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace Importer.Engine.Models
 {
-    internal class SqlFile : IFile
+    public class SqlFile : IFile
     {
         private const string PROVIDER_NAME = "System.Data.SqlClient";
 
@@ -13,7 +13,7 @@ namespace Importer.Engine.Models
         /// </summary>
         /// <param name="filePath">Data source and catalog name (Data Source={source string}; Initial Catalog={catalog name};)</param>
         /// <param name="property">Extended property (windows or server security)</param>
-        internal SqlFile(string dataSource, PropertyInfo property)
+        public SqlFile(string dataSource, PropertyInfo property)
         {
             /* think how to use ConnectionStringBuilder 
              * (m.b. create some properties in config file)
@@ -26,7 +26,7 @@ namespace Importer.Engine.Models
         }
 
         // 
-        internal SqlFile(string connectionString)
+        public SqlFile(string connectionString)
         {
             _connectionString = connectionString;
             _tableList = null;

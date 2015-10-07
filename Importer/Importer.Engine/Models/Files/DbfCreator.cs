@@ -1,12 +1,12 @@
 ﻿
 namespace Importer.Engine.Models
 {
-    internal class DbfCreator : ICreator
+    public class DbfCreator : ICreator
     {
         /// <summary>
         /// Default contructor
         /// </summary>
-        internal DbfCreator()
+        public DbfCreator()
         { 
         
         }

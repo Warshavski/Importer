@@ -149,7 +149,7 @@ namespace Importer.Engine.Models
         /// <param name="connection">the connection which we get from Schema</param>
         /// <param name="providetName">name of data provider</param>
         /// <param name="isSourceTable">is table in source file</param>
-        internal Table(string tableName, DbConnection connection, string providerName, bool isSourceTable)
+        public Table(string tableName, DbConnection connection, string providerName, bool isSourceTable)
         {
             // initialize class data fields
             _tableName = tableName;
@@ -160,7 +160,7 @@ namespace Importer.Engine.Models
             InitializeColumns(connection);
         }
 
-        internal Table(string tableName)
+        public Table(string tableName)
         {
             _tableName = tableName;
         }

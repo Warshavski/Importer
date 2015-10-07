@@ -5,12 +5,12 @@ using System.Data.OleDb;
 
 namespace Importer.Engine.Models
 {
-    internal class DbfFile : IFile
+    public class DbfFile : IFile
     {
         // name of data provider
         private const string PROVIDER_NAME = "System.Data.OleDb";
 
-        internal DbfFile(string dataSource, PropertyInfo property)
+        public DbfFile(string dataSource, PropertyInfo property)
         {
             /* *.dbf connection string
              *  @"Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; User ID=Admin; Password=; Extended Properties={1};"

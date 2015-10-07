@@ -119,6 +119,10 @@
       <Project>{C4B12F83-25AC-4C4B-934E-E1EAC0B3EAA6}</Project>
       <Name>Importer.Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Importer.Presentation\Importer.Presentation.csproj">
+      <Project>{9C93B08D-603E-4266-9ED7-E1F4AC934C21}</Project>
+      <Name>Importer.Presentation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

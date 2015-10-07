@@ -67,7 +67,7 @@ namespace Importer.Engine.Models
         #region Constructors
 
         // default constructor (for testing)
-        internal Column()
+        public Column()
         {
             _index = -1;
             _columnName = EMPTY_DATA;
@@ -77,7 +77,7 @@ namespace Importer.Engine.Models
         }
 
         // main constructor     
-        internal Column(string columnName, int index)
+        public Column(string columnName, int index)
         {
             _index = index;
             _columnName = columnName;
@@ -87,7 +87,7 @@ namespace Importer.Engine.Models
         }
 
         // release constructor
-        internal Column(string columnName, int index, string dataType, int length)
+        public Column(string columnName, int index, string dataType, int length)
         {
             _columnName = columnName;
             _index = index;

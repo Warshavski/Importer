@@ -5,11 +5,11 @@ using System.Data.OleDb;
 
 namespace Importer.Engine.Models
 {
-    internal class ExcelFile : IFile
+    public class ExcelFile : IFile
     {
         private const string PROVIDER_NAME = "System.Data.OleDb";
 
-        internal ExcelFile(string dataSource, PropertyInfo property)
+        public ExcelFile(string dataSource, PropertyInfo property)
         {
             /* excel file connection string
              * @"Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties={1}; 

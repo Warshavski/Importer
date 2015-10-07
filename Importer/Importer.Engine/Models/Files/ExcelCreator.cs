@@ -1,12 +1,12 @@
 ﻿
 namespace Importer.Engine.Models
 {
-    internal class ExcelCreator : ICreator
+    public class ExcelCreator : ICreator
     {
         /// <summary>
         /// Default construnctor
         /// </summary>
-        internal ExcelCreator()
+        public ExcelCreator()
         { 
         
         }
