@@ -74,6 +74,7 @@
     <Compile Include="Test\Files\File.cs" />
     <Compile Include="Test\Files\FileFactory.cs" />
     <Compile Include="Test\Common\PropertyInfo.cs" />
+    <Compile Include="Test\Files\IFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\readme.txt" />

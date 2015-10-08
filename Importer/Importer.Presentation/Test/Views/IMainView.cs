@@ -16,6 +16,7 @@ namespace Importer.Presentation.Test.Views
         event Action DataLoad;
         
         Dictionary<string, string> FilesList { get; set; }
-        //File TestFile { get; set; }
+        IFile SourceFile { get; set; }
+        IFile TargetFile { get; set; }
     }
 }

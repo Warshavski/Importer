@@ -8,7 +8,7 @@ using System.Data;
 
 namespace Importer.Engine.Test.Files
 {
-    public class File
+    public abstract class File : IFile
     {
         private string _connectionString;
         public string ConnectionString
@@ -34,16 +34,22 @@ namespace Importer.Engine.Test.Files
             get { return _isSource; }
         }
 
-        internal File(string connectionString, string providerName, bool isSource)
+        public abstract FileBrowse BrowseType { get; }
+        public abstract string Name { get; }
+
+        protected File(string connectionString, string providerName, 
+            bool isSource)
         {
             _connectionString = connectionString;
             _providerName = providerName;
             _isSource = isSource;
+
+            InitializeTableList();
         }
 
         // not a good idea, maybe better to pass List<Table> in constructor
         // TODO : rework (too ugly)
-        public void InitializeTableList()
+        private void InitializeTableList()
         {
             // initialize link to empty List<SourceTable>
             _tableList = new List<Table>();
@@ -73,7 +79,7 @@ namespace Importer.Engine.Test.Files
                     foreach (DataRow columnsSchemaRow in dtColumnsSchema.Rows)
                     {
                         string columnName = (string)columnsSchemaRow["COLUMN_NAME"];
-                        string columnType = (string)columnsSchemaRow["DATA_TYPE"];
+                        string columnType = columnsSchemaRow["DATA_TYPE"].ToString();
                         int columnLength = -1;
                         int.TryParse(columnsSchemaRow["CHARACTER_MAXIMUM_LENGTH"].ToString(), out columnLength);
                         columnList.Add(new Column(columnName, columnType, columnLength));

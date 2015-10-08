@@ -23,13 +23,13 @@ namespace Importer.Engine.Test.Files
         {
             _dbProviders = new Dictionary<string, string>()
             {
-                {"Excel", "System.Data.OleDb"},
-                {"Dbf", "System.Data.OleDb"},
-                {"Sql", "System.Data.SqlClient"}
+                {"Excel",   "System.Data.OleDb"},
+                {"Dbf",     "System.Data.OleDb"},
+                {"Sql",     "System.Data.SqlClient"}
             };
         }
 
-        public File Create(string connectionString, string providerName, bool isSource)
+        public IFile Create(string connectionString, string providerName, bool isSource)
         {
             return new File(connectionString, providerName, isSource);
         }
