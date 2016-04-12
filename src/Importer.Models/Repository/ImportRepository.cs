@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
+using Escyug.Importer.Common;
 using Escyug.Importer.Data.Processors;
 using Escyug.Importer.Models.Repository.Factory;
 
@@ -32,6 +34,15 @@ namespace Escyug.Importer.Models.Repository
             using (var sourceDataReader = _readerProcessor.CreateReader(sourceTableName, sourceConnetionString))
             {
                 _importProcessor.Import(sourceDataReader, targetConnectionString, targetTableName);
+            }
+        }
+
+        public void Import(string sourceConnetionString, string sourceTableName,
+            string targetConnectionString, string targetTableName, IEnumerable<ColumnsMapping> columnsMapping)
+        {
+            using (var sourceDataReader = _readerProcessor.CreateReader(sourceTableName, sourceConnetionString))
+            {
+                _importProcessor.Import(sourceDataReader, targetConnectionString, targetTableName, columnsMapping);
             }
         }
     }

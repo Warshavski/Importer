@@ -45,32 +45,49 @@ namespace Escyug.Importer.UI.ConsoleApp
             var excelDataInstance = oleDbDataService.CreateInstance(connectionStrings[5]);
 
             var sqlImportService = new SqlDataImportService(
-                Constants.FileType.SQL, 
+                Constants.FileType.OLEDB, 
                 (rowsCopied) => { Console.WriteLine("    # Rows copied : " + rowsCopied); });
 
             var sqlDataService = new SqlDataService();
             var sqlDataInstanceSource = sqlDataService.CreateInstance(connectionStrings[0]);
-            var sqlDataInstanceTarget = sqlDataService.CreateInstance(connectionStrings[4]);
+            var sqlDataInstanceTarget = sqlDataService.CreateInstance(connectionStrings[3]);
 
             Console.WriteLine("\tdone.");
 
             Console.Write("Setup source instance...");
 
-            foreach (var table in sqlDataInstanceSource.Tables)
+            foreach (var table in excelDataInstance.Tables)
             { 
-                if (table.Name == "test1")
+                if (table.Name == "wat$")
                 {
                     table.MarkForImport();
                     break;
                 }
             }
 
+            var mappingsFilePath = @"C:\test\mappings_jv.txt";
+
+            var columnsMappings = new List<ColumnsMapping>();
+            using (var columnsMappingReader = new StreamReader(mappingsFilePath, Encoding.UTF8))
+            {
+                while(!columnsMappingReader.EndOfStream)
+                {
+                    var mappingsString = columnsMappingReader.ReadLine();
+                    
+                    var mappings = mappingsString.Split('-');
+
+                    columnsMappings.Add(new ColumnsMapping(mappings[0], mappings[1]));
+                }
+                    
+            }
+            
+
             Console.WriteLine("\tdone.");
 
             Console.Write("Setup target instance...");
             foreach (var table in sqlDataInstanceTarget.Tables)
             {
-                if (table.Name == "testImport")
+                if (table.Name == "VITAL")
                 {
                     table.MarkForImport();
                     break;
@@ -82,7 +99,7 @@ namespace Escyug.Importer.UI.ConsoleApp
             Console.WriteLine("Import in progress...");
             Console.WriteLine("....");
 
-            sqlImportService.Import(sqlDataInstanceSource, sqlDataInstanceTarget);
+            sqlImportService.Import(excelDataInstance, sqlDataInstanceTarget, columnsMappings);
             
             watch.Stop();
             

@@ -37,6 +37,16 @@ namespace Escyug.Importer.Models.Services
             return tableName;
         }
 
+        public void Import(IDataInstance sourceInstance, IDataInstance targetInstance, 
+            IEnumerable<ColumnsMapping> columnMappings)
+        {
+            var sourceTableName = GetTableNameForImport(sourceInstance.Tables);
+            var targetTableName = GetTableNameForImport(targetInstance.Tables);
+
+            _importRepo.Import(sourceInstance.ConnectionString, sourceTableName,
+                targetInstance.ConnectionString, targetTableName, columnMappings);
+        }
+
         public void Import(IDataInstance sourceInstance, IDataInstance targetInstance)
         {
 
@@ -57,7 +67,6 @@ namespace Escyug.Importer.Models.Services
 
             _importRepo.Import(sourceInstance.ConnectionString, sourceTableName,
                 targetInstance.ConnectionString, targetTableName);
-
         }
     }
 }

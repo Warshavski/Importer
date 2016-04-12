@@ -47,7 +47,12 @@
     <Compile Include="Processors\IMetaDataProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Importer.Common\Importer.Common.csproj">
+      <Project>{e5349102-55f3-4fbc-9236-81903ae9629c}</Project>
+      <Name>Importer.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
