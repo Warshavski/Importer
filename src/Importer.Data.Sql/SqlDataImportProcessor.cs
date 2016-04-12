@@ -8,16 +8,11 @@ namespace Escyug.Importer.Data.Sql
 {
     public class SqlDataImportProcessor : IDataImportProcessor
     {
-        private Action<long> _notifyAction;
+        public event Action<long> RowsCopiedNotify;
 
         public SqlDataImportProcessor()
         {
-            _notifyAction = null;
-        }
-
-        public SqlDataImportProcessor(Action<long> notifyAction)
-        {
-            _notifyAction = notifyAction;
+            
         }
 
         private void SetupBulkCopyInstance(SqlBulkCopy bulkCopyInstance, string tableName)
@@ -26,7 +21,7 @@ namespace Escyug.Importer.Data.Sql
 
             bulkCopyInstance.BatchSize = 5000;
             bulkCopyInstance.NotifyAfter = 1000;
-            //bulkCopyInstance.SqlRowsCopied += (sender, e) => _notifyAction(e.RowsCopied);
+            bulkCopyInstance.SqlRowsCopied += (sender, e) => { if (RowsCopiedNotify != null) RowsCopiedNotify(e.RowsCopied); };
         }
 
         public void Import(IDataReader sourceDataReader, string targetConnectionString, string targetTableName)
@@ -38,7 +33,6 @@ namespace Escyug.Importer.Data.Sql
                     SetupBulkCopyInstance(bulkCopy, targetTableName);
                     bulkCopy.WriteToServer(sourceDataReader);
                 }
-                    
             }
             catch (SqlException ex)
             {

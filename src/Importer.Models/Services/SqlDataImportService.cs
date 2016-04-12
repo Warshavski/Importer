@@ -17,6 +17,11 @@ namespace Escyug.Importer.Models.Services
             _importRepo = new ImportRepository(sourceFileType, TARGET_FILE_TYPE);
         }
 
+        public SqlDataImportService(string sourceFileType, Action<long> rowsCopiedNotify)
+        {
+            _importRepo = new ImportRepository(sourceFileType, TARGET_FILE_TYPE, rowsCopiedNotify);
+        }
+
         private string GetTableNameForImport(IEnumerable<Table> tablesList)
         {
             var tableName = string.Empty;
@@ -34,6 +39,8 @@ namespace Escyug.Importer.Models.Services
 
         public void Import(IDataInstance sourceInstance, IDataInstance targetInstance)
         {
+
+            // parallel just for test
             var sourceTableName = string.Empty;
             Parallel.ForEach(sourceInstance.Tables, (table) => 
                 { 

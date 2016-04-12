@@ -1,4 +1,6 @@
-﻿using Escyug.Importer.Data.Processors;
+﻿using System;
+
+using Escyug.Importer.Data.Processors;
 using Escyug.Importer.Models.Repository.Factory;
 
 namespace Escyug.Importer.Models.Repository
@@ -13,6 +15,14 @@ namespace Escyug.Importer.Models.Repository
             // create by factory method
             // importProcessor, readerProcessor
             _importProcessor = DataImportFactory.Create(targetFileType);
+            _readerProcessor = DataReaderFactory.Create(sourceFileType);
+        }
+
+        public ImportRepository(string sourceFileType, string targetFileType, Action<long> rowsCopiedNotify)
+        {
+            // create by factory method
+            // importProcessor, readerProcessor
+            _importProcessor = DataImportFactory.Create(targetFileType, rowsCopiedNotify);
             _readerProcessor = DataReaderFactory.Create(sourceFileType);
         }
 

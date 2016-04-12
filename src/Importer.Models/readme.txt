@@ -5,3 +5,4 @@
 	4. ?? Repository. Move to separate project or leave here (in models) ??. 
 	5. ?? Services. Move to separate project or leave here (in models) ??. 
 	6. Add mark for import function for Tables/Columns.
+	7. Add event on rows copied

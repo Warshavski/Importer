@@ -30,12 +30,12 @@ namespace Escyug.Importer.UI.ConsoleApp
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            Console.WriteLine("Initializing instances...");
+            Console.Write("Initializing instances...");
 
             var connectionStrings = new List<string>();
             
             var connectionStringsFilePath = @"C:\test\connectionStrings.txt";
-            using (var reader = new StreamReader(connectionStringsFilePath))
+            using (var reader = new StreamReader(connectionStringsFilePath, Encoding.UTF8))
             {
                 while (!reader.EndOfStream)
                     connectionStrings.Add(reader.ReadLine());
@@ -44,13 +44,17 @@ namespace Escyug.Importer.UI.ConsoleApp
             var oleDbDataService = new OleDbDataService();
             var excelDataInstance = oleDbDataService.CreateInstance(connectionStrings[5]);
 
-            var sqlImportService = new SqlDataImportService(Constants.FileType.SQL);
+            var sqlImportService = new SqlDataImportService(
+                Constants.FileType.SQL, 
+                (rowsCopied) => { Console.WriteLine("    # Rows copied : " + rowsCopied); });
 
             var sqlDataService = new SqlDataService();
             var sqlDataInstanceSource = sqlDataService.CreateInstance(connectionStrings[0]);
             var sqlDataInstanceTarget = sqlDataService.CreateInstance(connectionStrings[4]);
 
-            Console.WriteLine("Setup source instance...");
+            Console.WriteLine("\tdone.");
+
+            Console.Write("Setup source instance...");
 
             foreach (var table in sqlDataInstanceSource.Tables)
             { 
@@ -61,7 +65,9 @@ namespace Escyug.Importer.UI.ConsoleApp
                 }
             }
 
-            Console.WriteLine("Setup target instance...");
+            Console.WriteLine("\tdone.");
+
+            Console.Write("Setup target instance...");
             foreach (var table in sqlDataInstanceTarget.Tables)
             {
                 if (table.Name == "testImport")
@@ -71,10 +77,13 @@ namespace Escyug.Importer.UI.ConsoleApp
                 }
             }
 
+            Console.WriteLine("\tdone.");
+
             Console.WriteLine("Import in progress...");
+            Console.WriteLine("....");
 
             sqlImportService.Import(sqlDataInstanceSource, sqlDataInstanceTarget);
-
+            
             watch.Stop();
             
             var elapsed = watch.ElapsedMilliseconds;
