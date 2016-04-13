@@ -18,9 +18,6 @@ using Escyug.Importer.UI.ConsoleApp.Prototype.Old;
 */
 
 using Escyug.Importer.Common;
-using Escyug.Importer.Models;
-using Escyug.Importer.Models.Services;
-
 
 namespace Escyug.Importer.UI.ConsoleApp
 {
@@ -32,41 +29,16 @@ namespace Escyug.Importer.UI.ConsoleApp
 
             Console.Write("Initializing instances...");
 
-            var connectionStrings = new List<string>();
-            
             var connectionStringsFilePath = @"C:\test\connectionStrings.txt";
+            var connectionStrings = new List<string>();
             using (var reader = new StreamReader(connectionStringsFilePath, Encoding.UTF8))
             {
                 while (!reader.EndOfStream)
                     connectionStrings.Add(reader.ReadLine());
             }
 
-            var oleDbDataService = new OleDbDataService();
-            var excelDataInstance = oleDbDataService.CreateInstance(connectionStrings[5]);
-
-            var sqlImportService = new SqlDataImportService(
-                Constants.FileType.OLEDB, 
-                (rowsCopied) => { Console.WriteLine("    # Rows copied : " + rowsCopied); });
-
-            var sqlDataService = new SqlDataService();
-            var sqlDataInstanceSource = sqlDataService.CreateInstance(connectionStrings[0]);
-            var sqlDataInstanceTarget = sqlDataService.CreateInstance(connectionStrings[4]);
-
-            Console.WriteLine("\tdone.");
-
-            Console.Write("Setup source instance...");
-
-            foreach (var table in excelDataInstance.Tables)
-            { 
-                if (table.Name == "wat$")
-                {
-                    table.MarkForImport();
-                    break;
-                }
-            }
-
+            
             var mappingsFilePath = @"C:\test\mappings_jv.txt";
-
             var columnsMappings = new List<ColumnsMapping>();
             using (var columnsMappingReader = new StreamReader(mappingsFilePath, Encoding.UTF8))
             {
@@ -80,26 +52,6 @@ namespace Escyug.Importer.UI.ConsoleApp
                 }
                     
             }
-            
-
-            Console.WriteLine("\tdone.");
-
-            Console.Write("Setup target instance...");
-            foreach (var table in sqlDataInstanceTarget.Tables)
-            {
-                if (table.Name == "VITAL")
-                {
-                    table.MarkForImport();
-                    break;
-                }
-            }
-
-            Console.WriteLine("\tdone.");
-
-            Console.WriteLine("Import in progress...");
-            Console.WriteLine("....");
-
-            sqlImportService.Import(excelDataInstance, sqlDataInstanceTarget, columnsMappings);
             
             watch.Stop();
             
