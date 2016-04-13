@@ -15,5 +15,13 @@
             public const string SQL = "sql";
             public const string XML = "xml";
         }
+
+        // replace by enum
+        public enum FilesTypes
+        {
+            OleDb,
+            Sql,
+            Xml
+        }
     }
 }

@@ -39,11 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SqlDataImportProcessor.cs" />
-    <Compile Include="SqlDataReaderProcessor.cs" />
-    <Compile Include="SqlMetaDataProcessor.cs" />
+    <Compile Include="Processors\SqlDataImportProcessor.cs" />
+    <Compile Include="Processors\SqlDataReaderProcessor.cs" />
+    <Compile Include="Processors\SqlMetaDataProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryProcessors\SelectTablesQueryProcessor.cs" />
+    <Compile Include="SqlDataInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Importer.Common\Importer.Common.csproj">

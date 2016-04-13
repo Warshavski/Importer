@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.OleDb;
 
 using Escyug.Importer.Common;
-using Escyug.Importer.Data.Entities;
+using Escyug.Importer.Data.MetaData;
 using Escyug.Importer.Data.Processors;
 
 namespace Escyug.Importer.Data.OleDb

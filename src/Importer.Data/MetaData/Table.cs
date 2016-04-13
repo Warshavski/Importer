@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Escyug.Importer.Data.Entities
+namespace Escyug.Importer.Data.MetaData
 {
-    public class Table
+    public sealed class Table
     {
         private string _tableName;
         public string Name

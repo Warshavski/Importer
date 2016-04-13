@@ -1,6 +1,6 @@
-﻿namespace Escyug.Importer.Data.Entities
+﻿namespace Escyug.Importer.Data.MetaData
 {
-    public class Column
+    public sealed class Column
     {
         private string _columnName;
         public string Name

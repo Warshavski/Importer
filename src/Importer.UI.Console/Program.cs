@@ -11,13 +11,8 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Xml.Linq;
 
-/*
-using Escyug.Importer.UI.ConsoleApp.Prototype;
-using Escyug.Importer.UI.ConsoleApp.Beta;
-using Escyug.Importer.UI.ConsoleApp.Prototype.Old;
-*/
-
 using Escyug.Importer.Common;
+using Escyug.Importer.Models;
 
 namespace Escyug.Importer.UI.ConsoleApp
 {
@@ -27,17 +22,15 @@ namespace Escyug.Importer.UI.ConsoleApp
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            Console.Write("Initializing instances...");
-
             var connectionStringsFilePath = @"C:\test\connectionStrings.txt";
-            var connectionStrings = new List<string>();
+            var connectionStrigns = new List<string>();
             using (var reader = new StreamReader(connectionStringsFilePath, Encoding.UTF8))
             {
                 while (!reader.EndOfStream)
-                    connectionStrings.Add(reader.ReadLine());
+                    connectionStrigns.Add(reader.ReadLine());
             }
 
-            
+            /* Reads mappings
             var mappingsFilePath = @"C:\test\mappings_jv.txt";
             var columnsMappings = new List<ColumnsMapping>();
             using (var columnsMappingReader = new StreamReader(mappingsFilePath, Encoding.UTF8))
@@ -50,9 +43,14 @@ namespace Escyug.Importer.UI.ConsoleApp
 
                     columnsMappings.Add(new ColumnsMapping(mappings[0], mappings[1]));
                 }
-                    
             }
-            
+            */
+
+            var sqlDataInstance = DataInstanceCreator.CreateInstance(Constants.FilesTypes.Sql, connectionStrigns[0]);
+
+            Console.Write("Connection test...");
+            Console.WriteLine(sqlDataInstance.TestConnection());
+
             watch.Stop();
             
             var elapsed = watch.ElapsedMilliseconds;

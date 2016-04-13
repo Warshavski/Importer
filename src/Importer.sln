@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.Data.Sql", "Import
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.Data.OleDb", "Importer.Data.OleDb\Importer.Data.OleDb.csproj", "{9459980D-E423-4BC7-927D-66F61D0684FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Importer.UI.WinForm", "Importer.UI.WinForm\Importer.UI.WinForm.csproj", "{721FF1DD-A3E9-4621-8835-F87738ADB71C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,16 +59,11 @@ Global
 		{9459980D-E423-4BC7-927D-66F61D0684FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9459980D-E423-4BC7-927D-66F61D0684FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9459980D-E423-4BC7-927D-66F61D0684FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{721FF1DD-A3E9-4621-8835-F87738ADB71C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{721FF1DD-A3E9-4621-8835-F87738ADB71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{721FF1DD-A3E9-4621-8835-F87738ADB71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{721FF1DD-A3E9-4621-8835-F87738ADB71C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{20257D31-B13E-48B7-AE5C-A7D3D66934F8} = {E37713CE-BCC2-4904-AFE7-2B1F6A617F6A}
-		{721FF1DD-A3E9-4621-8835-F87738ADB71C} = {E37713CE-BCC2-4904-AFE7-2B1F6A617F6A}
 	EndGlobalSection
 EndGlobal

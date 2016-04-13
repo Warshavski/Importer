@@ -4,13 +4,13 @@ using System.Data;
 using System.Data.SqlClient;
 
 using Escyug.Importer.Common;
-using Escyug.Importer.Data.Entities;
+using Escyug.Importer.Data.MetaData;
 using Escyug.Importer.Data.Processors;
 
-namespace Escyug.Importer.Data.Sql
+namespace Escyug.Importer.Data.Sql.Processors
 {
     // same class implementation in OleDbMetaDataProcessor (different connections)
-    public class SqlMetaDataProcessor : IMetaDataProcessor
+    internal sealed class SqlMetaDataProcessor : IMetaDataProcessor
     {
         public IEnumerable<Table> SelectTablesMetaData(string connectionString)
         {
