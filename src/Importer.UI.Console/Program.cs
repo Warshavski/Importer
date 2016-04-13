@@ -50,7 +50,7 @@ namespace Escyug.Importer.UI.ConsoleApp
 
             var sqlDataService = new SqlDataService();
             var sqlDataInstanceSource = sqlDataService.CreateInstance(connectionStrings[0]);
-            var sqlDataInstanceTarget = sqlDataService.CreateInstance(connectionStrings[3]);
+            var sqlDataInstanceTarget = sqlDataService.CreateInstance(connectionStrings[4]);
 
             Console.WriteLine("\tdone.");
 

@@ -21,6 +21,7 @@ namespace Escyug.Importer.Data.Sql
         {
             bulkCopyInstance.DestinationTableName = tableName;
 
+            bulkCopyInstance.BulkCopyTimeout = 0;
             bulkCopyInstance.BatchSize = 5000;
             bulkCopyInstance.NotifyAfter = 1000;
             bulkCopyInstance.SqlRowsCopied += (sender, e) => { if (RowsCopiedNotify != null) RowsCopiedNotify(e.RowsCopied); };

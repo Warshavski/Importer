@@ -1,4 +1,7 @@
-﻿using System.Data;
+﻿using Escyug.Importer.Data.Entities;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 
 namespace Escyug.Importer.Data
@@ -62,27 +65,6 @@ namespace Escyug.Importer.Data
             return command;
         }
 
-        public static bool TestConnection(string providerName, string connectionString)
-        {
-            try
-            {
-                DbProviderFactory factory =
-                    DbProviderFactories.GetFactory(providerName);
-
-                using (DbConnection conn = factory.CreateConnection())
-                {
-                    conn.ConnectionString = connectionString;
-                    conn.Open();
-                }
-
-                return true;
-            }
-            catch (DbException)
-            {
-                return false;
-            }
-        }
-
         public static IDataReader CreateDataReader(string providerName, string connectionString, string commandText)
         {
             DbConnection connection = null;
@@ -105,6 +87,69 @@ namespace Escyug.Importer.Data
             }
 
             return reader;
+        }
+
+        private static IEnumerable<Column> GetColumnsMetaData(DbConnection connection, string tableName)
+        {
+            var columnsMetaDataList = new List<Column>();
+
+            var columnsSchema = connection.GetSchema("Columns", new string[] { null, null, tableName, null });
+            foreach (var columnsSchemaRow in columnsSchema.AsEnumerable())
+            {
+                var columnName = columnsSchemaRow["COLUMN_NAME"].ToString();
+                var columnDataType = columnsSchemaRow["DATA_TYPE"].ToString();
+
+                var columnLength = -1;
+                int.TryParse(columnsSchemaRow["CHARACTER_MAXIMUM_LENGTH"].ToString(), out columnLength);
+
+                columnsMetaDataList.Add(new Column(columnName, columnDataType, columnLength));
+            }
+
+            return columnsMetaDataList;
+        }
+
+        public static IEnumerable<Table> GetTablesMetaData(string providerName, string connectionString)
+        {
+            var tablesMetaDataList = new List<Table>();
+
+            using (var connection = DbCommonHelper.CreateDbConnection(providerName, connectionString))
+            {
+                connection.Open();
+
+                var tablesSchema = connection.GetSchema("Tables");
+                foreach (var tablesSchemaRow in tablesSchema.AsEnumerable())
+                {
+                    var tableName = tablesSchemaRow["TABLE_NAME"].ToString();
+
+                    var columnsMetaData = GetColumnsMetaData(connection, tableName);
+
+                    tablesMetaDataList.Add(new Table(tableName, columnsMetaData));
+                }
+            }
+
+            return tablesMetaDataList;
+        }
+
+        // ?? delete ??
+        public static bool TestConnection(string providerName, string connectionString)
+        {
+            try
+            {
+                DbProviderFactory factory =
+                    DbProviderFactories.GetFactory(providerName);
+
+                using (DbConnection conn = factory.CreateConnection())
+                {
+                    conn.ConnectionString = connectionString;
+                    conn.Open();
+                }
+
+                return true;
+            }
+            catch (DbException)
+            {
+                return false;
+            }
         }
 
         /* rework this shit

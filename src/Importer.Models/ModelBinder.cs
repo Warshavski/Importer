@@ -2,7 +2,7 @@
 
 namespace Escyug.Importer.Models
 {
-    public class ModelBinder
+    internal class ModelBinder
     {
         public static IEnumerable<Models.Table> CreateModelTablesList(IEnumerable<Data.Entities.Table> dataTables)
         {
