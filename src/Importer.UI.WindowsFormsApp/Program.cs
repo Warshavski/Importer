@@ -1,11 +1,7 @@
-﻿using Escyug.Importer.UI.WinForm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
-namespace Escyug.Importer.UI.WinForm
+namespace Escyug.Importer.UI.WindowsFormsApp
 {
     static class Program
     {
@@ -17,7 +13,7 @@ namespace Escyug.Importer.UI.WinForm
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestContext());
+            Application.Run(new MainForm());
         }
     }
 }

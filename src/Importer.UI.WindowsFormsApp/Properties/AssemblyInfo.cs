@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Importer.UI.WinForm")]
+[assembly: AssemblyTitle("Importer.UI.WindowsFormsApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Importer.UI.WinForm")]
+[assembly: AssemblyProduct("Importer.UI.WindowsFormsApp")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("b98e0666-d1ca-430a-bf0c-31cb4e07b72c")]
+[assembly: Guid("f5df2476-d05c-4372-a88d-b64a07e63024")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

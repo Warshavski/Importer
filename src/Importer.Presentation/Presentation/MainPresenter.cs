@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Escyug.Importer.Presentations.Views;
+using Escyug.Importer.Models;
 using Escyug.Importer.Models.Services;
 
 namespace Escyug.Importer.Presentations.Presentation
@@ -12,20 +13,26 @@ namespace Escyug.Importer.Presentations.Presentation
     public class MainPresenter
     {
         private readonly IMainView _view;
-        private readonly SqlDataImportService _importService;
-        private readonly 
+        
+        private DataInstanceService _sourceDataInstanceService;
+
+        private DataInstance _sourceDataInstance;
 
         public MainPresenter(IMainView view)
         {
             _view = view;
-
-            _view.SourceInstanceLoad  += () => OnSourceLoad();
-            _view.DestinationInstanceLoad += () => OnDestinationLoad();
+            _view.SourceInstanceLoad += () => OnSourceLoad();
         }
 
         private void OnSourceLoad()
         {
-            
+            _sourceDataInstanceService = 
+                DataInstanceServiceCreator.CreateService(_view.SelectedSourceType);
+
+            _sourceDataInstance = 
+                _sourceDataInstanceService.CreateInstance(_view.SourceConnectionString);
+
+            _view.SourceDataInstance = _sourceDataInstance;
         }
 
         private void OnDestinationLoad()

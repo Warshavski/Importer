@@ -48,7 +48,6 @@ namespace Escyug.Importer.UI.ConsoleApp
 
             PrintEntities(sqlInstance.Tables);
 
-            
             watch.Stop();
             
             var elapsed = watch.ElapsedMilliseconds;

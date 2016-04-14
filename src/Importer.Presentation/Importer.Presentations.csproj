@@ -47,6 +47,10 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Importer.Common\Importer.Common.csproj">
+      <Project>{e5349102-55f3-4fbc-9236-81903ae9629c}</Project>
+      <Name>Importer.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Importer.Models\Importer.Models.csproj">
       <Project>{1ec5e8de-796e-4435-bbaf-9586a1fa25b7}</Project>
       <Name>Importer.Models</Name>
