@@ -6,9 +6,9 @@ using System.Data.SqlClient;
 using Escyug.Importer.Common;
 using Escyug.Importer.Data.Processors;
 
-namespace Escyug.Importer.Data.Sql
+namespace Escyug.Importer.Data.Sql.Processors
 {
-    public class SqlDataImportProcessor : IDataImportProcessor
+    public sealed class SqlDataImportProcessor : IDataImportProcessor
     {
         public event Action<long> RowsCopiedNotify;
 

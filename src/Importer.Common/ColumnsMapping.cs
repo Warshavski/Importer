@@ -1,6 +1,6 @@
 ﻿namespace Escyug.Importer.Common
 {
-    public class ColumnsMapping
+    public sealed class ColumnsMapping
     {
         private string _sourceColumnName;
         public string SourceColumnName

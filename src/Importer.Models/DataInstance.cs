@@ -2,7 +2,7 @@
 
 namespace Escyug.Importer.Models
 {
-    public class DataInstance : IDataInstance
+    public sealed class DataInstance
     {
         private string _connectionString;
         public string ConnectionString

@@ -40,18 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Column.cs" />
-    <Compile Include="IDataInstance.cs" />
     <Compile Include="ModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Factory\DataImportFactory.cs" />
-    <Compile Include="Repository\Factory\DataReaderFactory.cs" />
-    <Compile Include="Repository\ImportRepository.cs" />
-    <Compile Include="Repository\OleDbDataRepository.cs" />
-    <Compile Include="Repository\SqlDataRepository.cs" />
-    <Compile Include="Services\SqlDataImportService.cs" />
-    <Compile Include="Services\OleDbDataService.cs" />
-    <Compile Include="Services\SqlDataService.cs" />
     <Compile Include="DataInstance.cs" />
+    <Compile Include="Repository\IDataInstanceRepository.cs" />
+    <Compile Include="Repository\OleDbDataInstanceRepository.cs" />
+    <Compile Include="Repository\SqlDataInstanceRepository.cs" />
+    <Compile Include="Services\DataInstanceService.cs" />
+    <Compile Include="Services\DataInstanceServiceCreator.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,9 +68,7 @@
       <Name>Importer.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="readme.txt" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

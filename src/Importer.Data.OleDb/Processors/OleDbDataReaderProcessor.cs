@@ -3,7 +3,7 @@
 using Escyug.Importer.Common;
 using Escyug.Importer.Data.Processors;
 
-namespace Escyug.Importer.Data.OleDb
+namespace Escyug.Importer.Data.OleDb.Processors
 {
     public class OleDbDataReaderProcessor : IDataReaderProcessor
     {

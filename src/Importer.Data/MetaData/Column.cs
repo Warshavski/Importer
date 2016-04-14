@@ -1,6 +1,6 @@
-﻿namespace Escyug.Importer.Data.Entities
+﻿namespace Escyug.Importer.Data.MetaData
 {
-    public class Column
+    public sealed class Column
     {
         private string _columnName;
         public string Name
@@ -20,7 +20,7 @@
             get { return _columnLength; }
         }
 
-        public Column(string columnName, string columnType, int columnLength) 
+        internal Column(string columnName, string columnType, int columnLength) 
         {
             _columnName = columnName;
             _columnType = columnType;

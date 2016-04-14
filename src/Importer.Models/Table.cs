@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Escyug.Importer.Models
 {
-    public class Table
+    public sealed class Table
     {
         private string _tableName;
         public string Name
@@ -23,7 +23,7 @@ namespace Escyug.Importer.Models
             get { return _isForImport; }
         }
 
-        public Table(string tableName, IEnumerable<Column> tableColumns) 
+        internal Table(string tableName, IEnumerable<Column> tableColumns) 
         {
             _tableName = tableName;
             _tableColumns = tableColumns;
@@ -38,6 +38,11 @@ namespace Escyug.Importer.Models
         public void SetMappings()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return _tableName;
         }
     }
 }

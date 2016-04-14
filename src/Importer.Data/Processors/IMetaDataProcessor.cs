@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using Escyug.Importer.Data.Entities;
+using Escyug.Importer.Data.MetaData;
 
 namespace Escyug.Importer.Data.Processors
 {
