@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using Escyug.Importer.Common;
 using Escyug.Importer.Presentations.Presenters;
+using Escyug.Importer.Presentations.ViewModel;
 using Escyug.Importer.Presentations.Views;
 
 namespace Escyug.Importer.UI.WindowsFormsApp
@@ -22,11 +23,15 @@ namespace Escyug.Importer.UI.WindowsFormsApp
 
         public event Action Initialize;
 
-        public event Action SourceInstanceLoad;
-        public event Func<Task> SourceInstanceLoadAsync;
+        public event Action ImportExecute;
+        public event Func<Task> ImportExecuteAsync;
 
         public event Action DestinationInstanceLoad;
         public event Func<Task> DestinationInstanceLoadAsync;
+
+        public event Action SourceInstanceLoad;
+        public event Func<Task> SourceInstanceLoadAsync;
+
 
         #endregion
 
@@ -42,9 +47,29 @@ namespace Escyug.Importer.UI.WindowsFormsApp
 
             this.buttonDestinationLoad.Click += async (sender, e) => 
                 await InvokeAsync(DestinationInstanceLoadAsync);
+
+            this.buttonImportExecute.Click += async (sender, e) =>
+                await InvokeAsync(ImportExecuteAsync);
+
+            // UI events 
+            this.cmBoxSourceTables.SelectedValueChanged += (sender, e) =>
+                {
+                    dgvMetaData.DataSource =
+                        ((Models.Table)cmBoxSourceTables.SelectedValue).Columns;
+                };
         }
 
         #region IMainView properties
+
+        public IEnumerable<FileTypeVM> FilesTypes
+        {
+            set 
+            { 
+                cmBoxFilesTypes.DataSource = value;
+                cmBoxFilesTypes.DisplayMember = "Name";
+                cmBoxFilesTypes.ValueMember = "Value";
+            }
+        }
 
         public IEnumerable<string> ConnectionStrings
         {
@@ -53,12 +78,24 @@ namespace Escyug.Importer.UI.WindowsFormsApp
 
         public Constants.FilesTypes SelectedSourceType
         {
-            get { return Constants.FilesTypes.OleDb; }
+            get { return (Constants.FilesTypes)cmBoxFilesTypes.SelectedValue; }
         }
 
         public string SourceConnectionString
         {
             get { return listBoxConnectionStrings.SelectedItem.ToString(); }
+        }
+
+        public Models.Table SelectedSourceTable
+        {
+            get
+            {
+                return (Models.Table)cmBoxSourceTables.SelectedValue;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public Constants.FilesTypes SelectedDestinationType
@@ -84,9 +121,8 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             }
             set
             {
-                treeView1.Nodes.Clear();
-                treeView1.Nodes.AddRange(
-                    CreateTreeViewNodes(value).ToArray());
+                cmBoxSourceTables.DataSource = value.Tables;
+                cmBoxSourceTables.DisplayMember = "Name";
             }
         }
 

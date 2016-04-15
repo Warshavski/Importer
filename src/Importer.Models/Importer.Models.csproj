@@ -43,9 +43,13 @@
     <Compile Include="ModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataInstance.cs" />
+    <Compile Include="Repository\IDataImportRepository.cs" />
     <Compile Include="Repository\IDataInstanceRepository.cs" />
+    <Compile Include="Repository\ImportRepositoryCreator.cs" />
     <Compile Include="Repository\OleDbDataInstanceRepository.cs" />
+    <Compile Include="Repository\SqlDataImportRepository.cs" />
     <Compile Include="Repository\SqlDataInstanceRepository.cs" />
+    <Compile Include="Services\DataImportService.cs" />
     <Compile Include="Services\DataInstanceService.cs" />
     <Compile Include="Services\DataInstanceServiceCreator.cs" />
     <Compile Include="Table.cs" />

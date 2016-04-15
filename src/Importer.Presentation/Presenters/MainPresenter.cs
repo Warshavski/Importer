@@ -7,6 +7,7 @@ using System.IO;
 
 using Escyug.Importer.Common;
 using Escyug.Importer.Presentations.Views;
+using Escyug.Importer.Presentations.ViewModel;
 using Escyug.Importer.Models;
 using Escyug.Importer.Models.Services;
 
@@ -30,6 +31,8 @@ namespace Escyug.Importer.Presentations.Presenters
             _view.SourceInstanceLoadAsync += () => OnSourceLoadAsync();
 
             _view.DestinationInstanceLoadAsync += () => OnDestinationLoadAsync();
+
+            _view.ImportExecuteAsync += () => OnImportExecuteAsync();
 
             _view.Initialize += () => OnInitialize();
         }
@@ -83,6 +86,25 @@ namespace Escyug.Importer.Presentations.Presenters
         private void OnInitialize()
         {
             ReadConnectionStringsAsync();
+
+            var filesTypes =  new List<FileTypeVM>();
+
+            filesTypes.Add(new FileTypeVM(Constants.FilesTypes.Sql, "SQL instance"));
+            filesTypes.Add(new FileTypeVM(Constants.FilesTypes.OleDb, "OleDb instance"));
+
+            _view.FilesTypes = filesTypes;
+        }
+
+        private async Task OnImportExecuteAsync()
+        {
+            DataImportService importService = new DataImportService(Constants.FilesTypes.Sql);
+
+            await Task.Run(() =>
+                {
+                    importService.Import(_sourceDataInstance, _destinationInstance);
+                });
+
+            ChangeOperationStatus("Import complete");
         }
 
         private async Task OnSourceLoadAsync()
@@ -91,13 +113,13 @@ namespace Escyug.Importer.Presentations.Presenters
             var connectionString = _view.SourceConnectionString;
             
             await Task.Run(() =>
-            {
-                InitializeSource(fileType, connectionString);
-            });
+                {
+                    InitializeSource(fileType, connectionString);
+                });
 
             _view.SourceDataInstance = _sourceDataInstance;
             
-            ChangeOperationStatus("done");
+            ChangeOperationStatus("Source metadata load");
         }
 
         private void OnSourceLoad()
@@ -116,12 +138,12 @@ namespace Escyug.Importer.Presentations.Presenters
 
             await Task.Run(() =>
             {
-                InitializeSource(fileType, connectionString);
+                InitializeDestination(fileType, connectionString);
             });
 
-            _view.DestinationDataInstance = _sourceDataInstance;
+            _view.DestinationDataInstance = _destinationInstance;
 
-            ChangeOperationStatus("done");
+            ChangeOperationStatus("Destination metadata load");
         }
 
         #endregion
