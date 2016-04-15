@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="Processors\OleDbDataImportProcessor.cs" />
     <Compile Include="Processors\OleDbDataReaderProcessor.cs" />
-    <Compile Include="Processors\OleDbMetaDataProcessor.cs" />
+    <Compile Include="Processors\OleDbMetadataProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Escyug.Importer.Data.MetaData
+namespace Escyug.Importer.Data.Metadata
 {
     public sealed class Table
     {

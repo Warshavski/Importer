@@ -11,8 +11,8 @@ namespace Escyug.Importer.Data.Xml
     {
         private readonly XmlReader _xmlReader;
 
-        // define MetaData class
-        private Dictionary<int, string> _fieldsMetaData;
+        // define Metadata class
+        private Dictionary<int, string> _fieldsMetadata;
 
         private object[] _currentLineValues;
 
@@ -20,7 +20,7 @@ namespace Escyug.Importer.Data.Xml
 
         public XmlDataReader(string filePath, string tableName)
         {
-            _fieldsMetaData = GetFieldsMetaData(filePath, tableName);
+            _fieldsMetadata = GetFieldsMetadata(filePath, tableName);
 
             _tableName = "z:row"; // tableName;
 
@@ -28,33 +28,33 @@ namespace Escyug.Importer.Data.Xml
             _xmlReader.MoveToContent();
         }
 
-        private Dictionary<int, string> GetFieldsMetaData(string filePath, string tableName)
+        private Dictionary<int, string> GetFieldsMetadata(string filePath, string tableName)
         {
             DataSet xmlSchema = new DataSet();
             xmlSchema.ReadXmlSchema(filePath);
 
-            var fieldsMetaData = new Dictionary<int, string>();
+            var fieldsMetadata = new Dictionary<int, string>();
             for (_fieldsCount = 0; _fieldsCount < xmlSchema.Tables[tableName].Columns.Count; ++_fieldsCount)
             {
                 var fieldName = xmlSchema.Tables[tableName].Columns[_fieldsCount].ColumnName;
-                fieldsMetaData.Add(_fieldsCount, fieldName);
+                fieldsMetadata.Add(_fieldsCount, fieldName);
             }
 
-            return fieldsMetaData;
+            return fieldsMetadata;
         }
 
-        private Dictionary<int, string> GetLineMetaData(XElement xElement)
+        private Dictionary<int, string> GetLineMetadata(XElement xElement)
         {
-            var currentLineMetaData = new Dictionary<int, string>();
+            var currentLineMetadata = new Dictionary<int, string>();
 
             int pos = 0;
             foreach (var attribute in xElement.Attributes())
             {
-                currentLineMetaData.Add(pos, attribute.Name.ToString());
+                currentLineMetadata.Add(pos, attribute.Name.ToString());
                 ++pos;
             }
 
-            return currentLineMetaData;
+            return currentLineMetadata;
         }
 
         private object[] GetLineValues(XElement xElement)
@@ -134,12 +134,12 @@ namespace Escyug.Importer.Data.Xml
 
         public string GetName(int i)
         {
-            return _fieldsMetaData[i];
+            return _fieldsMetadata[i];
         }
 
         public int GetOrdinal(string name)
         {
-            return _fieldsMetaData
+            return _fieldsMetadata
                 .FirstOrDefault(f => f.Value == name).Key;
         }
 

@@ -43,7 +43,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cmBoxFilesTypes = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.dgvMetaData = new System.Windows.Forms.DataGridView();
+            this.dgvMetadata = new System.Windows.Forms.DataGridView();
             this.sourceNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sourceDataTypeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sourceLength = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,7 +57,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMetaData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMetadata)).BeginInit();
             this.SuspendLayout();
             // 
             // listBoxConnectionStrings
@@ -167,12 +167,12 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "File type : ";
             // 
-            // dgvMetaData
+            // dgvMetadata
             // 
-            this.dgvMetaData.AllowUserToAddRows = false;
-            this.dgvMetaData.AllowUserToDeleteRows = false;
-            this.dgvMetaData.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.dgvMetaData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgvMetadata.AllowUserToAddRows = false;
+            this.dgvMetadata.AllowUserToDeleteRows = false;
+            this.dgvMetadata.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.dgvMetadata.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -180,9 +180,9 @@
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SteelBlue;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMetaData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvMetaData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMetaData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvMetadata.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvMetadata.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMetadata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sourceNameColumn,
             this.sourceDataTypeColumn,
             this.sourceLength});
@@ -193,16 +193,16 @@
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvMetaData.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dgvMetaData.Location = new System.Drawing.Point(5, 301);
-            this.dgvMetaData.MultiSelect = false;
-            this.dgvMetaData.Name = "dgvMetaData";
-            this.dgvMetaData.ReadOnly = true;
-            this.dgvMetaData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.dgvMetaData.RowHeadersVisible = false;
-            this.dgvMetaData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMetaData.Size = new System.Drawing.Size(305, 257);
-            this.dgvMetaData.TabIndex = 10;
+            this.dgvMetadata.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvMetadata.Location = new System.Drawing.Point(5, 301);
+            this.dgvMetadata.MultiSelect = false;
+            this.dgvMetadata.Name = "dgvMetadata";
+            this.dgvMetadata.ReadOnly = true;
+            this.dgvMetadata.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgvMetadata.RowHeadersVisible = false;
+            this.dgvMetadata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMetadata.Size = new System.Drawing.Size(305, 257);
+            this.dgvMetadata.TabIndex = 10;
             // 
             // sourceNameColumn
             // 
@@ -298,7 +298,7 @@
             this.ClientSize = new System.Drawing.Size(790, 583);
             this.Controls.Add(this.buttonImportExecute);
             this.Controls.Add(this.cmBoxSourceTables);
-            this.Controls.Add(this.dgvMetaData);
+            this.Controls.Add(this.dgvMetadata);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmBoxFilesTypes);
             this.Controls.Add(this.listBoxConnectionStrings);
@@ -315,7 +315,7 @@
             this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMetaData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMetadata)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,7 +341,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ComboBox cmBoxFilesTypes;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView dgvMetaData;
+        private System.Windows.Forms.DataGridView dgvMetadata;
         private System.Windows.Forms.DataGridViewTextBoxColumn sourceNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn sourceDataTypeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn sourceLength;

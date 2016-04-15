@@ -19,9 +19,9 @@ namespace Escyug.Importer.Models.Services
 
         public DataInstance CreateInstance(string connectionString)
         {
-            var metaData = _dataInstanceRepository.GetMetaData(connectionString);
+            var Metadata = _dataInstanceRepository.GetMetadata(connectionString);
 
-            return new DataInstance(connectionString, metaData);
+            return new DataInstance(connectionString, Metadata);
         }
 
     }

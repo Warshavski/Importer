@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using Escyug.Importer.Data.Processors;
-using Escyug.Importer.Data.MetaData;
+using Escyug.Importer.Data.Metadata;
 using Escyug.Importer.Data.OleDb.Processors;
 
 namespace Escyug.Importer.Models.Repository
@@ -10,19 +10,19 @@ namespace Escyug.Importer.Models.Repository
     internal sealed class OleDbDataInstanceRepository : IDataInstanceRepository
     {
         private readonly IDataReaderProcessor _dataReaderProcessor;
-        private readonly IMetaDataProcessor _metaDataProcessor;
+        private readonly IMetadataProcessor _MetadataProcessor;
 
         // DI or not DI ?
         public OleDbDataInstanceRepository()
         {
             _dataReaderProcessor = new OleDbDataReaderProcessor();
-            _metaDataProcessor = new OleDbMetaDataProcessor();
+            _MetadataProcessor = new OleDbMetadataProcessor();
         }
 
-        public IEnumerable<Table> GetMetaData(string connectionString)
+        public IEnumerable<Table> GetMetadata(string connectionString)
         {
-            var metaDataTables = _metaDataProcessor.SelectTablesMetaData(connectionString);
-            return ModelBinder.CreateModelTablesList(metaDataTables);
+            var MetadataTables = _MetadataProcessor.SelectTablesMetadata(connectionString);
+            return ModelBinder.CreateModelTablesList(MetadataTables);
         }
 
         // how to test connection?

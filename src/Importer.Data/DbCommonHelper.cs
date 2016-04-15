@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 
-using Escyug.Importer.Data.MetaData;
+using Escyug.Importer.Data.Metadata;
 
 namespace Escyug.Importer.Data
 {
@@ -90,9 +90,9 @@ namespace Escyug.Importer.Data
             return reader;
         }
 
-        private static IEnumerable<Column> GetColumnsMetaData(DbConnection connection, string tableName)
+        private static IEnumerable<Column> GetColumnsMetadata(DbConnection connection, string tableName)
         {
-            var columnsMetaDataList = new List<Column>();
+            var columnsMetadataList = new List<Column>();
 
             var columnsSchema = connection.GetSchema("Columns", new string[] { null, null, tableName, null });
             foreach (var columnsSchemaRow in columnsSchema.AsEnumerable())
@@ -103,15 +103,15 @@ namespace Escyug.Importer.Data
                 var columnLength = -1;
                 int.TryParse(columnsSchemaRow["CHARACTER_MAXIMUM_LENGTH"].ToString(), out columnLength);
 
-                columnsMetaDataList.Add(new Column(columnName, columnDataType, columnLength));
+                columnsMetadataList.Add(new Column(columnName, columnDataType, columnLength));
             }
 
-            return columnsMetaDataList;
+            return columnsMetadataList;
         }
 
-        public static IEnumerable<Table> GetTablesMetaData(string providerName, string connectionString)
+        public static IEnumerable<Table> GetTablesMetadata(string providerName, string connectionString)
         {
-            var tablesMetaDataList = new List<Table>();
+            var tablesMetadataList = new List<Table>();
 
             using (var connection = DbCommonHelper.CreateDbConnection(providerName, connectionString))
             {
@@ -122,13 +122,13 @@ namespace Escyug.Importer.Data
                 {
                     var tableName = tablesSchemaRow["TABLE_NAME"].ToString();
 
-                    var columnsMetaData = GetColumnsMetaData(connection, tableName);
+                    var columnsMetadata = GetColumnsMetadata(connection, tableName);
 
-                    tablesMetaDataList.Add(new Table(tableName, columnsMetaData));
+                    tablesMetadataList.Add(new Table(tableName, columnsMetadata));
                 }
             }
 
-            return tablesMetaDataList;
+            return tablesMetadataList;
         }
 
         // ?? delete ??

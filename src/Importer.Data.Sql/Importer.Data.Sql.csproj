@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="Processors\SqlDataImportProcessor.cs" />
     <Compile Include="Processors\SqlDataReaderProcessor.cs" />
-    <Compile Include="Processors\SqlMetaDataProcessor.cs" />
+    <Compile Include="Processors\SqlMetadataProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

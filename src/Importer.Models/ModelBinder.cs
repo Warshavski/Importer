@@ -4,7 +4,7 @@ namespace Escyug.Importer.Models
 {
     internal sealed class ModelBinder
     {
-        public static IEnumerable<Models.Table> CreateModelTablesList(IEnumerable<Data.MetaData.Table> dataTables)
+        public static IEnumerable<Models.Table> CreateModelTablesList(IEnumerable<Data.Metadata.Table> dataTables)
         {
             var modelTablesList = new List<Models.Table>();
             foreach (var dataTablesItem in dataTables)

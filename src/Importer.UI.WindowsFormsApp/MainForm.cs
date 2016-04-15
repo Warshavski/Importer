@@ -54,7 +54,7 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             // UI events 
             this.cmBoxSourceTables.SelectedValueChanged += (sender, e) =>
                 {
-                    dgvMetaData.DataSource =
+                    dgvMetadata.DataSource =
                         ((Models.Table)cmBoxSourceTables.SelectedValue).Columns;
                 };
         }

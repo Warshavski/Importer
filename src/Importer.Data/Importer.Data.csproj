@@ -44,7 +44,7 @@
     <Compile Include="MetaData\Table.cs" />
     <Compile Include="Processors\IDataImportProcessor.cs" />
     <Compile Include="Processors\IDataReaderProcessor.cs" />
-    <Compile Include="Processors\IMetaDataProcessor.cs" />
+    <Compile Include="Processors\IMetadataProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

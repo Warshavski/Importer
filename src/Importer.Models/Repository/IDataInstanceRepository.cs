@@ -10,7 +10,7 @@ namespace Escyug.Importer.Models.Repository
 {
     internal interface IDataInstanceRepository
     {
-        IEnumerable<Table> GetMetaData(string connectionString);
+        IEnumerable<Table> GetMetadata(string connectionString);
         bool TestConnection(string connectionString);
         // get data
     }

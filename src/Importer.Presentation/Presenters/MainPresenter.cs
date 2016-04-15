@@ -119,7 +119,7 @@ namespace Escyug.Importer.Presentations.Presenters
 
             _view.SourceDataInstance = _sourceDataInstance;
             
-            ChangeOperationStatus("Source metadata load");
+            ChangeOperationStatus("Source Metadata load");
         }
 
         private void OnSourceLoad()
@@ -143,7 +143,7 @@ namespace Escyug.Importer.Presentations.Presenters
 
             _view.DestinationDataInstance = _destinationInstance;
 
-            ChangeOperationStatus("Destination metadata load");
+            ChangeOperationStatus("Destination Metadata load");
         }
 
         #endregion

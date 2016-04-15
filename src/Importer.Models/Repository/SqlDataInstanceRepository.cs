@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Escyug.Importer.Data.MetaData;
+using Escyug.Importer.Data.Metadata;
 using Escyug.Importer.Data.Processors;
 using Escyug.Importer.Data.Sql.Processors;
 
@@ -10,19 +10,19 @@ namespace Escyug.Importer.Models.Repository
     internal sealed class SqlDataInstanceRepository : IDataInstanceRepository
     {
         private readonly IDataReaderProcessor _dataReaderProcessor;
-        private readonly IMetaDataProcessor _metaDataProcessor;
+        private readonly IMetadataProcessor _MetadataProcessor;
 
         // DI or not DI
         public SqlDataInstanceRepository()
         {
             _dataReaderProcessor = new SqlDataReaderProcessor();
-            _metaDataProcessor = new SqlMetaDataProcessor();
+            _MetadataProcessor = new SqlMetadataProcessor();
         }
 
-        public IEnumerable<Table> GetMetaData(string connectionString)
+        public IEnumerable<Table> GetMetadata(string connectionString)
         {
-            var metaDataTables = _metaDataProcessor.SelectTablesMetaData(connectionString);
-            return ModelBinder.CreateModelTablesList(metaDataTables);
+            var MetadataTables = _MetadataProcessor.SelectTablesMetadata(connectionString);
+            return ModelBinder.CreateModelTablesList(MetadataTables);
         }
 
         // how to test? use helper classes?

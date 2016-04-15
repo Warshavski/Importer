@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-using Escyug.Importer.Data.MetaData;
+using Escyug.Importer.Data.Metadata;
 
 namespace Escyug.Importer.Data.Processors
 {
-    public interface IMetaDataProcessor
+    public interface IMetadataProcessor
     {
-        IEnumerable<Table> SelectTablesMetaData(string connectionString);
+        IEnumerable<Table> SelectTablesMetadata(string connectionString);
     }
 }
