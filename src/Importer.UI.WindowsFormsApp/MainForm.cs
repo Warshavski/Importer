@@ -7,10 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 using Escyug.Importer.Common;
-using Escyug.Importer.Presentations.Presentation;
+using Escyug.Importer.Presentations.Presenters;
 using Escyug.Importer.Presentations.Views;
 
 namespace Escyug.Importer.UI.WindowsFormsApp
@@ -19,12 +18,37 @@ namespace Escyug.Importer.UI.WindowsFormsApp
     {
         private readonly MainPresenter _presenter;
 
+        #region IMainView events
+
+        public event Action Initialize;
+
+        public event Action SourceInstanceLoad;
+        public event Func<Task> SourceInstanceLoadAsync;
+
+        public event Action DestinationInstanceLoad;
+        public event Func<Task> DestinationInstanceLoadAsync;
+
+        #endregion
+
         public MainForm()
         {
             InitializeComponent();
             _presenter = new MainPresenter(this);
 
-            this.buttonLoadSource.Click += (sender, e) => Invoke(SourceInstanceLoad);
+            this.Load += (sender, e) => Invoke(Initialize);
+
+            this.buttonLoadSource.Click += async (sender, e) => 
+                await InvokeAsync(SourceInstanceLoadAsync);
+
+            this.buttonDestinationLoad.Click += async (sender, e) => 
+                await InvokeAsync(DestinationInstanceLoadAsync);
+        }
+
+        #region IMainView properties
+
+        public IEnumerable<string> ConnectionStrings
+        {
+            set { listBoxConnectionStrings.Items.AddRange(value.ToArray()); }
         }
 
         public Constants.FilesTypes SelectedSourceType
@@ -37,6 +61,21 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             get { return listBoxConnectionStrings.SelectedItem.ToString(); }
         }
 
+        public Constants.FilesTypes SelectedDestinationType
+        {
+            get { return Constants.FilesTypes.Sql; }
+        }
+
+        public string DestinationConnectionString
+        {
+            get { return listBoxConnectionStrings.SelectedItem.ToString(); }
+        }
+
+        public object OperationStatus
+        {
+            set { MessageBox.Show(value.ToString()); }
+        }
+
         public Models.DataInstance SourceDataInstance
         {
             get
@@ -46,22 +85,8 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             set
             {
                 treeView1.Nodes.Clear();
-
-                foreach (var table in value.Tables)
-                {
-                    TreeNode rootNode = new TreeNode(table.Name);
-                    
-                    foreach (var column in table.Columns)
-                    {
-                        TreeNode childNode = new TreeNode(column.Name);
-                        childNode.Nodes.Add(column.Type);
-                        childNode.Nodes.Add(column.Length.ToString());
-
-                        rootNode.Nodes.Add(childNode);
-                    }
-
-                    treeView1.Nodes.Add(rootNode);
-                }
+                treeView1.Nodes.AddRange(
+                    CreateTreeViewNodes(value).ToArray());
             }
         }
 
@@ -73,13 +98,15 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             }
             set
             {
-                throw new NotImplementedException();
+                treeView2.Nodes.Clear();
+                treeView2.Nodes.AddRange(
+                    CreateTreeViewNodes(value).ToArray());
             }
         }
 
-        public event Action SourceInstanceLoad;
+        #endregion
 
-        public event Action DestinationInstanceLoad;
+        #region Helper methods
 
         private void Invoke(Action action)
         {
@@ -87,14 +114,35 @@ namespace Escyug.Importer.UI.WindowsFormsApp
                 action.Invoke();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private async Task InvokeAsync(Func<Task> func)
         {
-            var csFilePath = @"C:\test\connectionStrings.txt";
-            using (var csReader = new StreamReader(csFilePath, Encoding.UTF8))
-            {
-                while (!csReader.EndOfStream)
-                    listBoxConnectionStrings.Items.Add(csReader.ReadLine());
-            }
+            if (func != null)
+                await func.Invoke();
         }
+
+        private IEnumerable<TreeNode> CreateTreeViewNodes(Models.DataInstance dataInstance)
+        {
+            var treeNodes = new List<TreeNode>();
+            foreach (var table in dataInstance.Tables)
+            {
+                TreeNode rootNode = new TreeNode(table.Name);
+
+                foreach (var column in table.Columns)
+                {
+                    TreeNode childNode = new TreeNode(column.Name);
+                    childNode.Nodes.Add(column.Type);
+                    childNode.Nodes.Add(column.Length.ToString());
+
+                    rootNode.Nodes.Add(childNode);
+                }
+
+                treeNodes.Add(rootNode);
+            }
+
+            return treeNodes;
+        }
+
+        #endregion
+
     }
 }

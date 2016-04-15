@@ -17,7 +17,7 @@ namespace Escyug.Importer.Models
             get { return _tablesList; }
         }
 
-        public DataInstance(string connectionString, IEnumerable<Table> tablesList)
+        internal DataInstance(string connectionString, IEnumerable<Table> tablesList)
         {
             _connectionString = connectionString;
             _tablesList = tablesList;

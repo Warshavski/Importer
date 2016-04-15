@@ -32,6 +32,8 @@
             this.lblListCsTitle = new System.Windows.Forms.Label();
             this.buttonLoadSource = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.buttonDestinationLoad = new System.Windows.Forms.Button();
+            this.treeView2 = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // listBoxConnectionStrings
@@ -58,9 +60,9 @@
             // 
             this.buttonLoadSource.Location = new System.Drawing.Point(12, 192);
             this.buttonLoadSource.Name = "buttonLoadSource";
-            this.buttonLoadSource.Size = new System.Drawing.Size(75, 23);
+            this.buttonLoadSource.Size = new System.Drawing.Size(90, 23);
             this.buttonLoadSource.TabIndex = 2;
-            this.buttonLoadSource.Text = "Load";
+            this.buttonLoadSource.Text = "Load source";
             this.buttonLoadSource.UseVisualStyleBackColor = true;
             // 
             // treeView1
@@ -70,11 +72,29 @@
             this.treeView1.Size = new System.Drawing.Size(253, 179);
             this.treeView1.TabIndex = 3;
             // 
+            // buttonDestinationLoad
+            // 
+            this.buttonDestinationLoad.Location = new System.Drawing.Point(272, 192);
+            this.buttonDestinationLoad.Name = "buttonDestinationLoad";
+            this.buttonDestinationLoad.Size = new System.Drawing.Size(157, 23);
+            this.buttonDestinationLoad.TabIndex = 4;
+            this.buttonDestinationLoad.Text = "Load destination";
+            this.buttonDestinationLoad.UseVisualStyleBackColor = true;
+            // 
+            // treeView2
+            // 
+            this.treeView2.Location = new System.Drawing.Point(272, 221);
+            this.treeView2.Name = "treeView2";
+            this.treeView2.Size = new System.Drawing.Size(253, 179);
+            this.treeView2.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(537, 412);
+            this.Controls.Add(this.treeView2);
+            this.Controls.Add(this.buttonDestinationLoad);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.buttonLoadSource);
             this.Controls.Add(this.lblListCsTitle);
@@ -82,7 +102,6 @@
             this.MinimumSize = new System.Drawing.Size(200, 250);
             this.Name = "MainForm";
             this.Text = "MainForm";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -94,5 +113,7 @@
         private System.Windows.Forms.Label lblListCsTitle;
         private System.Windows.Forms.Button buttonLoadSource;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Button buttonDestinationLoad;
+        private System.Windows.Forms.TreeView treeView2;
     }
 }
