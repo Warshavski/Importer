@@ -28,8 +28,8 @@
 	add more meta data.
     - Processors (IDataImportProcessor) - unify interface.
     - Processors (IDataReaderProcessor) - unify interface.
-
     - DbCommonHelper - add fuction for data access and return.
+
 3. Importer.Data.(Sql, OleDb, Xml...)	
     - (Sql, OleDb)MetaDataProcessor - unify and replace to separate class
 	(Methods are same in both classes, difference are only in connection).
