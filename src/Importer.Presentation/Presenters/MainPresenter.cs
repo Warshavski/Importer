@@ -15,6 +15,12 @@ namespace Escyug.Importer.Presentations.Presenters
 {
     public class MainPresenter
     {
+       
+    }
+}
+
+
+/* Test methods (works pretty well)
         private readonly IMainView _view;
 
         private DataInstanceService _sourceDataInstanceService;
@@ -39,7 +45,7 @@ namespace Escyug.Importer.Presentations.Presenters
 
         #region Helper methods
 
-        private void InitializeSource(Constants.FilesTypes sourceType, string connectionString)
+        private void InitializeSource(Constants.DataInstanceTypes sourceType, string connectionString)
         {
             _sourceDataInstanceService =
                 DataInstanceServiceCreator.CreateService(sourceType);
@@ -48,7 +54,7 @@ namespace Escyug.Importer.Presentations.Presenters
                 _sourceDataInstanceService.CreateInstance(connectionString);
         }
 
-        private void InitializeDestination(Constants.FilesTypes destinationType, string connectionString)
+        private void InitializeDestination(Constants.DataInstanceTypes destinationType, string connectionString)
         {
             _destinationInstanceService =
                 DataInstanceServiceCreator.CreateService(destinationType);
@@ -87,17 +93,17 @@ namespace Escyug.Importer.Presentations.Presenters
         {
             ReadConnectionStringsAsync();
 
-            var filesTypes =  new List<FileTypeVM>();
+            var filesTypes =  new List<FileType>();
 
-            filesTypes.Add(new FileTypeVM(Constants.FilesTypes.Sql, "SQL instance"));
-            filesTypes.Add(new FileTypeVM(Constants.FilesTypes.OleDb, "OleDb instance"));
+            filesTypes.Add(new FileType(Constants.DataInstanceTypes.Sql, "SQL instance"));
+            filesTypes.Add(new FileType(Constants.DataInstanceTypes.OleDb, "OleDb instance"));
 
             _view.FilesTypes = filesTypes;
         }
 
         private async Task OnImportExecuteAsync()
         {
-            DataImportService importService = new DataImportService(Constants.FilesTypes.Sql);
+            DataImportService importService = new DataImportService(Constants.DataInstanceTypes.Sql);
 
             await Task.Run(() =>
                 {
@@ -119,7 +125,7 @@ namespace Escyug.Importer.Presentations.Presenters
 
             _view.SourceDataInstance = _sourceDataInstance;
             
-            ChangeOperationStatus("Source Metadata load");
+            ChangeOperationStatus("Source metadata load completed");
         }
 
         private void OnSourceLoad()
@@ -143,9 +149,8 @@ namespace Escyug.Importer.Presentations.Presenters
 
             _view.DestinationDataInstance = _destinationInstance;
 
-            ChangeOperationStatus("Destination Metadata load");
+            ChangeOperationStatus("Destination metadata load completed");
         }
 
         #endregion
-    }
-}
+ */

@@ -6,20 +6,25 @@ using Escyug.Importer.Common;
 using Escyug.Importer.Models;
 using Escyug.Importer.Presentations.ViewModel;
 
-
-
 namespace Escyug.Importer.Presentations.Views
 {
     public interface IMainView
     {
-        IEnumerable<string> ConnectionStrings { set; }
-        IEnumerable<FileTypeVM> FilesTypes { set; }
+       
+    }
+}
 
-        Constants.FilesTypes SelectedSourceType { get; }
+
+/* Test members 
+ * NOTE : see MainPresenter.cs comments "Test methods"
+        IEnumerable<string> ConnectionStrings { set; }
+        IEnumerable<FileType> FilesTypes { set; }
+
+        Constants.DataInstanceTypes SelectedSourceType { get; }
         string SourceConnectionString { get; }
         Table SelectedSourceTable { set; get; }
 
-        Constants.FilesTypes SelectedDestinationType { get; }
+        Constants.DataInstanceTypes SelectedDestinationType { get; }
         string DestinationConnectionString { get; }
 
         object OperationStatus { set; }
@@ -37,5 +42,4 @@ namespace Escyug.Importer.Presentations.Views
         event Func<Task> ImportExecuteAsync;
 
         event Action Initialize;
-    }
-}
+ */

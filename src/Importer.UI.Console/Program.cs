@@ -42,7 +42,7 @@ namespace Escyug.Importer.UI.ConsoleApp
 
             Console.WriteLine("done." + Environment.NewLine);
 
-            var sqlService = DataInstanceServiceCreator.CreateService(Constants.FilesTypes.Sql);
+            var sqlService = DataInstanceServiceCreator.CreateService(Constants.DataInstanceTypes.Sql);
 
             var sqlInstance = sqlService.CreateInstance(connectionStrings[0]);
 

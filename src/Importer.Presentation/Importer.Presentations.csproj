@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\SetupPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\FileTypeVM.cs" />
+    <Compile Include="ViewModel\FileType.cs" />
     <Compile Include="Views\IMainView.cs" />
+    <Compile Include="Views\ISetupView.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
