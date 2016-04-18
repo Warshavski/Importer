@@ -13,7 +13,7 @@ namespace Escyug.Importer.Models.Services
     {
         private readonly IDataImportRepository _importRepo;
 
-        public DataImportService(Constants.FilesTypes sourceFileType)
+        public DataImportService(Constants.DataInstanceTypes sourceFileType)
         {
             _importRepo = ImportRepositoryCreator.Create(sourceFileType);
         }

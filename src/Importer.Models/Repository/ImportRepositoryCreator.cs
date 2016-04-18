@@ -7,14 +7,14 @@ namespace Escyug.Importer.Models.Repository
     public class ImportRepositoryCreator
     {
         // yeah creates only SqlDataImporter
-        public static IDataImportRepository Create(Constants.FilesTypes fileType)
+        public static IDataImportRepository Create(Constants.DataInstanceTypes fileType)
         {
             switch (fileType)
             {
-                case Constants.FilesTypes.Sql :
+                case Constants.DataInstanceTypes.Sql :
                     return new SqlDataImportRepository(
                         new SqlDataImportProcessor(), new SqlDataReaderProcessor());
-                case Constants.FilesTypes.OleDb :
+                case Constants.DataInstanceTypes.OleDb :
                     return new SqlDataImportRepository(
                         new SqlDataImportProcessor(), new OleDbDataReaderProcessor());
                 default :

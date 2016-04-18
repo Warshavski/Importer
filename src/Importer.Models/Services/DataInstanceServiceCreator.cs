@@ -11,13 +11,13 @@ namespace Escyug.Importer.Models.Services
 {
     public sealed class DataInstanceServiceCreator
     {
-        public static DataInstanceService CreateService(Constants.FilesTypes fileType)
+        public static DataInstanceService CreateService(Constants.DataInstanceTypes fileType)
         {
             switch (fileType)
             {
-                case Constants.FilesTypes.Sql :
+                case Constants.DataInstanceTypes.Sql :
                     return new DataInstanceService(new SqlDataInstanceRepository());
-                case Constants.FilesTypes.OleDb :
+                case Constants.DataInstanceTypes.OleDb :
                     return new DataInstanceService(new OleDbDataInstanceRepository());
                 default :
                     return null;
