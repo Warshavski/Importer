@@ -21,6 +21,14 @@ namespace Escyug.Importer.Models
         public bool IsForImport
         {
             get { return _isForImport; }
+            set { _isForImport = value; }
+        }
+
+        private string _mappedTableName;
+        public string MappedTableName
+        {
+            get { return _mappedTableName; }
+            set { _mappedTableName = value; }
         }
 
         internal Table(string tableName, IEnumerable<Column> tableColumns) 
@@ -28,16 +36,6 @@ namespace Escyug.Importer.Models
             _tableName = tableName;
             _tableColumns = tableColumns;
             _isForImport = false;
-        }
-
-        public void MarkForImport()
-        {
-            _isForImport = true;
-        }
-
-        public void SetMappings()
-        {
-            throw new NotImplementedException();
         }
 
         public override string ToString()

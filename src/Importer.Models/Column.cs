@@ -20,11 +20,26 @@
             get { return _columnLength; }
         }
 
+        private bool _isForImport;
+        public bool IsForImport
+        {
+            get { return _isForImport; }
+            set { _isForImport = value; }
+        }
+
+        private string _mappedColumnName;
+        public string MappedColumnName
+        {
+            get { return _mappedColumnName; }
+            set { _mappedColumnName = value; }
+        }
+
         internal Column(string columnName, string columnType, int columnLength) 
         {
             _columnName = columnName;
             _columnType = columnType;
             _columnLength = columnLength;
+            _isForImport = false;
         }
     }
 }
