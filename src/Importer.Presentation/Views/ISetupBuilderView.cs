@@ -6,7 +6,7 @@ using Escyug.Importer.Presentations.ViewModel;
 
 namespace Escyug.Importer.Presentations.Views
 {
-    public interface ISetupBuilderView : IView
+    public interface ISetupBuilderView : IView, INestedView
     {
         event Action SelectFileType;
 

@@ -43,7 +43,9 @@
     <Compile Include="Common\BasePresenter.cs" />
     <Compile Include="Common\IApplicationController.cs" />
     <Compile Include="Common\IContainer.cs" />
+    <Compile Include="Common\INestedView.cs" />
     <Compile Include="Common\IPresenter.cs" />
+    <Compile Include="Common\ViewContainer.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\SetupBuilderPresenter.cs" />
     <Compile Include="Presenters\SetupPresenter.cs" />

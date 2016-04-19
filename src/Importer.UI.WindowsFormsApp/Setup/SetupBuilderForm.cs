@@ -9,18 +9,16 @@ namespace Escyug.Importer.UI.WindowsFormsApp.Setup
 {
     public partial class SetupBuilderForm : Form, ISetupBuilderView
     {
-        private readonly ApplicationContext _context;
-
-        public SetupBuilderForm(ApplicationContext context)
+        public SetupBuilderForm()
         {
-            _context = context;
             InitializeComponent();
         }
 
-        //public new void Show()
-        //{
-        //    base.Show();
-        //}
+        public new void Show()
+        {
+            //Append
+            //base.Show();
+        }
 
         #region ISetupBuilderView members
 
@@ -45,5 +43,22 @@ namespace Escyug.Importer.UI.WindowsFormsApp.Setup
 
         #endregion
 
+        // look like ugly crutch
+        public void Append(Presentations.Common.IView view)
+        {
+            foreach (var ctrl in ((Form)view).Controls)
+            {
+                if (ctrl is SplitContainer)
+                {
+                    this.TopLevel = false;
+                    this.ControlBox = false;
+                    this.Dock = DockStyle.Fill;
+                    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                    ((SplitContainer)ctrl).Panel2.Controls.Add(this);
+                    this.Visible = true;
+                }
+                    
+            }
+        }
     }
 }

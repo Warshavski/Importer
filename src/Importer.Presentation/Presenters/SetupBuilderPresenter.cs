@@ -14,7 +14,7 @@ using Escyug.Importer.Presentations.Views;
 
 namespace Escyug.Importer.Presentations.Presenters
 {
-    public class SetupBuilderPresenter : BasePresenter<ISetupBuilderView, DataInstance>
+    public class SetupBuilderPresenter : BasePresenter<ISetupBuilderView, ViewContainer<DataInstance, IView>>
     {
         private DataInstance _dataInstace;
 
@@ -24,12 +24,23 @@ namespace Escyug.Importer.Presentations.Presenters
             View.SelectFileType += () => OnSelectFileType();
         }
 
-        public override void Run(DataInstance argument)
+        public override void Run(ViewContainer<DataInstance, IView> argument)
         {
-            _dataInstace = argument;
+            _dataInstace = argument.Argument;
             Initialize();
-            View.Show();
+            View.Append(argument.Container);
         }
+
+        /*
+         * 
+          public override void Run(DataInstance argument)
+          {
+              _dataInstace = argument;
+              Initialize();
+              View.Append(View);
+              //View.Show();
+          }
+        */
 
         private void Initialize()
         {

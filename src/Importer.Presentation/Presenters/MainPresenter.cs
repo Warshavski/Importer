@@ -25,7 +25,11 @@ namespace Escyug.Importer.Presentations.Presenters
 
         private void Initialize()
         {
-            Controller.Run<SetupBuilderPresenter, DataInstance>(_sourceDataInstance);
+            // pass binding container and DataInstance variable 
+            var testContainer = new ViewContainer<DataInstance, IView>
+                (_sourceDataInstance, View);
+
+            Controller.Run<SetupBuilderPresenter, ViewContainer<DataInstance, IView>>(testContainer);
         }
     }
 }

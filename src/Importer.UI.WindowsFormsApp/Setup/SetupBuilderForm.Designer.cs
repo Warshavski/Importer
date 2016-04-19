@@ -70,13 +70,13 @@
             this.comboBoxSourceType.Size = new System.Drawing.Size(250, 21);
             this.comboBoxSourceType.TabIndex = 0;
             // 
-            // MainSetupForm
+            // SetupBuilderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(712, 418);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "MainSetupForm";
+            this.Name = "SetupBuilderForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.splitContainer1.Panel1.ResumeLayout(false);
