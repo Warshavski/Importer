@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Escyug.Importer.Common;
+
 using Escyug.Importer.Models;
+
+using Escyug.Importer.Presentations.Common;
 using Escyug.Importer.Presentations.ViewModel;
 
 namespace Escyug.Importer.Presentations.Views
 {
-    public interface IMainView
+    public interface IMainView : IView
     {
-       
+        DataInstance SourceDataInstance { get; set; }
+        DataInstance DestinationDataInstance { get; set; }
     }
 }
 

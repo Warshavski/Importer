@@ -38,9 +38,9 @@
             this.labelUserName = new System.Windows.Forms.Label();
             this.radioButtonSqlAuth = new System.Windows.Forms.RadioButton();
             this.radioButtonWindowsAuth = new System.Windows.Forms.RadioButton();
-            this.comboBoxDataBase = new System.Windows.Forms.ComboBox();
-            this.labelDataBase = new System.Windows.Forms.Label();
             this.buttonRefresh = new System.Windows.Forms.Button();
+            this.labelDataBase = new System.Windows.Forms.Label();
+            this.comboBoxDataBase = new System.Windows.Forms.ComboBox();
             this.groupBoxAuth.SuspendLayout();
             this.panelSqlAuth.SuspendLayout();
             this.SuspendLayout();
@@ -48,7 +48,7 @@
             // labelServerName
             // 
             this.labelServerName.AutoSize = true;
-            this.labelServerName.Location = new System.Drawing.Point(7, 15);
+            this.labelServerName.Location = new System.Drawing.Point(7, 9);
             this.labelServerName.Name = "labelServerName";
             this.labelServerName.Size = new System.Drawing.Size(73, 13);
             this.labelServerName.TabIndex = 0;
@@ -56,7 +56,7 @@
             // 
             // textBoxServerName
             // 
-            this.textBoxServerName.Location = new System.Drawing.Point(116, 12);
+            this.textBoxServerName.Location = new System.Drawing.Point(116, 6);
             this.textBoxServerName.Name = "textBoxServerName";
             this.textBoxServerName.Size = new System.Drawing.Size(350, 20);
             this.textBoxServerName.TabIndex = 1;
@@ -66,9 +66,9 @@
             this.groupBoxAuth.Controls.Add(this.panelSqlAuth);
             this.groupBoxAuth.Controls.Add(this.radioButtonSqlAuth);
             this.groupBoxAuth.Controls.Add(this.radioButtonWindowsAuth);
-            this.groupBoxAuth.Location = new System.Drawing.Point(10, 45);
+            this.groupBoxAuth.Location = new System.Drawing.Point(9, 59);
             this.groupBoxAuth.Name = "groupBoxAuth";
-            this.groupBoxAuth.Size = new System.Drawing.Size(467, 137);
+            this.groupBoxAuth.Size = new System.Drawing.Size(467, 138);
             this.groupBoxAuth.TabIndex = 2;
             this.groupBoxAuth.TabStop = false;
             this.groupBoxAuth.Text = "Authentication : ";
@@ -140,37 +140,37 @@
             this.radioButtonWindowsAuth.UseVisualStyleBackColor = true;
             this.radioButtonWindowsAuth.CheckedChanged += new System.EventHandler(this.radioButtonWindowsAuth_CheckedChanged);
             // 
-            // comboBoxDataBase
+            // buttonRefresh
             // 
-            this.comboBoxDataBase.FormattingEnabled = true;
-            this.comboBoxDataBase.Location = new System.Drawing.Point(83, 191);
-            this.comboBoxDataBase.Name = "comboBoxDataBase";
-            this.comboBoxDataBase.Size = new System.Drawing.Size(278, 21);
-            this.comboBoxDataBase.TabIndex = 3;
+            this.buttonRefresh.Location = new System.Drawing.Point(368, 30);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(98, 23);
+            this.buttonRefresh.TabIndex = 8;
+            this.buttonRefresh.Text = "Refresh";
+            this.buttonRefresh.UseVisualStyleBackColor = true;
             // 
             // labelDataBase
             // 
             this.labelDataBase.AutoSize = true;
-            this.labelDataBase.Location = new System.Drawing.Point(12, 194);
+            this.labelDataBase.Location = new System.Drawing.Point(7, 35);
             this.labelDataBase.Name = "labelDataBase";
             this.labelDataBase.Size = new System.Drawing.Size(65, 13);
-            this.labelDataBase.TabIndex = 4;
+            this.labelDataBase.TabIndex = 7;
             this.labelDataBase.Text = "Data base : ";
             // 
-            // buttonRefresh
+            // comboBoxDataBase
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(369, 189);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(100, 23);
-            this.buttonRefresh.TabIndex = 5;
-            this.buttonRefresh.Text = "Refresh";
-            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.comboBoxDataBase.FormattingEnabled = true;
+            this.comboBoxDataBase.Location = new System.Drawing.Point(116, 32);
+            this.comboBoxDataBase.Name = "comboBoxDataBase";
+            this.comboBoxDataBase.Size = new System.Drawing.Size(246, 21);
+            this.comboBoxDataBase.TabIndex = 6;
             // 
             // SqlSetupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 219);
+            this.ClientSize = new System.Drawing.Size(485, 204);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.labelDataBase);
             this.Controls.Add(this.comboBoxDataBase);
@@ -201,8 +201,8 @@
         private System.Windows.Forms.Label labelUserName;
         private System.Windows.Forms.RadioButton radioButtonSqlAuth;
         private System.Windows.Forms.RadioButton radioButtonWindowsAuth;
-        private System.Windows.Forms.ComboBox comboBoxDataBase;
-        private System.Windows.Forms.Label labelDataBase;
         private System.Windows.Forms.Button buttonRefresh;
+        private System.Windows.Forms.Label labelDataBase;
+        private System.Windows.Forms.ComboBox comboBoxDataBase;
     }
 }

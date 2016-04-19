@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Escyug.Importer.Models.Repository;
+﻿using Escyug.Importer.Models.Repository;
 
 namespace Escyug.Importer.Models.Services
 {
-    public sealed class DataInstanceService
+    public sealed class DataInstanceService : IDataInstanceService
     {
         private readonly IDataInstanceRepository _dataInstanceRepository;
 
@@ -23,6 +17,5 @@ namespace Escyug.Importer.Models.Services
 
             return new DataInstance(connectionString, Metadata);
         }
-
     }
 }

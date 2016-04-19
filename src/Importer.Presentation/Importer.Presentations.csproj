@@ -39,12 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ApplicationController.cs" />
+    <Compile Include="Common\BasePresenter.cs" />
+    <Compile Include="Common\IApplicationController.cs" />
+    <Compile Include="Common\IContainer.cs" />
+    <Compile Include="Common\IPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\SetupBuilderPresenter.cs" />
     <Compile Include="Presenters\SetupPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\FileType.cs" />
     <Compile Include="Views\IMainView.cs" />
+    <Compile Include="Views\ISetupBuilderView.cs" />
     <Compile Include="Views\ISetupView.cs" />
+    <Compile Include="Common\IView.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

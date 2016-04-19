@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Escyug.Importer.Presentations.Presenters;
+using Escyug.Importer.Presentations.Views;
+using Escyug.Importer.Presentations.ViewModel;
+
 namespace Escyug.Importer.UI.WindowsFormsApp.Setup
 {
     public partial class SqlSetupForm : Form

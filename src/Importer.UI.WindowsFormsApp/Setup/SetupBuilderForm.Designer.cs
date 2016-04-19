@@ -1,6 +1,6 @@
 ﻿namespace Escyug.Importer.UI.WindowsFormsApp.Setup
 {
-    partial class MainSetupForm
+    partial class SetupBuilderForm
     {
         /// <summary>
         /// Required designer variable.
@@ -40,6 +40,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -64,11 +65,10 @@
             // comboBoxSourceType
             // 
             this.comboBoxSourceType.FormattingEnabled = true;
-            this.comboBoxSourceType.Location = new System.Drawing.Point(121, 6);
+            this.comboBoxSourceType.Location = new System.Drawing.Point(116, 6);
             this.comboBoxSourceType.Name = "comboBoxSourceType";
             this.comboBoxSourceType.Size = new System.Drawing.Size(250, 21);
             this.comboBoxSourceType.TabIndex = 0;
-            this.comboBoxSourceType.SelectionChangeCommitted += new System.EventHandler(this.comboBoxSourceType_SelectionChangeCommitted);
             // 
             // MainSetupForm
             // 

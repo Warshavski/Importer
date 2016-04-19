@@ -52,6 +52,7 @@
     <Compile Include="Services\DataImportService.cs" />
     <Compile Include="Services\DataInstanceService.cs" />
     <Compile Include="Services\DataInstanceServiceCreator.cs" />
+    <Compile Include="Services\IDataInstanceService.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>
   <ItemGroup>

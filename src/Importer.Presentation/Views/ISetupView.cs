@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 
-using Escyug.Importer.Presentations.ViewModel;
+using Escyug.Importer.Presentations.Common;
 
 namespace Escyug.Importer.Presentations.Views
 {
-    public interface ISetupView
+    public interface ISetupView : IView
     {
-        event Action Initialize;
+        event Action InitializeDataInstance;
 
-        IEnumerable<FileType> FilesTypesList { set; }
+        string ConnectionString { get; }
     }
 }

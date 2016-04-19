@@ -1,37 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Escyug.Importer.Common;
+
+using Escyug.Importer.Models;
+using Escyug.Importer.Models.Services;
+
+using Escyug.Importer.Presentations.Common;
 using Escyug.Importer.Presentations.Views;
 using Escyug.Importer.Presentations.ViewModel;
 
 namespace Escyug.Importer.Presentations.Presenters
 {
-    public class SetupPresenter
+    public sealed class SetupPresenter : BasePresenter<ISetupView, DataInstance>
     {
-        private readonly ISetupView _view;
+        private readonly DataInstanceService _dataInstanceService;
 
-        public SetupPresenter(ISetupView view)
+        private DataInstance _sourceDataInstance;
+        
+        public SetupPresenter(IApplicationController controller, ISetupView view, 
+            DataInstanceService dataInstanceService) 
+            : base(controller, view) 
         {
-            _view = view;
+            _dataInstanceService = dataInstanceService;
 
-            _view.Initialize += () => OnInitialize();
+            View.InitializeDataInstance += () => OnInitializeDataInstance();
         }
 
-        private void OnInitialize()
+        public override void Run(DataInstance argument)
         {
-            // separate factory class 
-            var filesTypes = new List<FileType>();
+            _sourceDataInstance = argument;
+            View.Show();
+        }
 
-            filesTypes.Add(new FileType(null, "<select source type>"));
-            filesTypes.Add(new FileType(Constants.DataInstanceTypes.OleDb, "Dbf"));
-            filesTypes.Add(new FileType(Constants.DataInstanceTypes.OleDb, "Excel"));
-            filesTypes.Add(new FileType(Constants.DataInstanceTypes.Sql, "Sql"));
+        private void OnInitializeDataInstance()
+        {
+            _sourceDataInstance = _dataInstanceService.CreateInstance(View.ConnectionString);
 
-            _view.FilesTypesList = filesTypes;
+            View.Close();
         }
     }
 }

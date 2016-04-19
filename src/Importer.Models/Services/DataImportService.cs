@@ -9,7 +9,7 @@ using Escyug.Importer.Models.Repository;
 
 namespace Escyug.Importer.Models.Services
 {
-    public class DataImportService
+    public sealed class DataImportService
     {
         private readonly IDataImportRepository _importRepo;
 

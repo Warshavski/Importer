@@ -1,21 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 
 using Escyug.Importer.Common;
+
+using Escyug.Importer.Presentations.Common;
 using Escyug.Importer.Presentations.Views;
-using Escyug.Importer.Presentations.ViewModel;
+
 using Escyug.Importer.Models;
 using Escyug.Importer.Models.Services;
 
 namespace Escyug.Importer.Presentations.Presenters
 {
-    public class MainPresenter
+    public class MainPresenter : BasePresenter<IMainView>
     {
-       
+        private DataInstance _sourceDataInstance;
+        private DataInstance _destinationDataInstance;
+
+        public MainPresenter(IApplicationController controller, IMainView view)
+            : base(controller, view)
+        {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            Controller.Run<SetupBuilderPresenter, DataInstance>(_sourceDataInstance);
+        }
     }
 }
 

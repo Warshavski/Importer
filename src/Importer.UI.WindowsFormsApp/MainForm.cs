@@ -19,22 +19,12 @@ namespace Escyug.Importer.UI.WindowsFormsApp
 {
     public partial class MainForm : Form, IMainView
     {
-        private readonly MainPresenter _presenter;
-
-        public MainForm()
+        private readonly ApplicationContext _context;
+   
+        public MainForm(ApplicationContext context)
         {
+            _context = context;
             InitializeComponent();
-            
-            this.Load += (sender, e) =>
-                {
-                    var setupForm = new MainSetupForm();
-                    setupForm.TopLevel = false;
-                    setupForm.Visible = true;
-                    setupForm.FormBorderStyle = FormBorderStyle.None;
-                    setupForm.Dock = DockStyle.Fill;
-
-                    splitContainerMenu.Panel1.Controls.Add(setupForm);
-                };
         }
 
         // create separate class 
@@ -50,6 +40,40 @@ namespace Escyug.Importer.UI.WindowsFormsApp
         {
             if (func != null)
                 await func.Invoke();
+        }
+
+        #endregion
+
+        public new void Show()
+        {
+            _context.MainForm = this;
+            Application.Run(_context);
+        }
+
+        #region IMainView members
+
+        public Models.DataInstance SourceDataInstance
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Models.DataInstance DestinationDataInstance
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion

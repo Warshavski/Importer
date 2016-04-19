@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using Escyug.Importer.Models.Services;
+
+using Escyug.Importer.Presentations.Common;
+using Escyug.Importer.Presentations.Presenters;
+using Escyug.Importer.Presentations.Views;
+
+using Escyug.Importer.UI.WindowsFormsApp.Setup;
+
 namespace Escyug.Importer.UI.WindowsFormsApp
 {
-    static class Program
+    internal static class Program
     {
+        public static readonly ApplicationContext Context = new ApplicationContext();
+
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -13,7 +23,13 @@ namespace Escyug.Importer.UI.WindowsFormsApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            var controller = new ApplicationController(new InjectAdapter())
+                .RegisterView<IMainView, MainForm>()
+                .RegisterView<ISetupBuilderView, SetupBuilderForm>()
+                .RegisterInstance(new ApplicationContext());
+
+            controller.Run<MainPresenter>();
         }
     }
 }
