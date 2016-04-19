@@ -42,6 +42,8 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
+            this.labelSourceType = new System.Windows.Forms.Label();
+            this.comboBoxSourceType = new System.Windows.Forms.ComboBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -101,13 +103,13 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // toolStripSeparator1
@@ -130,13 +132,13 @@
             // documentationToolStripMenuItem
             // 
             this.documentationToolStripMenuItem.Name = "documentationToolStripMenuItem";
-            this.documentationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.documentationToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.documentationToolStripMenuItem.Text = "Documentation";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // splitContainerMain
@@ -151,7 +153,9 @@
             // splitContainerMain.Panel1
             // 
             this.splitContainerMain.Panel1.BackColor = System.Drawing.Color.White;
+            this.splitContainerMain.Panel1.Controls.Add(this.labelSourceType);
             this.splitContainerMain.Panel1.Controls.Add(this.label1);
+            this.splitContainerMain.Panel1.Controls.Add(this.comboBoxSourceType);
             this.splitContainerMain.Size = new System.Drawing.Size(692, 526);
             this.splitContainerMain.SplitterDistance = 55;
             this.splitContainerMain.SplitterWidth = 2;
@@ -160,11 +164,28 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 18);
+            this.label1.Location = new System.Drawing.Point(460, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(149, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Main title and description label";
+            // 
+            // labelSourceType
+            // 
+            this.labelSourceType.AutoSize = true;
+            this.labelSourceType.Location = new System.Drawing.Point(12, 20);
+            this.labelSourceType.Name = "labelSourceType";
+            this.labelSourceType.Size = new System.Drawing.Size(73, 13);
+            this.labelSourceType.TabIndex = 3;
+            this.labelSourceType.Text = "Source type : ";
+            // 
+            // comboBoxSourceType
+            // 
+            this.comboBoxSourceType.FormattingEnabled = true;
+            this.comboBoxSourceType.Location = new System.Drawing.Point(116, 17);
+            this.comboBoxSourceType.Name = "comboBoxSourceType";
+            this.comboBoxSourceType.Size = new System.Drawing.Size(250, 21);
+            this.comboBoxSourceType.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -206,6 +227,8 @@
         private System.Windows.Forms.ToolStripMenuItem documentationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelSourceType;
+        private System.Windows.Forms.ComboBox comboBoxSourceType;
 
     }
 }

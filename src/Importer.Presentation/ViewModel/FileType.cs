@@ -2,7 +2,7 @@
 
 namespace Escyug.Importer.Presentations.ViewModel
 {
-    public class FileType
+    public sealed class FileType
     {   
         private Constants.DataInstanceTypes? _dataInstanceType;
         public Constants.DataInstanceTypes? DataInstanceType

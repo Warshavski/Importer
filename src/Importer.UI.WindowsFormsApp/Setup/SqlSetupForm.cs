@@ -14,28 +14,47 @@ using Escyug.Importer.Presentations.ViewModel;
 
 namespace Escyug.Importer.UI.WindowsFormsApp.Setup
 {
-    public partial class SqlSetupForm : Form
+    public partial class SqlSetupForm : Form, ISqlSetupView
     {
         public SqlSetupForm()
         {
             InitializeComponent();
+            
+            this.Load += (sender, e) => 
+                { 
+                    this.radioButtonWindowsAuth.Checked = true;
+                    this.textBoxDataBase.Text = "liss";
+                    this.textBoxServerName.Text = "localhost";
+                };
+
+            this.radioButtonWindowsAuth.CheckedChanged += (sender, e) =>
+                {
+                    if (radioButtonWindowsAuth.Checked)
+                        panelSqlAuth.Enabled = false;
+                };
+            this.radioButtonSqlAuth.CheckedChanged += (sender, e) =>
+                {
+                    if (radioButtonSqlAuth.Checked)
+                        panelSqlAuth.Enabled = true;
+                };
+
+            this.buttonInitializeTest.Click += (sender, e) => Invoker.Invoke(InitializeDataInstance);
         }
 
-        private void radioButtonWindowsAuth_CheckedChanged(object sender, EventArgs e)
+        public event Action InitializeDataInstance;
+
+        public new void Show()
         {
-            if (radioButtonWindowsAuth.Checked)
-                panelSqlAuth.Enabled = false;
+            ShowDialog();
         }
 
-        private void radioButtonSqlAuth_CheckedChanged(object sender, EventArgs e)
+        public string ConnectionString
         {
-            if (radioButtonSqlAuth.Checked)
-                panelSqlAuth.Enabled = true;
-        }
-
-        private void SqlSetupForm_Load(object sender, EventArgs e)
-        {
-            this.radioButtonWindowsAuth.Checked = true;
-        }
+            get 
+            {
+                return string.Format(@"Data Source={0};Initial Catalog={1};Integrated Security=True;",
+                    textBoxServerName.Text, textBoxDataBase.Text);
+            }
+        }     
     }
 }

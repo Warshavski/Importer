@@ -4,7 +4,7 @@ using Escyug.Importer.Presentations.Common;
 
 namespace Escyug.Importer.Presentations.Views
 {
-    public interface ISetupView : IView
+    public interface ISqlSetupView : IView
     {
         event Action InitializeDataInstance;
 

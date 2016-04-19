@@ -59,6 +59,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InjectAdapter.cs" />
+    <Compile Include="Invoker.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,12 +74,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Setup\SetupBuilderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Setup\SetupBuilderForm.Designer.cs">
-      <DependentUpon>SetupBuilderForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Setup\OleDbSetupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,9 +105,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Setup\SetupBuilderForm.resx">
-      <DependentUpon>SetupBuilderForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Setup\OleDbSetupForm.resx">
       <DependentUpon>OleDbSetupForm.cs</DependentUpon>
     </EmbeddedResource>

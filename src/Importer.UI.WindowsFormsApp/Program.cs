@@ -26,7 +26,8 @@ namespace Escyug.Importer.UI.WindowsFormsApp
 
             var controller = new ApplicationController(new InjectAdapter())
                 .RegisterView<IMainView, MainForm>()
-                .RegisterView<ISetupBuilderView, SetupBuilderForm>()
+                .RegisterView<ISqlSetupView, SqlSetupForm>()
+                .RegisterView<IMappingsView, MappingsForm>()
                 .RegisterInstance(new ApplicationContext());
 
             controller.Run<MainPresenter>();

@@ -8,35 +8,34 @@ using Escyug.Importer.Models.Services;
 
 using Escyug.Importer.Presentations.Common;
 using Escyug.Importer.Presentations.Views;
-using Escyug.Importer.Presentations.ViewModel;
 
 namespace Escyug.Importer.Presentations.Presenters
 {
-    public sealed class SetupPresenter : BasePresenter<ISetupView, DataInstance>
+    public sealed class SqlSetupPresenter : BasePresenter<ISqlSetupView>
     {
         private readonly DataInstanceService _dataInstanceService;
 
-        private DataInstance _sourceDataInstance;
-        
-        public SetupPresenter(IApplicationController controller, ISetupView view, 
-            DataInstanceService dataInstanceService) 
+        public SqlSetupPresenter(IApplicationController controller, ISqlSetupView view) 
             : base(controller, view) 
         {
-            _dataInstanceService = dataInstanceService;
+            _dataInstanceService = 
+                DataInstanceServiceCreator.CreateService(Constants.DataInstanceTypes.Sql);
 
             View.InitializeDataInstance += () => OnInitializeDataInstance();
         }
 
+        /*
         public override void Run(DataInstance argument)
         {
             _sourceDataInstance = argument;
             View.Show();
         }
+        */
 
         private void OnInitializeDataInstance()
         {
-            _sourceDataInstance = _dataInstanceService.CreateInstance(View.ConnectionString);
-
+            var sourceDataInstance = _dataInstanceService.CreateInstance(View.ConnectionString);
+            Controller.Run<MappingPresenter, DataInstance>(sourceDataInstance);
             View.Close();
         }
     }

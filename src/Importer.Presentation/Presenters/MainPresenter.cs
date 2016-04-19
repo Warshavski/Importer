@@ -7,29 +7,43 @@ using Escyug.Importer.Common;
 using Escyug.Importer.Presentations.Common;
 using Escyug.Importer.Presentations.Views;
 
-using Escyug.Importer.Models;
-using Escyug.Importer.Models.Services;
-
 namespace Escyug.Importer.Presentations.Presenters
 {
-    public class MainPresenter : BasePresenter<IMainView>
+    public sealed class MainPresenter : BasePresenter<IMainView>
     {
-        private DataInstance _sourceDataInstance;
-        private DataInstance _destinationDataInstance;
-
         public MainPresenter(IApplicationController controller, IMainView view)
             : base(controller, view)
         {
             Initialize();
+
+            View.SelectFileType += () => OnSelectFileType();
         }
 
         private void Initialize()
         {
-            // pass binding container and DataInstance variable 
-            var testContainer = new ViewContainer<DataInstance, IView>
-                (_sourceDataInstance, View);
+            var fileTypesList = new List<ViewModel.FileType>();
 
-            Controller.Run<SetupBuilderPresenter, ViewContainer<DataInstance, IView>>(testContainer);
+            fileTypesList.Add(new ViewModel.FileType(null, "<select file type>"));
+            fileTypesList.Add(new ViewModel.FileType(Constants.DataInstanceTypes.Sql, "Sql data instance"));
+            fileTypesList.Add(new ViewModel.FileType(Constants.DataInstanceTypes.OleDb, "Dbf file"));
+            fileTypesList.Add(new ViewModel.FileType(Constants.DataInstanceTypes.OleDb, "Excel file"));
+
+            View.FileTypesList = fileTypesList;
+        }
+
+        private void OnSelectFileType()
+        {
+            /* NOTE : setup presenter should be created by Application controller.
+             *        Application controller should use DI and dependency resolver.
+             * 
+             *  1. Create DataInsanceService depends on selected file type.
+             *  2. Create SetupPresenter and Run it with parameter (DataInstance).
+             */
+            var fileType = View.SelectedFileType.DataInstanceType.Value;
+
+            // clear form and load new one
+            // should depend on selected file type
+            Controller.Run<SqlSetupPresenter>();
         }
     }
 }

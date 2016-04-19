@@ -43,17 +43,15 @@
     <Compile Include="Common\BasePresenter.cs" />
     <Compile Include="Common\IApplicationController.cs" />
     <Compile Include="Common\IContainer.cs" />
-    <Compile Include="Common\INestedView.cs" />
     <Compile Include="Common\IPresenter.cs" />
-    <Compile Include="Common\ViewContainer.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
-    <Compile Include="Presenters\SetupBuilderPresenter.cs" />
-    <Compile Include="Presenters\SetupPresenter.cs" />
+    <Compile Include="Presenters\MappingPresenter.cs" />
+    <Compile Include="Presenters\SqlSetupPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\FileType.cs" />
     <Compile Include="Views\IMainView.cs" />
-    <Compile Include="Views\ISetupBuilderView.cs" />
-    <Compile Include="Views\ISetupView.cs" />
+    <Compile Include="Views\IMappingsView.cs" />
+    <Compile Include="Views\ISqlSetupView.cs" />
     <Compile Include="Common\IView.cs" />
   </ItemGroup>
   <ItemGroup />

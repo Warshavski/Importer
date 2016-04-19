@@ -40,7 +40,8 @@
             this.radioButtonWindowsAuth = new System.Windows.Forms.RadioButton();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelDataBase = new System.Windows.Forms.Label();
-            this.comboBoxDataBase = new System.Windows.Forms.ComboBox();
+            this.buttonInitializeTest = new System.Windows.Forms.Button();
+            this.textBoxDataBase = new System.Windows.Forms.TextBox();
             this.groupBoxAuth.SuspendLayout();
             this.panelSqlAuth.SuspendLayout();
             this.SuspendLayout();
@@ -126,7 +127,6 @@
             this.radioButtonSqlAuth.TabStop = true;
             this.radioButtonSqlAuth.Text = "SQL Server authentication";
             this.radioButtonSqlAuth.UseVisualStyleBackColor = true;
-            this.radioButtonSqlAuth.CheckedChanged += new System.EventHandler(this.radioButtonSqlAuth_CheckedChanged);
             // 
             // radioButtonWindowsAuth
             // 
@@ -138,7 +138,6 @@
             this.radioButtonWindowsAuth.TabStop = true;
             this.radioButtonWindowsAuth.Text = "Windows authentication";
             this.radioButtonWindowsAuth.UseVisualStyleBackColor = true;
-            this.radioButtonWindowsAuth.CheckedChanged += new System.EventHandler(this.radioButtonWindowsAuth_CheckedChanged);
             // 
             // buttonRefresh
             // 
@@ -158,28 +157,37 @@
             this.labelDataBase.TabIndex = 7;
             this.labelDataBase.Text = "Data base : ";
             // 
-            // comboBoxDataBase
+            // buttonInitializeTest
             // 
-            this.comboBoxDataBase.FormattingEnabled = true;
-            this.comboBoxDataBase.Location = new System.Drawing.Point(116, 32);
-            this.comboBoxDataBase.Name = "comboBoxDataBase";
-            this.comboBoxDataBase.Size = new System.Drawing.Size(246, 21);
-            this.comboBoxDataBase.TabIndex = 6;
+            this.buttonInitializeTest.Location = new System.Drawing.Point(383, 203);
+            this.buttonInitializeTest.Name = "buttonInitializeTest";
+            this.buttonInitializeTest.Size = new System.Drawing.Size(90, 23);
+            this.buttonInitializeTest.TabIndex = 9;
+            this.buttonInitializeTest.Text = "Initialize test";
+            this.buttonInitializeTest.UseVisualStyleBackColor = true;
+            // 
+            // textBoxDataBase
+            // 
+            this.textBoxDataBase.Location = new System.Drawing.Point(116, 32);
+            this.textBoxDataBase.Name = "textBoxDataBase";
+            this.textBoxDataBase.Size = new System.Drawing.Size(247, 20);
+            this.textBoxDataBase.TabIndex = 10;
             // 
             // SqlSetupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 204);
+            this.ClientSize = new System.Drawing.Size(485, 232);
+            this.Controls.Add(this.textBoxDataBase);
+            this.Controls.Add(this.buttonInitializeTest);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.labelDataBase);
-            this.Controls.Add(this.comboBoxDataBase);
             this.Controls.Add(this.groupBoxAuth);
             this.Controls.Add(this.textBoxServerName);
             this.Controls.Add(this.labelServerName);
             this.Name = "SqlSetupForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SqlInstanceForm";
-            this.Load += new System.EventHandler(this.SqlSetupForm_Load);
             this.groupBoxAuth.ResumeLayout(false);
             this.groupBoxAuth.PerformLayout();
             this.panelSqlAuth.ResumeLayout(false);
@@ -203,6 +211,7 @@
         private System.Windows.Forms.RadioButton radioButtonWindowsAuth;
         private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.Label labelDataBase;
-        private System.Windows.Forms.ComboBox comboBoxDataBase;
+        private System.Windows.Forms.Button buttonInitializeTest;
+        private System.Windows.Forms.TextBox textBoxDataBase;
     }
 }

@@ -25,24 +25,9 @@ namespace Escyug.Importer.UI.WindowsFormsApp
         {
             _context = context;
             InitializeComponent();
+
+            this.comboBoxSourceType.SelectionChangeCommitted += (sender, e) => Invoker.Invoke(SelectFileType);
         }
-
-        // create separate class 
-        #region Helper methods 
-
-        private void Invoke(Action action)
-        {
-            if (action != null)
-                action.Invoke();
-        }
-
-        private async Task InvokeAsync(Func<Task> func)
-        {
-            if (func != null)
-                await func.Invoke();
-        }
-
-        #endregion
 
         public new void Show()
         {
@@ -50,33 +35,21 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             Application.Run(_context);
         }
 
-        #region IMainView members
+        public event Action SelectFileType;
 
-        public Models.DataInstance SourceDataInstance
+        public IEnumerable<FileType> FileTypesList
         {
-            get
+            set 
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                comboBoxSourceType.DataSource = value;
+                comboBoxSourceType.DisplayMember = "Name";
             }
         }
 
-        public Models.DataInstance DestinationDataInstance
+        public FileType SelectedFileType
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return (FileType)comboBoxSourceType.SelectedValue; }
         }
-
-        #endregion
     }
 }
 
