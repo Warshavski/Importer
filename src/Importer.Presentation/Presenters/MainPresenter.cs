@@ -4,19 +4,72 @@ using System.Threading.Tasks;
 
 using Escyug.Importer.Common;
 
+using Escyug.Importer.Models;
+using Escyug.Importer.Models.Services;
+
 using Escyug.Importer.Presentations.Common;
 using Escyug.Importer.Presentations.Views;
+using System.IO;
+using System.Text;
 
 namespace Escyug.Importer.Presentations.Presenters
 {
+
+   /* NOTE : setup presenter should be created by Application controller.
+    *        Application controller should use DI and dependency resolver.
+    * 
+    *  1. Create DataInsanceService depends on selected file type.
+    *  2. Create SetupPresenter and Run it with parameter (DataInstance).
+    */
+
+    /* clear form and load new one
+     * should depend on selected file type
+     */
+
+    //var fileType = View.SelectedFileType.DataInstanceType.Value;
+    //Controller.Run<SqlSetupPresenter>();
+
     public sealed class MainPresenter : BasePresenter<IMainView>
     {
+        private List<string> _testConnectionStrings;
+
+        private readonly IDataInstanceService _destinationService;
+
+        private DataInstance _sourceDataInstance;
+        private DataInstance _destinationDataInstance;
+
         public MainPresenter(IApplicationController controller, IMainView view)
             : base(controller, view)
         {
             Initialize();
 
-            View.SelectFileType += () => OnSelectFileType();
+            View.DestinationInitialize += () => OnDestinationInitialize();
+            view.DestinationInitializeAsync += () => OnDestinationInitializeAsync();
+
+            View.SourceInitialize += () => OnSourceInitialize();
+            view.SourceInitializeAsync += () => OnSourceInitializeAsync();
+
+            _destinationService =
+                DataInstanceServiceCreator.CreateService(Constants.DataInstanceTypes.Sql);
+
+            _testConnectionStrings = new List<string>();
+
+            ReadConnectionStringsAsync();
+        }
+
+        private async void ReadConnectionStringsAsync()
+        {
+            var csFilePath = @"C:\test\connectionStrings.txt";
+            var connectioStringsList = new List<string>();
+            string cs;
+            using (var csReader = new StreamReader(csFilePath, Encoding.UTF8))
+            {
+                while (!csReader.EndOfStream)
+                {
+                    cs = await csReader.ReadLineAsync();
+                    _testConnectionStrings.Add(cs);
+                }
+            }
         }
 
         private void Initialize()
@@ -31,19 +84,51 @@ namespace Escyug.Importer.Presentations.Presenters
             View.FileTypesList = fileTypesList;
         }
 
-        private void OnSelectFileType()
+        private void OnDestinationInitialize()
         {
-            /* NOTE : setup presenter should be created by Application controller.
-             *        Application controller should use DI and dependency resolver.
-             * 
-             *  1. Create DataInsanceService depends on selected file type.
-             *  2. Create SetupPresenter and Run it with parameter (DataInstance).
-             */
-            var fileType = View.SelectedFileType.DataInstanceType.Value;
+            _destinationDataInstance = 
+                _destinationService.CreateInstance(_testConnectionStrings[1]);
 
-            // clear form and load new one
-            // should depend on selected file type
-            Controller.Run<SqlSetupPresenter>();
+            View.DestinationTablesList = _destinationDataInstance.Tables;
+        }
+
+        private async Task OnDestinationInitializeAsync()
+        {
+            View.IsDestinationLoad = true;
+
+            await Task.Run(() =>
+                {
+                    _destinationDataInstance = 
+                        _destinationService.CreateInstance(_testConnectionStrings[2]);
+                });
+
+            View.DestinationTablesList = _destinationDataInstance.Tables;
+            
+            View.IsDestinationLoad = false;
+        }
+
+        private void OnSourceInitialize()
+        {     
+            //var destinationService =
+            //    DataInstanceServiceCreator.CreateService(Constants.DataInstanceTypes.Sql);
+
+            //_sourceDataInstance = destinationService.CreateInstance(@"Data Source=localhost;Initial Catalog=liss;Integrated Security=True;");
+
+            //View.SourceTablesList = _sourceDataInstance.Tables;
+        }
+
+        private async Task OnSourceInitializeAsync()
+        {
+            View.IsSourceLoad = true;
+
+            await Task.Run(() =>
+                {
+                    _sourceDataInstance = _destinationService.CreateInstance(_testConnectionStrings[3]);
+                });
+
+            View.SourceTablesList = _sourceDataInstance.Tables;
+
+            View.IsSourceLoad = false;
         }
     }
 }

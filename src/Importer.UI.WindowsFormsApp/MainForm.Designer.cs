@@ -28,11 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripMainControl = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButtonFile = new System.Windows.Forms.ToolStripDropDownButton();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,26 +48,56 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
+            this.toolStripDestinationControl = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonLoadDestination = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonDestinationSettings = new System.Windows.Forms.ToolStripButton();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.imageListTreeView = new System.Windows.Forms.ImageList(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.checkBoxTruncate = new System.Windows.Forms.CheckBox();
+            this.buttonLoadSource = new System.Windows.Forms.Button();
+            this.comboBoxSourceTables = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonImportExecute = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.destinationColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mappingColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.typeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.importCheckColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sourceColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.labelSourceType = new System.Windows.Forms.Label();
             this.comboBoxSourceType = new System.Windows.Forms.ComboBox();
-            this.statusStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.statusStripMain.SuspendLayout();
+            this.toolStripMainControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
+            this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
+            this.toolStripDestinationControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // statusStrip1
+            // statusStripMain
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripProgressBar1});
-            this.statusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip1.Location = new System.Drawing.Point(0, 551);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(692, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStripMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.statusStripMain.Location = new System.Drawing.Point(0, 551);
+            this.statusStripMain.Name = "statusStripMain";
+            this.statusStripMain.Size = new System.Drawing.Size(692, 22);
+            this.statusStripMain.TabIndex = 0;
+            this.statusStripMain.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
@@ -75,18 +111,18 @@
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(250, 16);
             // 
-            // toolStrip1
+            // toolStripMainControl
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMainControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButtonFile,
             this.toolStripSeparator1,
             this.toolStripDropDownButtonHelp});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip1.Size = new System.Drawing.Size(692, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStripMainControl.Location = new System.Drawing.Point(0, 0);
+            this.toolStripMainControl.Name = "toolStripMainControl";
+            this.toolStripMainControl.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStripMainControl.Size = new System.Drawing.Size(692, 25);
+            this.toolStripMainControl.TabIndex = 1;
+            this.toolStripMainControl.Text = "toolStrip1";
             // 
             // toolStripDropDownButtonFile
             // 
@@ -143,6 +179,7 @@
             // 
             // splitContainerMain
             // 
+            this.splitContainerMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainerMain.IsSplitterFixed = true;
@@ -153,9 +190,11 @@
             // splitContainerMain.Panel1
             // 
             this.splitContainerMain.Panel1.BackColor = System.Drawing.Color.White;
-            this.splitContainerMain.Panel1.Controls.Add(this.labelSourceType);
             this.splitContainerMain.Panel1.Controls.Add(this.label1);
-            this.splitContainerMain.Panel1.Controls.Add(this.comboBoxSourceType);
+            // 
+            // splitContainerMain.Panel2
+            // 
+            this.splitContainerMain.Panel2.Controls.Add(this.splitContainer1);
             this.splitContainerMain.Size = new System.Drawing.Size(692, 526);
             this.splitContainerMain.SplitterDistance = 55;
             this.splitContainerMain.SplitterWidth = 2;
@@ -164,16 +203,275 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(460, 21);
+            this.label1.Location = new System.Drawing.Point(27, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(149, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Main title and description label";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainer1.Panel1.Controls.Add(this.pictureBoxLoading);
+            this.splitContainer1.Panel1.Controls.Add(this.toolStripDestinationControl);
+            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.checkBoxTruncate);
+            this.splitContainer1.Panel2.Controls.Add(this.buttonLoadSource);
+            this.splitContainer1.Panel2.Controls.Add(this.comboBoxSourceTables);
+            this.splitContainer1.Panel2.Controls.Add(this.label2);
+            this.splitContainer1.Panel2.Controls.Add(this.buttonImportExecute);
+            this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer1.Panel2.Controls.Add(this.labelSourceType);
+            this.splitContainer1.Panel2.Controls.Add(this.comboBoxSourceType);
+            this.splitContainer1.Size = new System.Drawing.Size(692, 469);
+            this.splitContainer1.SplitterDistance = 179;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // pictureBoxLoading
+            // 
+            this.pictureBoxLoading.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureBoxLoading.Image = global::Escyug.Importer.UI.WindowsFormsApp.Properties.Resources._35__1_;
+            this.pictureBoxLoading.Location = new System.Drawing.Point(63, 208);
+            this.pictureBoxLoading.Name = "pictureBoxLoading";
+            this.pictureBoxLoading.Size = new System.Drawing.Size(50, 50);
+            this.pictureBoxLoading.TabIndex = 3;
+            this.pictureBoxLoading.TabStop = false;
+            this.pictureBoxLoading.Visible = false;
+            // 
+            // toolStripDestinationControl
+            // 
+            this.toolStripDestinationControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonLoadDestination,
+            this.toolStripSeparator2,
+            this.toolStripButtonDestinationSettings});
+            this.toolStripDestinationControl.Location = new System.Drawing.Point(0, 0);
+            this.toolStripDestinationControl.Name = "toolStripDestinationControl";
+            this.toolStripDestinationControl.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStripDestinationControl.Size = new System.Drawing.Size(177, 25);
+            this.toolStripDestinationControl.TabIndex = 2;
+            this.toolStripDestinationControl.Text = "toolStrip2";
+            // 
+            // toolStripButtonLoadDestination
+            // 
+            this.toolStripButtonLoadDestination.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonLoadDestination.Image = global::Escyug.Importer.UI.WindowsFormsApp.Properties.Resources._monitor;
+            this.toolStripButtonLoadDestination.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonLoadDestination.Name = "toolStripButtonLoadDestination";
+            this.toolStripButtonLoadDestination.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonLoadDestination.Text = "Load destination";
+            this.toolStripButtonLoadDestination.ToolTipText = "Load destination instance";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonDestinationSettings
+            // 
+            this.toolStripButtonDestinationSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonDestinationSettings.Image = global::Escyug.Importer.UI.WindowsFormsApp.Properties.Resources._cog;
+            this.toolStripButtonDestinationSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDestinationSettings.Name = "toolStripButtonDestinationSettings";
+            this.toolStripButtonDestinationSettings.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonDestinationSettings.Text = "toolStripButton1";
+            this.toolStripButtonDestinationSettings.ToolTipText = "Destination connection settings";
+            // 
+            // treeView1
+            // 
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageListTreeView;
+            this.treeView1.Location = new System.Drawing.Point(0, 25);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.SelectedImageIndex = 0;
+            this.treeView1.Size = new System.Drawing.Size(177, 443);
+            this.treeView1.TabIndex = 0;
+            // 
+            // imageListTreeView
+            // 
+            this.imageListTreeView.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTreeView.ImageStream")));
+            this.imageListTreeView.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTreeView.Images.SetKeyName(0, "30.png");
+            this.imageListTreeView.Images.SetKeyName(1, "empty.png");
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureBox1.Image = global::Escyug.Importer.UI.WindowsFormsApp.Properties.Resources._35__2_;
+            this.pictureBox1.Location = new System.Drawing.Point(452, 13);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(20, 20);
+            this.pictureBox1.TabIndex = 10;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
+            // checkBoxTruncate
+            // 
+            this.checkBoxTruncate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxTruncate.AutoSize = true;
+            this.checkBoxTruncate.Location = new System.Drawing.Point(10, 440);
+            this.checkBoxTruncate.Name = "checkBoxTruncate";
+            this.checkBoxTruncate.Size = new System.Drawing.Size(149, 17);
+            this.checkBoxTruncate.TabIndex = 9;
+            this.checkBoxTruncate.Text = "Truncate destination table";
+            this.checkBoxTruncate.UseVisualStyleBackColor = true;
+            // 
+            // buttonLoadSource
+            // 
+            this.buttonLoadSource.Location = new System.Drawing.Point(356, 11);
+            this.buttonLoadSource.Name = "buttonLoadSource";
+            this.buttonLoadSource.Size = new System.Drawing.Size(90, 23);
+            this.buttonLoadSource.TabIndex = 2;
+            this.buttonLoadSource.Text = "Load source";
+            this.buttonLoadSource.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxSourceTables
+            // 
+            this.comboBoxSourceTables.FormattingEnabled = true;
+            this.comboBoxSourceTables.Location = new System.Drawing.Point(100, 41);
+            this.comboBoxSourceTables.Name = "comboBoxSourceTables";
+            this.comboBoxSourceTables.Size = new System.Drawing.Size(250, 21);
+            this.comboBoxSourceTables.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(78, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Source tables :";
+            // 
+            // buttonImportExecute
+            // 
+            this.buttonImportExecute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonImportExecute.Location = new System.Drawing.Point(409, 436);
+            this.buttonImportExecute.Name = "buttonImportExecute";
+            this.buttonImportExecute.Size = new System.Drawing.Size(90, 23);
+            this.buttonImportExecute.TabIndex = 5;
+            this.buttonImportExecute.Text = "Import";
+            this.buttonImportExecute.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.destinationColumn,
+            this.mappingColumn,
+            this.lengthColumn,
+            this.typeColumn,
+            this.importCheckColumn,
+            this.sourceColumn});
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle13;
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dataGridView1.Location = new System.Drawing.Point(7, 83);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.dataGridView1.RowHeadersVisible = false;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            this.dataGridView1.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.dataGridView1.Size = new System.Drawing.Size(492, 348);
+            this.dataGridView1.TabIndex = 4;
+            // 
+            // destinationColumn
+            // 
+            this.destinationColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.destinationColumn.DataPropertyName = "Name";
+            this.destinationColumn.HeaderText = "Destination";
+            this.destinationColumn.Name = "destinationColumn";
+            this.destinationColumn.ReadOnly = true;
+            // 
+            // mappingColumn
+            // 
+            this.mappingColumn.DataPropertyName = "MappedColumnName";
+            this.mappingColumn.HeaderText = "Mapping column";
+            this.mappingColumn.Name = "mappingColumn";
+            this.mappingColumn.Visible = false;
+            // 
+            // lengthColumn
+            // 
+            this.lengthColumn.DataPropertyName = "Length";
+            this.lengthColumn.HeaderText = "Length";
+            this.lengthColumn.Name = "lengthColumn";
+            this.lengthColumn.ReadOnly = true;
+            this.lengthColumn.Visible = false;
+            // 
+            // typeColumn
+            // 
+            this.typeColumn.DataPropertyName = "Type";
+            this.typeColumn.HeaderText = "Type";
+            this.typeColumn.Name = "typeColumn";
+            this.typeColumn.ReadOnly = true;
+            this.typeColumn.Visible = false;
+            // 
+            // importCheckColumn
+            // 
+            this.importCheckColumn.DataPropertyName = "IsForImport";
+            this.importCheckColumn.HeaderText = "Import";
+            this.importCheckColumn.Name = "importCheckColumn";
+            this.importCheckColumn.Visible = false;
+            // 
+            // sourceColumn
+            // 
+            this.sourceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.sourceColumn.DataPropertyName = "Columns";
+            this.sourceColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
+            this.sourceColumn.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.sourceColumn.HeaderText = "Source";
+            this.sourceColumn.MaxDropDownItems = 12;
+            this.sourceColumn.Name = "sourceColumn";
+            // 
             // labelSourceType
             // 
             this.labelSourceType.AutoSize = true;
-            this.labelSourceType.Location = new System.Drawing.Point(12, 20);
+            this.labelSourceType.Location = new System.Drawing.Point(16, 16);
             this.labelSourceType.Name = "labelSourceType";
             this.labelSourceType.Size = new System.Drawing.Size(73, 13);
             this.labelSourceType.TabIndex = 3;
@@ -182,7 +480,7 @@
             // comboBoxSourceType
             // 
             this.comboBoxSourceType.FormattingEnabled = true;
-            this.comboBoxSourceType.Location = new System.Drawing.Point(116, 17);
+            this.comboBoxSourceType.Location = new System.Drawing.Point(100, 13);
             this.comboBoxSourceType.Name = "comboBoxSourceType";
             this.comboBoxSourceType.Size = new System.Drawing.Size(250, 21);
             this.comboBoxSourceType.TabIndex = 2;
@@ -193,20 +491,32 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 573);
             this.Controls.Add(this.splitContainerMain);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.toolStripMainControl);
+            this.Controls.Add(this.statusStripMain);
             this.MinimumSize = new System.Drawing.Size(500, 450);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.statusStripMain.ResumeLayout(false);
+            this.statusStripMain.PerformLayout();
+            this.toolStripMainControl.ResumeLayout(false);
+            this.toolStripMainControl.PerformLayout();
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel1.PerformLayout();
+            this.splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
             this.splitContainerMain.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).EndInit();
+            this.toolStripDestinationControl.ResumeLayout(false);
+            this.toolStripDestinationControl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -214,8 +524,8 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.StatusStrip statusStripMain;
+        private System.Windows.Forms.ToolStrip toolStripMainControl;
         private System.Windows.Forms.SplitContainer splitContainerMain;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
@@ -229,6 +539,27 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelSourceType;
         private System.Windows.Forms.ComboBox comboBoxSourceType;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Button buttonLoadSource;
+        private System.Windows.Forms.ComboBox comboBoxSourceTables;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonImportExecute;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.CheckBox checkBoxTruncate;
+        private System.Windows.Forms.ToolStrip toolStripDestinationControl;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLoadDestination;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDestinationSettings;
+        private System.Windows.Forms.ImageList imageListTreeView;
+        private System.Windows.Forms.PictureBox pictureBoxLoading;
+        private System.Windows.Forms.DataGridViewTextBoxColumn destinationColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mappingColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lengthColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn typeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn importCheckColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn sourceColumn;
+        private System.Windows.Forms.PictureBox pictureBox1;
 
     }
 }

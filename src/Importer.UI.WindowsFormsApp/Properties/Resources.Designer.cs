@@ -63,9 +63,9 @@ namespace Escyug.Importer.UI.WindowsFormsApp.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _22 {
+        internal static System.Drawing.Bitmap _35__1_ {
             get {
-                object obj = ResourceManager.GetObject("22", resourceCulture);
+                object obj = ResourceManager.GetObject("35 (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Escyug.Importer.UI.WindowsFormsApp.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _22__1_ {
+        internal static System.Drawing.Bitmap _35__2_ {
             get {
-                object obj = ResourceManager.GetObject("22 (1)", resourceCulture);
+                object obj = ResourceManager.GetObject("35 (2)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Escyug.Importer.UI.WindowsFormsApp.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _22__2_ {
+        internal static System.Drawing.Bitmap _cog {
             get {
-                object obj = ResourceManager.GetObject("22 (2)", resourceCulture);
+                object obj = ResourceManager.GetObject("_cog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,19 +93,9 @@ namespace Escyug.Importer.UI.WindowsFormsApp.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _22__3_ {
+        internal static System.Drawing.Bitmap _monitor {
             get {
-                object obj = ResourceManager.GetObject("22 (3)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap _35 {
-            get {
-                object obj = ResourceManager.GetObject("35", resourceCulture);
+                object obj = ResourceManager.GetObject("_monitor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Escyug.Importer.Common;
 
@@ -12,11 +13,25 @@ namespace Escyug.Importer.Presentations.Views
 {
     public interface IMainView : IView
     {
-        event Action SelectFileType;
+        event Action DestinationInitialize;
+        event Func<Task> DestinationInitializeAsync;
+
+        event Action SourceInitialize;
+        event Func<Task> SourceInitializeAsync;
+
+        bool IsDestinationLoad { set; }
+        bool IsSourceLoad { set; }
+        string OperationState { set; }
 
         IEnumerable<ViewModel.FileType> FileTypesList { set; }
 
         ViewModel.FileType SelectedFileType { get; }
+
+        IEnumerable<Table> SourceTablesList { set; }
+        IEnumerable<Table> DestinationTablesList { set; }
+
+        IEnumerable<Models.Column> SelectedSourceTableColumns { set; }
+        IEnumerable<Models.Column> SelectedDestinationTableColumns { set; }   
     }
 }
 

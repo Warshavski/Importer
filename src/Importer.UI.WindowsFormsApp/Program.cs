@@ -13,6 +13,7 @@ namespace Escyug.Importer.UI.WindowsFormsApp
 {
     internal static class Program
     {
+        // ?? for what ??
         public static readonly ApplicationContext Context = new ApplicationContext();
 
         /// <summary>

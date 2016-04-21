@@ -140,19 +140,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\22.gif" />
+    <None Include="Resources\35 %281%29.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\22 %281%29.gif" />
+    <None Include="Resources\monitor.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\22 %282%29.gif" />
+    <None Include="Resources\cog.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\22 %283%29.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\35.gif" />
+    <None Include="Resources\35 %282%29.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
