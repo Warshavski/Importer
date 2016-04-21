@@ -11,7 +11,7 @@ namespace Escyug.Importer.Models.Services
 {
     public sealed class DataInstanceServiceCreator
     {
-        public static DataInstanceService CreateService(Constants.DataInstanceTypes fileType)
+        public static IDataInstanceService CreateService(Constants.DataInstanceTypes fileType)
         {
             switch (fileType)
             {
