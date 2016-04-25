@@ -7,7 +7,7 @@ using Escyug.Importer.Presentations.Common;
 
 namespace Escyug.Importer.UI.WindowsFormsApp
 {
-    internal sealed class InjectAdapter : IContainer
+    internal sealed class LightInjectAdapter : IContainer
     {
         private readonly ServiceContainer _container = new ServiceContainer();
 

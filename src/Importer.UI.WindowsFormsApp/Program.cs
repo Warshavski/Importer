@@ -25,10 +25,9 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var controller = new ApplicationController(new InjectAdapter())
+            var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IMainView, MainForm>()
                 .RegisterView<ISqlSetupView, SqlSetupForm>()
-                .RegisterView<IMappingsView, MappingsForm>()
                 .RegisterInstance(new ApplicationContext());
 
             controller.Run<MainPresenter>();
