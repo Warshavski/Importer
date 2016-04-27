@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Escyug.Importer.Common;
+
 using Escyug.Importer.Presentations.Presenters;
 using Escyug.Importer.Presentations.ViewModel;
 using Escyug.Importer.Presentations.Views;
@@ -46,6 +48,10 @@ namespace Escyug.Importer.UI.WindowsFormsApp
                         this.SelectedDestinationTableColumns =
                             (treeView1.SelectedNode.Tag as Models.Table).Columns;
                 };
+
+            this.toolStripButtonDestinationSettings.Click += async (sender, e) => await Invoker.InvokeAsync(DestinationInitializeAsync);
+
+            this.buttonImportExecute.Click += async (sender, e) => await Invoker.InvokeAsync(ImportAsync);
         }
 
         public new void Show()
@@ -54,11 +60,18 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             Application.Run(_context);
         }
 
+        public string Error
+        {
+            set { MessageBox.Show(value, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
         public event Action DestinationInitialize;
         public event Func<Task> DestinationInitializeAsync;
 
         public event Action SourceInitialize;
         public event Func<Task> SourceInitializeAsync;
+
+        public event Func<Task> ImportAsync;
 
         public bool IsDestinationLoad
         {
@@ -83,6 +96,17 @@ namespace Escyug.Importer.UI.WindowsFormsApp
                 comboBoxSourceType.DisplayMember = "Name";
             }
         }
+
+        public string SelectedSourceTable
+        {
+            get { return comboBoxSourceTables.SelectedText; } 
+        }
+        
+        public string SelectedDestinationTable 
+        {
+            get { return treeView1.SelectedNode.Name; }
+        }
+
 
         public FileType SelectedFileType
         {
@@ -115,7 +139,7 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             set 
             {
                 foreach (DataGridViewRow row in dataGridView1.Rows)
-                    row.Cells["sourceColumn"].Value = null;
+                    row.Cells[sourceColumn.Name].Value = null;
 
                 sourceColumn.DataSource = value;
                 sourceColumn.DisplayMember = "Name";
@@ -130,6 +154,27 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             }
         }
 
+        public Mapping Mapping
+        {
+            get 
+            {
+                var columnsMappings = new List<ColumnsMapping>();
+                
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.Cells[sourceColumn.Name].Value != null)
+                    {
+                        columnsMappings.Add(
+                       new ColumnsMapping(
+                           row.Cells[sourceColumn.Name].Value.ToString(),
+                           row.Cells[destinationColumn.Name].Value.ToString()));
+                    }
+                   
+                }
+
+                return new Mapping(SelectedSourceTable, SelectedDestinationTable, columnsMappings);
+            }
+        }
 
         #region Helper methods
 
@@ -159,7 +204,6 @@ namespace Escyug.Importer.UI.WindowsFormsApp
         }
 
         #endregion
-
     }
 }
 

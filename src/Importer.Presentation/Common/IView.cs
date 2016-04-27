@@ -4,5 +4,7 @@
     {
         void Show();
         void Close();
+
+        string Error { set; }
     }
 }

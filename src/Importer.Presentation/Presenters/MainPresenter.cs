@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
+using System.Text;
 
 using Escyug.Importer.Common;
 
@@ -9,8 +11,7 @@ using Escyug.Importer.Models.Services;
 
 using Escyug.Importer.Presentations.Common;
 using Escyug.Importer.Presentations.Views;
-using System.IO;
-using System.Text;
+using System.Configuration;
 
 namespace Escyug.Importer.Presentations.Presenters
 {
@@ -34,7 +35,7 @@ namespace Escyug.Importer.Presentations.Presenters
         private List<string> _testConnectionStrings;
 
         private readonly IDataInstanceService _destinationService;
-
+        
         private DataInstance _sourceDataInstance;
         private DataInstance _destinationDataInstance;
 
@@ -47,7 +48,9 @@ namespace Escyug.Importer.Presentations.Presenters
             view.DestinationInitializeAsync += () => OnDestinationInitializeAsync();
 
             View.SourceInitialize += () => OnSourceInitialize();
-            view.SourceInitializeAsync += () => OnSourceInitializeAsync();
+            View.SourceInitializeAsync += () => OnSourceInitializeAsync();
+
+            View.ImportAsync += () => OnImportAsync();
 
             _destinationService =
                 DataInstanceServiceCreator.CreateService(Constants.DataInstanceTypes.Sql);
@@ -94,41 +97,98 @@ namespace Escyug.Importer.Presentations.Presenters
 
         private async Task OnDestinationInitializeAsync()
         {
-            View.IsDestinationLoad = true;
+            var context = new ViewModel.ConnectionContext(true);
 
-            await Task.Run(() =>
+            Controller.Run<SqlSetupPresenter, ViewModel.ConnectionContext>(context);
+
+            if (string.Compare(context.ConnectionString, string.Empty) != 0)
+            {
+                View.IsDestinationLoad = true;
+
+                await Task.Run(() =>
                 {
-                    _destinationDataInstance = 
-                        _destinationService.CreateInstance(_testConnectionStrings[2]);
+                    _destinationDataInstance =
+                        _destinationService.CreateInstance(context.ConnectionString);
                 });
 
-            View.DestinationTablesList = _destinationDataInstance.Tables;
-            
-            View.IsDestinationLoad = false;
+                View.DestinationTablesList = _destinationDataInstance.Tables;
+
+                View.IsDestinationLoad = false;
+            }
         }
 
         private void OnSourceInitialize()
-        {     
-            //var destinationService =
-            //    DataInstanceServiceCreator.CreateService(Constants.DataInstanceTypes.Sql);
+        {
+            View.IsSourceLoad = true;
 
-            //_sourceDataInstance = destinationService.CreateInstance(@"Data Source=localhost;Initial Catalog=liss;Integrated Security=True;");
+            _sourceDataInstance = 
+                _destinationService.CreateInstance(_sourceDataInstance.ConnectionString);
 
-            //View.SourceTablesList = _sourceDataInstance.Tables;
+            View.IsSourceLoad = false;
+
+            /* 
+            var destinationService =
+                DataInstanceServiceCreator.CreateService(Constants.DataInstanceTypes.Sql);
+
+            _sourceDataInstance = destinationService.CreateInstance(@"Data Source=localhost;Initial Catalog=liss;Integrated Security=True;");
+
+            View.SourceTablesList = _sourceDataInstance.Tables;
+            */
         }
 
         private async Task OnSourceInitializeAsync()
         {
-            View.IsSourceLoad = true;
+            var sourceConnectionContext = new ViewModel.ConnectionContext();
 
-            await Task.Run(() =>
+            switch (View.SelectedFileType.Name)
+            {
+                case "Sql data instance" :
+                    Controller.Run<SqlSetupPresenter, ViewModel.ConnectionContext>(sourceConnectionContext);
+                    break;
+                case "Dbf file" :
+                    Controller.Run<ExcelSetupPresenter, ViewModel.ConnectionContext>(sourceConnectionContext);
+                    break;
+                case "Excel file" :
+                    Controller.Run<ExcelSetupPresenter, ViewModel.ConnectionContext>(sourceConnectionContext);
+                    break;
+                default :
+                    View.Error = "Select file type";
+                    break;
+            }
+
+            if (string.Compare(sourceConnectionContext.ConnectionString, string.Empty) != 0)
+            {
+                View.IsSourceLoad = true;
+
+                var sourceService = 
+                    DataInstanceServiceCreator.CreateService(
+                        View.SelectedFileType.DataInstanceType.Value);
+
+                await Task.Run(() =>
                 {
-                    _sourceDataInstance = _destinationService.CreateInstance(_testConnectionStrings[3]);
+                    _sourceDataInstance =
+                        sourceService.CreateInstance(
+                            sourceConnectionContext.ConnectionString);
                 });
 
-            View.SourceTablesList = _sourceDataInstance.Tables;
+                View.SourceTablesList = _sourceDataInstance.Tables;
 
-            View.IsSourceLoad = false;
+                View.IsSourceLoad = false;
+            }
+        }
+
+        private async Task OnImportAsync()
+        {
+            var mapping = View.Mapping;
+            var message = string.Empty;
+            await Task.Run(() =>
+            {
+                message += mapping.SourceTable + " @ " + mapping.TargetTableName + Environment.NewLine;
+                foreach (var colmap in mapping.ColumnsMapping)
+                    message += colmap.SourceColumnName + " | " + colmap.TargetColunmName + Environment.NewLine;
+            });
+
+            View.Error = message;
         }
     }
 }

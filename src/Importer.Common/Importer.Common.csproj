@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ColumnsMapping.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Mapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

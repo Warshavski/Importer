@@ -19,9 +19,14 @@ namespace Escyug.Importer.Presentations.Views
         event Action SourceInitialize;
         event Func<Task> SourceInitializeAsync;
 
+        event Func<Task> ImportAsync;
+
         bool IsDestinationLoad { set; }
         bool IsSourceLoad { set; }
         string OperationState { set; }
+
+        string SelectedSourceTable { get; }
+        string SelectedDestinationTable { get; }
 
         IEnumerable<ViewModel.FileType> FileTypesList { set; }
 
@@ -31,7 +36,9 @@ namespace Escyug.Importer.Presentations.Views
         IEnumerable<Table> DestinationTablesList { set; }
 
         IEnumerable<Models.Column> SelectedSourceTableColumns { set; }
-        IEnumerable<Models.Column> SelectedDestinationTableColumns { set; }   
+        IEnumerable<Models.Column> SelectedDestinationTableColumns { set; }
+
+        Mapping Mapping { get; }
     }
 }
 

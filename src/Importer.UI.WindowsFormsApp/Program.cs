@@ -25,9 +25,12 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            //AppDomain.CurrentDomain.SetData("APP_CONFIG_FILE", @"..\Importer.UI.WindowsFormsApp\App.config");
+
             var controller = new ApplicationController(new LightInjectAdapter())
                 .RegisterView<IMainView, MainForm>()
                 .RegisterView<ISqlSetupView, SqlSetupForm>()
+                .RegisterView<IExcelSetupView, ExcelSetupForm>()
                 .RegisterInstance(new ApplicationContext());
 
             controller.Run<MainPresenter>();

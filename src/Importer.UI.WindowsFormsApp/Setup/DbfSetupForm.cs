@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Escyug.Importer.UI.WindowsFormsApp.Setup
 {
-    public partial class OleDbSetupForm : Form
+    public partial class DbfSetupForm : Form
     {
-        public OleDbSetupForm()
+        public DbfSetupForm()
         {
             InitializeComponent();
         }

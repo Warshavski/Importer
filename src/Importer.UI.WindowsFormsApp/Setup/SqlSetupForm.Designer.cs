@@ -38,10 +38,11 @@
             this.labelUserName = new System.Windows.Forms.Label();
             this.radioButtonSqlAuth = new System.Windows.Forms.RadioButton();
             this.radioButtonWindowsAuth = new System.Windows.Forms.RadioButton();
-            this.buttonRefresh = new System.Windows.Forms.Button();
+            this.buttonTestConnection = new System.Windows.Forms.Button();
             this.labelDataBase = new System.Windows.Forms.Label();
-            this.buttonInitializeTest = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.textBoxDataBase = new System.Windows.Forms.TextBox();
+            this.buttonOk = new System.Windows.Forms.Button();
             this.groupBoxAuth.SuspendLayout();
             this.panelSqlAuth.SuspendLayout();
             this.SuspendLayout();
@@ -91,6 +92,7 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(315, 20);
             this.textBoxPassword.TabIndex = 6;
+            this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // labelPassword
             // 
@@ -139,14 +141,14 @@
             this.radioButtonWindowsAuth.Text = "Windows authentication";
             this.radioButtonWindowsAuth.UseVisualStyleBackColor = true;
             // 
-            // buttonRefresh
+            // buttonTestConnection
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(368, 30);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(98, 23);
-            this.buttonRefresh.TabIndex = 8;
-            this.buttonRefresh.Text = "Refresh";
-            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonTestConnection.Location = new System.Drawing.Point(368, 30);
+            this.buttonTestConnection.Name = "buttonTestConnection";
+            this.buttonTestConnection.Size = new System.Drawing.Size(98, 23);
+            this.buttonTestConnection.TabIndex = 8;
+            this.buttonTestConnection.Text = "Test connection";
+            this.buttonTestConnection.UseVisualStyleBackColor = true;
             // 
             // labelDataBase
             // 
@@ -157,14 +159,14 @@
             this.labelDataBase.TabIndex = 7;
             this.labelDataBase.Text = "Data base : ";
             // 
-            // buttonInitializeTest
+            // buttonCancel
             // 
-            this.buttonInitializeTest.Location = new System.Drawing.Point(383, 203);
-            this.buttonInitializeTest.Name = "buttonInitializeTest";
-            this.buttonInitializeTest.Size = new System.Drawing.Size(90, 23);
-            this.buttonInitializeTest.TabIndex = 9;
-            this.buttonInitializeTest.Text = "Initialize test";
-            this.buttonInitializeTest.UseVisualStyleBackColor = true;
+            this.buttonCancel.Location = new System.Drawing.Point(383, 203);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(90, 23);
+            this.buttonCancel.TabIndex = 9;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // textBoxDataBase
             // 
@@ -173,14 +175,24 @@
             this.textBoxDataBase.Size = new System.Drawing.Size(247, 20);
             this.textBoxDataBase.TabIndex = 10;
             // 
+            // buttonOk
+            // 
+            this.buttonOk.Location = new System.Drawing.Point(302, 203);
+            this.buttonOk.Name = "buttonOk";
+            this.buttonOk.Size = new System.Drawing.Size(75, 23);
+            this.buttonOk.TabIndex = 11;
+            this.buttonOk.Text = "Ok";
+            this.buttonOk.UseVisualStyleBackColor = true;
+            // 
             // SqlSetupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(485, 232);
+            this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.textBoxDataBase);
-            this.Controls.Add(this.buttonInitializeTest);
-            this.Controls.Add(this.buttonRefresh);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonTestConnection);
             this.Controls.Add(this.labelDataBase);
             this.Controls.Add(this.groupBoxAuth);
             this.Controls.Add(this.textBoxServerName);
@@ -209,9 +221,10 @@
         private System.Windows.Forms.Label labelUserName;
         private System.Windows.Forms.RadioButton radioButtonSqlAuth;
         private System.Windows.Forms.RadioButton radioButtonWindowsAuth;
-        private System.Windows.Forms.Button buttonRefresh;
+        private System.Windows.Forms.Button buttonTestConnection;
         private System.Windows.Forms.Label labelDataBase;
-        private System.Windows.Forms.Button buttonInitializeTest;
+        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TextBox textBoxDataBase;
+        private System.Windows.Forms.Button buttonOk;
     }
 }
