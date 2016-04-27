@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Escyug.Importer.Common;
 
-using Escyug.Importer.Presentations.Presenters;
 using Escyug.Importer.Presentations.ViewModel;
 using Escyug.Importer.Presentations.Views;
 
-using Escyug.Importer.UI.WindowsFormsApp.Setup;
 
 namespace Escyug.Importer.UI.WindowsFormsApp
 {
@@ -104,7 +97,7 @@ namespace Escyug.Importer.UI.WindowsFormsApp
 
         public long RowsCopied
         {
-            set { toolStripProgressBar1.Value = (int)((value * 100) / 39992); }
+            set { toolStripProgressBar1.Value = (int)((value * 100) / 24477); }
         }
 
         public string SelectedSourceTable

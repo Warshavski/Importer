@@ -1,8 +1,11 @@
-﻿
+﻿using System;
+
+using Escyug.Importer.Presentations.Common;
+
 namespace Escyug.Importer.Presentations.Views
 {
-    public interface IDbfSetupView
+    public interface IDbfSetupView : IView, ISetupView
     {
-        string ConnectionString { get; }
+        
     }
 }

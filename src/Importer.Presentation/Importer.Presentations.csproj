@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Common\ApplicationController.cs" />
     <Compile Include="Common\BasePresenter.cs" />
+    <Compile Include="Presenters\DbfSetupPresenter.cs" />
     <Compile Include="ViewModel\ConnectionContext.cs" />
     <Compile Include="Common\IApplicationController.cs" />
     <Compile Include="Common\IContainer.cs" />

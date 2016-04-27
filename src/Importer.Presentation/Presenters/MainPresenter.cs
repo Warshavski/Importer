@@ -146,7 +146,7 @@ namespace Escyug.Importer.Presentations.Presenters
                     Controller.Run<SqlSetupPresenter, ViewModel.ConnectionContext>(sourceConnectionContext);
                     break;
                 case "Dbf file" :
-                    Controller.Run<ExcelSetupPresenter, ViewModel.ConnectionContext>(sourceConnectionContext);
+                    Controller.Run<DbfSetupPresenter, ViewModel.ConnectionContext>(sourceConnectionContext);
                     break;
                 case "Excel file" :
                     Controller.Run<ExcelSetupPresenter, ViewModel.ConnectionContext>(sourceConnectionContext);

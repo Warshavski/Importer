@@ -13,6 +13,11 @@ namespace Escyug.Importer.UI.WindowsFormsApp.Setup
         {
             InitializeComponent();
 
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.FileName = string.Empty;
+            openFileDialog1.Filter = "Excel files 97-2003 (*.xls)|*.xls|Excel files 2007 (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+
             this.Load += (sender, e) => Invoker.Invoke(Initialize);
 
             this.buttonBrowse.Click += (sender, e) => { openFileDialog1.ShowDialog(); };

@@ -31,6 +31,7 @@ namespace Escyug.Importer.UI.WindowsFormsApp
                 .RegisterView<IMainView, MainForm>()
                 .RegisterView<ISqlSetupView, SqlSetupForm>()
                 .RegisterView<IExcelSetupView, ExcelSetupForm>()
+                .RegisterView<IDbfSetupView, DbfSetupForm>()
                 .RegisterInstance(new ApplicationContext());
 
             controller.Run<MainPresenter>();
