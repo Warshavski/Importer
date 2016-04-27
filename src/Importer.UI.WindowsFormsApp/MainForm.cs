@@ -83,6 +83,11 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             set { pictureBox1.Visible = value; }
         }
 
+        public bool IsImportInProgress
+        {
+            set { splitContainer1.Enabled = !value; }
+        }
+
         public string OperationState
         {
             set { toolStripStatusLabel1.Text = value; }
@@ -97,14 +102,19 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             }
         }
 
+        public long RowsCopied
+        {
+            set { toolStripProgressBar1.Value = (int)((value * 100) / 39992); }
+        }
+
         public string SelectedSourceTable
         {
-            get { return comboBoxSourceTables.SelectedText; } 
+            get { return comboBoxSourceTables.Text; } 
         }
         
         public string SelectedDestinationTable 
         {
-            get { return treeView1.SelectedNode.Name; }
+            get { return treeView1.SelectedNode.Text; }
         }
 
 
@@ -154,7 +164,7 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             }
         }
 
-        public Mapping Mapping
+        public IEnumerable<ColumnsMapping> ColumnsMappings 
         {
             get 
             {
@@ -165,14 +175,12 @@ namespace Escyug.Importer.UI.WindowsFormsApp
                     if (row.Cells[sourceColumn.Name].Value != null)
                     {
                         columnsMappings.Add(
-                       new ColumnsMapping(
-                           row.Cells[sourceColumn.Name].Value.ToString(),
-                           row.Cells[destinationColumn.Name].Value.ToString()));
-                    }
-                   
+                            new ColumnsMapping(
+                                row.Cells[sourceColumn.Name].Value.ToString(),
+                                row.Cells[destinationColumn.Name].Value.ToString()));
+                    }  
                 }
-
-                return new Mapping(SelectedSourceTable, SelectedDestinationTable, columnsMappings);
+                return columnsMappings;
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Escyug.Importer.Common;
 using Escyug.Importer.Data.Processors;
@@ -18,6 +19,15 @@ namespace Escyug.Importer.Models.Repository
             _dataReaderProcessor = dataReaderProcessor;
         }
 
+        // ?? DI ?? yeah DI, bitch! but something wrong with this shit...
+        public SqlDataImportRepository(IDataImportProcessor importProcessor,
+            IDataReaderProcessor dataReaderProcessor, Action<long> importNotify)
+        {
+            _importProcessor = importProcessor;
+            _dataReaderProcessor = dataReaderProcessor;
+            _importProcessor.RowsCopiedNotify += importNotify;
+        }
+
         public void Import(string sourceConnectionString, string sourceTableName, 
             string targetConnectionString, string targetTableName)
         {
@@ -31,5 +41,7 @@ namespace Escyug.Importer.Models.Repository
             using (var dataReader = _dataReaderProcessor.CreateReader(sourceTableName, sourceConnectionString))
                 _importProcessor.Import(dataReader, targetConnectionString, targetTableName, columnsMappings);
         }
+
+        
     }
 }

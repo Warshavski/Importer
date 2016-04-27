@@ -12,7 +12,7 @@ namespace Escyug.Importer.Models.Repository
     {
         IEnumerable<Table> GetMetadata(string connectionString);
         bool TestConnection(string connectionString);
-        //void TruncateData();
-        // get data
+        //TruncateData();
+        //GetData();
     }
 }

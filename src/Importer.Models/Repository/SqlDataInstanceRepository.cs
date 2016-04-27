@@ -10,19 +10,19 @@ namespace Escyug.Importer.Models.Repository
     internal sealed class SqlDataInstanceRepository : IDataInstanceRepository
     {
         private readonly IDataReaderProcessor _dataReaderProcessor;
-        private readonly IMetadataProcessor _MetadataProcessor;
+        private readonly IMetadataProcessor _metadataProcessor;
 
         // DI or not DI
         public SqlDataInstanceRepository()
         {
             _dataReaderProcessor = new SqlDataReaderProcessor();
-            _MetadataProcessor = new SqlMetadataProcessor();
+            _metadataProcessor = new SqlMetadataProcessor();
         }
 
         public IEnumerable<Table> GetMetadata(string connectionString)
         {
-            var MetadataTables = _MetadataProcessor.SelectTablesMetadata(connectionString);
-            return ModelBinder.CreateModelTablesList(MetadataTables);
+            var metadataTables = _metadataProcessor.SelectTablesMetadata(connectionString);
+            return ModelBinder.CreateModelTablesList(metadataTables);
         }
 
         // how to test? use helper classes?

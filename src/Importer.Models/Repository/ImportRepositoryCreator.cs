@@ -1,4 +1,6 @@
-﻿using Escyug.Importer.Common;
+﻿using System;
+
+using Escyug.Importer.Common;
 using Escyug.Importer.Data.Sql.Processors;
 using Escyug.Importer.Data.OleDb.Processors;
 
@@ -18,6 +20,22 @@ namespace Escyug.Importer.Models.Repository
                     return new SqlDataImportRepository(
                         new SqlDataImportProcessor(), new OleDbDataReaderProcessor());
                 default :
+                    return null;
+            }
+        }
+
+        // yeah creates only SqlDataImporter
+        public static IDataImportRepository Create(Constants.DataInstanceTypes fileType, Action<long> importNotify)
+        {
+            switch (fileType)
+            {
+                case Constants.DataInstanceTypes.Sql:
+                    return new SqlDataImportRepository(
+                        new SqlDataImportProcessor(), new SqlDataReaderProcessor(), importNotify);
+                case Constants.DataInstanceTypes.OleDb:
+                    return new SqlDataImportRepository(
+                        new SqlDataImportProcessor(), new OleDbDataReaderProcessor(), importNotify);
+                default:
                     return null;
             }
         }

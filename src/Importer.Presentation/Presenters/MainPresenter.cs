@@ -179,16 +179,30 @@ namespace Escyug.Importer.Presentations.Presenters
 
         private async Task OnImportAsync()
         {
-            var mapping = View.Mapping;
-            var message = string.Empty;
+            View.IsImportInProgress = true;
+
+            View.OperationState = "Create mapping";
+
+            var destinationTableName = View.SelectedDestinationTable;
+            var sourceTableName = View.SelectedSourceTable;
+
+            var columnsMappings = View.ColumnsMappings;
+
+            var mapping = new Mapping(sourceTableName, destinationTableName, columnsMappings);
+
+            View.OperationState = "Import...";
+
+            var importService =
+                new DataImportService(
+                    View.SelectedFileType.DataInstanceType.Value, (rows) => { View.RowsCopied = rows; });
+
             await Task.Run(() =>
             {
-                message += mapping.SourceTable + " @ " + mapping.TargetTableName + Environment.NewLine;
-                foreach (var colmap in mapping.ColumnsMapping)
-                    message += colmap.SourceColumnName + " | " + colmap.TargetColunmName + Environment.NewLine;
+                importService.Import(_sourceDataInstance, _destinationDataInstance, mapping);
             });
 
-            View.Error = message;
+            View.OperationState = "Import complete";
+            View.IsImportInProgress = false;
         }
     }
 }

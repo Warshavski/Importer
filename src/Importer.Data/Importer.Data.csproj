@@ -40,8 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbCommonHelper.cs" />
-    <Compile Include="MetaData\Column.cs" />
-    <Compile Include="MetaData\Table.cs" />
+    <Compile Include="Metadata\Column.cs" />
+    <Compile Include="Metadata\Table.cs" />
     <Compile Include="Processors\IDataImportProcessor.cs" />
     <Compile Include="Processors\IDataReaderProcessor.cs" />
     <Compile Include="Processors\IMetadataProcessor.cs" />

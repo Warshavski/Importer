@@ -16,6 +16,12 @@ namespace Escyug.Importer.Models.Services
         public DataImportService(Constants.DataInstanceTypes sourceFileType)
         {
             _importRepo = ImportRepositoryCreator.Create(sourceFileType);
+
+        }
+
+        public DataImportService(Constants.DataInstanceTypes sourceFileType, Action<long> importNotify)
+        {
+            _importRepo = ImportRepositoryCreator.Create(sourceFileType, importNotify);
         }
 
         // create async method
@@ -51,5 +57,13 @@ namespace Escyug.Importer.Models.Services
                 }
             }
         }
+
+        // create async method
+        public void Import(DataInstance sourceInstance, DataInstance destinationInstance, Mapping mapping)
+        {
+            _importRepo.Import(sourceInstance.ConnectionString, mapping.SourceTable,
+                destinationInstance.ConnectionString, mapping.TargetTableName, mapping.ColumnsMapping);
+        }
+
     }
 }

@@ -23,7 +23,10 @@ namespace Escyug.Importer.Presentations.Views
 
         bool IsDestinationLoad { set; }
         bool IsSourceLoad { set; }
+        bool IsImportInProgress { set; }
+
         string OperationState { set; }
+        long RowsCopied { set; }
 
         string SelectedSourceTable { get; }
         string SelectedDestinationTable { get; }
@@ -38,7 +41,7 @@ namespace Escyug.Importer.Presentations.Views
         IEnumerable<Models.Column> SelectedSourceTableColumns { set; }
         IEnumerable<Models.Column> SelectedDestinationTableColumns { set; }
 
-        Mapping Mapping { get; }
+        IEnumerable<ColumnsMapping> ColumnsMappings { get; }
     }
 }
 
