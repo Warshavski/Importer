@@ -26,10 +26,10 @@ namespace Escyug.Importer.Presentations.Views
         bool IsImportInProgress { set; }
 
         string OperationState { set; }
-        long RowsCopied { set; }
+        int ImportProgress { set; }
 
-        string SelectedSourceTable { get; }
-        string SelectedDestinationTable { get; }
+        Models.Table SelectedSourceTable { get; }
+        Models.Table SelectedDestinationTable { get; }
 
         IEnumerable<ViewModel.FileType> FileTypesList { set; }
 

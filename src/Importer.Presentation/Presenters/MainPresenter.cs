@@ -104,6 +104,7 @@ namespace Escyug.Importer.Presentations.Presenters
             if (string.Compare(context.ConnectionString, string.Empty) != 0)
             {
                 View.IsDestinationLoad = true;
+                View.OperationState = "Destination load...";
 
                 await Task.Run(() =>
                 {
@@ -114,6 +115,7 @@ namespace Escyug.Importer.Presentations.Presenters
                 View.DestinationTablesList = _destinationDataInstance.Tables;
 
                 View.IsDestinationLoad = false;
+                View.OperationState = "Destination loaded";
             }
         }
 
@@ -159,6 +161,7 @@ namespace Escyug.Importer.Presentations.Presenters
             if (string.Compare(sourceConnectionContext.ConnectionString, string.Empty) != 0)
             {
                 View.IsSourceLoad = true;
+                View.OperationState = "Source load...";
 
                 var sourceService = 
                     DataInstanceServiceCreator.CreateService(
@@ -174,6 +177,7 @@ namespace Escyug.Importer.Presentations.Presenters
                 View.SourceTablesList = _sourceDataInstance.Tables;
 
                 View.IsSourceLoad = false;
+                View.OperationState = "Source loaded";
             }
         }
 
@@ -183,8 +187,10 @@ namespace Escyug.Importer.Presentations.Presenters
 
             View.OperationState = "Create mapping";
 
-            var destinationTableName = View.SelectedDestinationTable;
-            var sourceTableName = View.SelectedSourceTable;
+            var destinationTableName = View.SelectedDestinationTable.Name;
+            var sourceTableName = View.SelectedSourceTable.Name;
+
+            var sourceTableRowsCount = View.SelectedSourceTable.RowsCount;
 
             var columnsMappings = View.ColumnsMappings;
 
@@ -194,7 +200,7 @@ namespace Escyug.Importer.Presentations.Presenters
 
             var importService =
                 new DataImportService(
-                    View.SelectedFileType.DataInstanceType.Value, (rows) => { View.RowsCopied = rows; });
+                    View.SelectedFileType.DataInstanceType.Value, (rows) => { View.ImportProgress = (int)(rows * 100 / sourceTableRowsCount); });
 
             await Task.Run(() =>
             {

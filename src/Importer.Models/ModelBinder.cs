@@ -10,6 +10,7 @@ namespace Escyug.Importer.Models
             foreach (var dataTablesItem in dataTables)
             {
                 var modelTableName = dataTablesItem.Name;
+                var modelTableRowsCount = dataTablesItem.RowsCount;
                 var modelColumnList = new List<Models.Column>();
 
                 foreach (var dataColumnItem in dataTablesItem.Columns)
@@ -22,7 +23,8 @@ namespace Escyug.Importer.Models
                         new Models.Column(modelColumnName, modelColumnType, modelColmnLength));
                 }
 
-                modelTablesList.Add(new Models.Table(modelTableName, modelColumnList));
+                modelTablesList.Add(
+                    new Models.Table(modelTableName, modelColumnList, modelTableRowsCount));
             }
 
             return modelTablesList;

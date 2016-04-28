@@ -16,10 +16,23 @@ namespace Escyug.Importer.Data.Metadata
             get { return _tableColumns; }
         }
 
-        internal Table(string tableName, IEnumerable<Column> tableColumns) 
+        private long _rowsCount;
+        public long RowsCount
+        {
+            get { return _rowsCount; }
+        }
+
+        internal Table(string tableName, IEnumerable<Column> tableColumns)
         {
             _tableName = tableName;
             _tableColumns = tableColumns;
+        }
+
+        internal Table(string tableName, IEnumerable<Column> tableColumns, long rowsCount) 
+        {
+            _tableName = tableName;
+            _tableColumns = tableColumns;
+            _rowsCount = rowsCount;
         }
     }
 }

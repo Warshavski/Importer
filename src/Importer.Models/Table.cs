@@ -17,25 +17,26 @@ namespace Escyug.Importer.Models
             get { return _tableColumns; }
         }
 
-        private bool _isForImport;
-        public bool IsForImport
-        {
-            get { return _isForImport; }
-            set { _isForImport = value; }
-        }
+        public bool IsForImport { get; set; }
+        public string MappedTableName { get; set; }
 
-        private string _mappedTableName;
-        public string MappedTableName
+        private long _rowsCount;
+        public long RowsCount
         {
-            get { return _mappedTableName; }
-            set { _mappedTableName = value; }
+            get { return _rowsCount; }
         }
 
         internal Table(string tableName, IEnumerable<Column> tableColumns) 
         {
             _tableName = tableName;
             _tableColumns = tableColumns;
-            _isForImport = false;
+        }
+
+        internal Table(string tableName, IEnumerable<Column> tableColumns, long rowsCount)
+        {
+            _tableName = tableName;
+            _tableColumns = tableColumns;
+            _rowsCount = rowsCount;
         }
 
         public override string ToString()

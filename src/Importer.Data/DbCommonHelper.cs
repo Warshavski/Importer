@@ -109,6 +109,17 @@ namespace Escyug.Importer.Data
             return columnsMetadataList;
         }
 
+        private static long RowsCount(string tableName, DbConnection connection)
+        {
+            var commandText = "SELECT COUNT(*) AS TOTAL_ROWS FROM [" + tableName + "]";
+            var command = CreateCommand(commandText, connection);
+            
+            // so stupid
+            var count = (long)(int)command.ExecuteScalar();
+
+            return count;
+        }
+
         public static IEnumerable<Table> GetTablesMetadata(string providerName, string connectionString)
         {
             var tablesMetadataList = new List<Table>();
@@ -121,10 +132,11 @@ namespace Escyug.Importer.Data
                 foreach (var tablesSchemaRow in tablesSchema.AsEnumerable())
                 {
                     var tableName = tablesSchemaRow["TABLE_NAME"].ToString();
+                    var rowsCount = RowsCount(tableName, connection);
 
                     var columnsMetadata = GetColumnsMetadata(connection, tableName);
 
-                    tablesMetadataList.Add(new Table(tableName, columnsMetadata));
+                    tablesMetadataList.Add(new Table(tableName, columnsMetadata, rowsCount));
                 }
             }
 

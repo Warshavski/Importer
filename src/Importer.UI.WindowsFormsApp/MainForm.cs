@@ -78,7 +78,12 @@ namespace Escyug.Importer.UI.WindowsFormsApp
 
         public bool IsImportInProgress
         {
-            set { splitContainer1.Enabled = !value; }
+            set 
+            {
+                toolStripProgressBar1.Value = 0;
+                toolStripProgressBar1.Visible = value;
+                splitContainer1.Enabled = !value; 
+            }
         }
 
         public string OperationState
@@ -95,19 +100,19 @@ namespace Escyug.Importer.UI.WindowsFormsApp
             }
         }
 
-        public long RowsCopied
+        public int ImportProgress
         {
-            set { toolStripProgressBar1.Value = (int)((value * 100) / 24477); }
+            set { toolStripProgressBar1.Value = value; }
         }
 
-        public string SelectedSourceTable
+        public Models.Table SelectedSourceTable
         {
-            get { return comboBoxSourceTables.Text; } 
+            get { return comboBoxSourceTables.SelectedValue as Models.Table; } 
         }
         
-        public string SelectedDestinationTable 
+        public Models.Table SelectedDestinationTable 
         {
-            get { return treeView1.SelectedNode.Text; }
+            get { return treeView1.SelectedNode.Tag as Models.Table; }
         }
 
 
