@@ -39,26 +39,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Column.cs" />
-    <Compile Include="ModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataInstance.cs" />
-    <Compile Include="Repository\IDataImportRepository.cs" />
-    <Compile Include="Repository\IDataInstanceRepository.cs" />
-    <Compile Include="Repository\ImportRepositoryCreator.cs" />
-    <Compile Include="Repository\OleDbDataInstanceRepository.cs" />
-    <Compile Include="Repository\SqlDataImportRepository.cs" />
-    <Compile Include="Repository\SqlDataInstanceRepository.cs" />
-    <Compile Include="Services\DataImportService.cs" />
-    <Compile Include="Services\DataInstanceService.cs" />
-    <Compile Include="Services\DataInstanceServiceCreator.cs" />
-    <Compile Include="Services\IDataInstanceService.cs" />
-    <Compile Include="Table.cs" />
+    <Compile Include="Services\DataServiceFactory.cs" />
+    <Compile Include="Services\IDataService.cs" />
+    <Compile Include="Services\DataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Importer.Common\Importer.Common.csproj">
       <Project>{e5349102-55f3-4fbc-9236-81903ae9629c}</Project>
       <Name>Importer.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Data.Common\Importer.Data.Common.csproj">
+      <Project>{fbcec75f-e289-4aff-9919-82d921c32a80}</Project>
+      <Name>Importer.Data.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Importer.Data.OleDb\Importer.Data.OleDb.csproj">
       <Project>{9459980d-e423-4bc7-927d-66f61d0684fe}</Project>
@@ -67,6 +60,10 @@
     <ProjectReference Include="..\Importer.Data.Sql\Importer.Data.Sql.csproj">
       <Project>{4ab7a248-ca09-4fc7-addb-3d74766ce5df}</Project>
       <Name>Importer.Data.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Data.Xml\Importer.Data.Xml.csproj">
+      <Project>{c0685c07-54b6-4721-aa60-f5c07d96d006}</Project>
+      <Name>Importer.Data.Xml</Name>
     </ProjectReference>
     <ProjectReference Include="..\Importer.Data\Importer.Data.csproj">
       <Project>{db5a0ce3-30c9-4058-97a7-39faf52af529}</Project>

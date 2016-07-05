@@ -2,29 +2,18 @@
 {
     public sealed class Column
     {
-        private string _columnName;
-        public string Name
-        {
-            get { return _columnName; }
-        }
+        public string Name { get; private set; }
 
-        private string _columnType; // ?? object ??
-        public string Type
-        {
-            get { return _columnType; }
-        }
+        // ?? object ??
+        public string Type { get; private set; }
+        
+        public int Length { get; private set; }
 
-        private int _columnLength;
-        public int Length
+        public Column(string columnName, string columnType, int columnLength) 
         {
-            get { return _columnLength; }
-        }
-
-        internal Column(string columnName, string columnType, int columnLength) 
-        {
-            _columnName = columnName;
-            _columnType = columnType;
-            _columnLength = columnLength;
+            Name = columnName;
+            Type = columnType;
+            Length = columnLength;
         }
     }
 }

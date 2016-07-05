@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Processors\SqlDataImportProcessor.cs" />
+    <Compile Include="Processors\SqlDataImportProcessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Processors\SqlDataReaderProcessor.cs" />
     <Compile Include="Processors\SqlMetadataProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -48,6 +50,10 @@
     <ProjectReference Include="..\Importer.Common\Importer.Common.csproj">
       <Project>{e5349102-55f3-4fbc-9236-81903ae9629c}</Project>
       <Name>Importer.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Data.Common\Importer.Data.Common.csproj">
+      <Project>{fbcec75f-e289-4aff-9919-82d921c32a80}</Project>
+      <Name>Importer.Data.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Importer.Data\Importer.Data.csproj">
       <Project>{db5a0ce3-30c9-4058-97a7-39faf52af529}</Project>

@@ -4,35 +4,23 @@ namespace Escyug.Importer.Data.Metadata
 {
     public sealed class Table
     {
-        private string _tableName;
-        public string Name
+        public string Name { get; private set; }
+
+        public IEnumerable<Column> Columns { get; private set; }
+
+        public long RowsCount { get; private set; }
+
+        public Table(string tableName, IEnumerable<Column> tableColumns)
         {
-            get { return _tableName; }
+            Name = tableName;
+            Columns = tableColumns;
         }
 
-        private IEnumerable<Column> _tableColumns;
-        public IEnumerable<Column> Columns
+        public Table(string tableName, IEnumerable<Column> tableColumns, long rowsCount) 
         {
-            get { return _tableColumns; }
-        }
-
-        private long _rowsCount;
-        public long RowsCount
-        {
-            get { return _rowsCount; }
-        }
-
-        internal Table(string tableName, IEnumerable<Column> tableColumns)
-        {
-            _tableName = tableName;
-            _tableColumns = tableColumns;
-        }
-
-        internal Table(string tableName, IEnumerable<Column> tableColumns, long rowsCount) 
-        {
-            _tableName = tableName;
-            _tableColumns = tableColumns;
-            _rowsCount = rowsCount;
+            Name = tableName;
+            Columns = tableColumns;
+            RowsCount = rowsCount;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Escyug.Importer.Presentations.ViewModel
+namespace Escyug.Importer.Presentations.BETA.ViewModels
 {
     /// <summary>
     /// class for extended properties
@@ -17,7 +17,7 @@ namespace Escyug.Importer.Presentations.ViewModel
         public object Value { get { return _value; } }
 
         // default constructor
-        public PropertyInfo(string displayName, object value)
+        internal PropertyInfo(string displayName, object value)
         {
             _displayName = displayName;
             _value = value;

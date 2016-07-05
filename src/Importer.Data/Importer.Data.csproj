@@ -39,10 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbCommonHelper.cs" />
     <Compile Include="Metadata\Column.cs" />
+    <Compile Include="ColumnsMapping.cs" />
     <Compile Include="Metadata\Table.cs" />
-    <Compile Include="Processors\IDataImportProcessor.cs" />
+    <Compile Include="Processors\IAsyncDataImportProcessor.cs" />
+    <Compile Include="Processors\IDataImportProcessor.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Processors\IDataReaderProcessor.cs" />
     <Compile Include="Processors\IMetadataProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E5349102-55F3-4FBC-9236-81903AE9629C}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{BB4BAB91-4784-4754-A580-1B5346E8D224}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Escyug.Importer.Common</RootNamespace>
-    <AssemblyName>Importer.Common</AssemblyName>
+    <RootNamespace>Escyug.Importer.Console.App</RootNamespace>
+    <AssemblyName>Importer.Console.App</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,13 +41,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logging\" />
+    <ProjectReference Include="..\Importer.Common\Importer.Common.csproj">
+      <Project>{e5349102-55f3-4fbc-9236-81903ae9629c}</Project>
+      <Name>Importer.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Data.Common\Importer.Data.Common.csproj">
+      <Project>{fbcec75f-e289-4aff-9919-82d921c32a80}</Project>
+      <Name>Importer.Data.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Data.OleDb\Importer.Data.OleDb.csproj">
+      <Project>{9459980d-e423-4bc7-927d-66f61d0684fe}</Project>
+      <Name>Importer.Data.OleDb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Data.Sql\Importer.Data.Sql.csproj">
+      <Project>{4ab7a248-ca09-4fc7-addb-3d74766ce5df}</Project>
+      <Name>Importer.Data.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Data.Xml\Importer.Data.Xml.csproj">
+      <Project>{c0685c07-54b6-4721-aa60-f5c07d96d006}</Project>
+      <Name>Importer.Data.Xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Data\Importer.Data.csproj">
+      <Project>{db5a0ce3-30c9-4058-97a7-39faf52af529}</Project>
+      <Name>Importer.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Models\Importer.Models.csproj">
+      <Project>{1ec5e8de-796e-4435-bbaf-9586a1fa25b7}</Project>
+      <Name>Importer.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

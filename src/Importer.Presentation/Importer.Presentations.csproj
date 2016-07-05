@@ -43,7 +43,6 @@
     <Compile Include="Common\ApplicationController.cs" />
     <Compile Include="Common\BasePresenter.cs" />
     <Compile Include="Presenters\DbfSetupPresenter.cs" />
-    <Compile Include="ViewModel\ConnectionContext.cs" />
     <Compile Include="Common\IApplicationController.cs" />
     <Compile Include="Common\IContainer.cs" />
     <Compile Include="Common\IPresenter.cs" />
@@ -51,8 +50,6 @@
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\SqlSetupPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\FileType.cs" />
-    <Compile Include="ViewModel\PropertyInfo.cs" />
     <Compile Include="Views\IDbfSetupView.cs" />
     <Compile Include="Views\IExcelSetupView.cs" />
     <Compile Include="Views\IMainView.cs" />

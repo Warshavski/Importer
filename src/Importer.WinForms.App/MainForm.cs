@@ -1,0 +1,167 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+using Escyug.Importer.Presentations.BETA.Views;
+using Escyug.Importer.Presentations.BETA.ViewModels;
+
+namespace Escyug.Importer.WinForms.App
+{
+    public partial class MainForm : Form, IMainView
+    {
+        private readonly ApplicationContext _context;
+
+        public MainForm(ApplicationContext context)
+        {
+            _context = context;
+
+            InitializeComponent();
+
+            this.buttonLoadSource.Click += (sender, e) => Invoke(InitializeSource);
+
+            this.comboBoxSourceTables.SelectionChangeCommitted += (sender, e) => Invoke(SelectSourceTable);
+           
+
+            //this.treeView1.AfterSelect += (sender, e) =>
+            //{
+            //    if (treeView1.SelectedNode.Tag is Models.Table)
+            //        this.SelectedDestinationTableColumns =
+            //            (treeView1.SelectedNode.Tag as Models.Table).Columns;
+            //};
+        }
+
+        public void Invoke(Action action)
+        {
+            if (action != null)
+            {
+                action.Invoke();
+            }
+        }
+
+        public new void Show()
+        {
+            _context.MainForm = this;
+            Application.Run(_context);
+        }
+
+        public string Error
+        {
+            set 
+            { 
+                MessageBox.Show(value, "Application error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error); 
+            }
+        }
+
+        public event Action InitializeSource;
+        
+        public event Action SelectSourceTable;
+
+        public ICollection<FileType> FileTypes 
+        {
+            get
+            {
+                return comboBoxSourceType.DataSource as ICollection<FileType>;
+            }
+            set
+            {
+                comboBoxSourceType.DataSource = value;
+                comboBoxSourceType.DisplayMember = "Name";
+            }
+        }
+
+        public FileType SourceDataType 
+        {
+            get 
+            {
+                return comboBoxSourceType.SelectedValue as FileType;
+            }
+        }
+
+        public string SourceConnectionString 
+        {
+            get 
+            { 
+                return textBoxSourceConnection.Text; 
+            }
+            set 
+            { 
+                textBoxSourceConnection.Text = value; 
+            }
+        }
+        
+        public ICollection<Escyug.Importer.Data.Metadata.Table> SourceMetadata
+        {
+            get
+            {
+                return comboBoxSourceTables.DataSource as ICollection<Data.Metadata.Table>;
+            }
+            set 
+            {
+                comboBoxSourceTables.DataSource = value;
+                comboBoxSourceTables.DisplayMember = "Name";
+            }
+        }
+
+        public Data.Metadata.Table SelectedSourceTable 
+        {
+            get
+            {
+                return comboBoxSourceTables.SelectedValue as Data.Metadata.Table;
+            }
+        }
+
+        public ICollection<Data.Metadata.Column> SelectedSourceTableColumns
+        {
+            get
+            {
+                return sourceColumn.DataSource as ICollection<Data.Metadata.Column>;
+            }
+            set
+            {
+                sourceColumn.DataSource = value;
+                sourceColumn.DisplayMember = "Name";
+                //dataGridView1.DataSource = value;
+            }
+        }
+
+        #region Helper methods
+
+        private IEnumerable<TreeNode> CreateTreeViewNodes(IEnumerable<Data.Metadata.Table> tablesList)
+        {
+            var treeNodes = new List<TreeNode>();
+            foreach (var table in tablesList)
+            {
+                TreeNode rootNode = new TreeNode(table.Name);
+                rootNode.ImageIndex = 0;
+                rootNode.Tag = table;
+
+                foreach (var column in table.Columns)
+                {
+                    TreeNode childNode = new TreeNode(column.Name);
+                    childNode.ImageIndex = 1;
+                    childNode.Nodes.Add("Type : " + column.Type, "1", 1);
+                    childNode.Nodes.Add("Lenght : " + column.Length.ToString(), "1", 1);
+
+                    rootNode.Nodes.Add(childNode);
+                }
+
+                treeNodes.Add(rootNode);
+            }
+
+            return treeNodes;
+        }
+
+        #endregion Helper methods
+
+
+
+       
+    }
+}

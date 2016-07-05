@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E5349102-55F3-4FBC-9236-81903AE9629C}</ProjectGuid>
+    <ProjectGuid>{C9723CC6-BF6A-4E38-B03E-7C65463A1EC6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Escyug.Importer.Common</RootNamespace>
-    <AssemblyName>Importer.Common</AssemblyName>
+    <RootNamespace>Escyug.Importer.Presentations.BETA</RootNamespace>
+    <AssemblyName>Importer.Presentations.BETA</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,13 +39,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ApplicationController.cs" />
+    <Compile Include="Common\BasePresenter.cs" />
+    <Compile Include="Common\IContainer.cs" />
+    <Compile Include="Common\IPresenter.cs" />
+    <Compile Include="Common\IView.cs" />
+    <Compile Include="Common\IApplicationController.cs" />
+    <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\FileType.cs" />
+    <Compile Include="ViewModels\PropertyInfo.cs" />
+    <Compile Include="Views\IMainView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logging\" />
+    <ProjectReference Include="..\Importer.Data\Importer.Data.csproj">
+      <Project>{db5a0ce3-30c9-4058-97a7-39faf52af529}</Project>
+      <Name>Importer.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Importer.Models\Importer.Models.csproj">
+      <Project>{1ec5e8de-796e-4435-bbaf-9586a1fa25b7}</Project>
+      <Name>Importer.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

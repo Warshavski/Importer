@@ -4,8 +4,9 @@ using System.Data;
 using System.Data.Common;
 
 using Escyug.Importer.Data.Metadata;
+using System.Threading.Tasks;
 
-namespace Escyug.Importer.Data
+namespace Escyug.Importer.Data.Common
 {
     /// <summary>
     /// Create connection
@@ -13,6 +14,12 @@ namespace Escyug.Importer.Data
     /// </summary>
     public static class DbCommonHelper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="providerName"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static DbConnection CreateDbConnection(string providerName, string connectionString)
         {
             // Assume failure.
@@ -41,6 +48,12 @@ namespace Escyug.Importer.Data
             return connection;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="commandText"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
         public static DbCommand CreateCommand(string commandText, DbConnection conn)
         {
             // Assume failure.
@@ -66,6 +79,13 @@ namespace Escyug.Importer.Data
             return command;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="providerName"></param>
+        /// <param name="connectionString"></param>
+        /// <param name="commandText"></param>
+        /// <returns></returns>
         public static IDataReader CreateDataReader(string providerName, string connectionString, string commandText)
         {
             DbConnection connection = null;
@@ -90,60 +110,38 @@ namespace Escyug.Importer.Data
             return reader;
         }
 
-        private static IEnumerable<Column> GetColumnsMetadata(DbConnection connection, string tableName)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="connection"></param>
+        /// <returns></returns>
+        public static long CountRows(string tableName, DbConnection connection)
         {
-            var columnsMetadataList = new List<Column>();
-
-            var columnsSchema = connection.GetSchema("Columns", new string[] { null, null, tableName, null });
-            foreach (var columnsSchemaRow in columnsSchema.AsEnumerable())
+            try
             {
-                var columnName = columnsSchemaRow["COLUMN_NAME"].ToString();
-                var columnDataType = columnsSchemaRow["DATA_TYPE"].ToString();
+                var commandText = "SELECT COUNT(*) AS TOTAL_ROWS FROM [" + tableName + "]";
+                var command = CreateCommand(commandText, connection);
 
-                var columnLength = -1;
-                int.TryParse(columnsSchemaRow["CHARACTER_MAXIMUM_LENGTH"].ToString(), out columnLength);
+                // so stupid
+                var count = (long)(int)command.ExecuteScalar();
 
-                columnsMetadataList.Add(new Column(columnName, columnDataType, columnLength));
+                return count;
             }
-
-            return columnsMetadataList;
-        }
-
-        private static long RowsCount(string tableName, DbConnection connection)
-        {
-            var commandText = "SELECT COUNT(*) AS TOTAL_ROWS FROM [" + tableName + "]";
-            var command = CreateCommand(commandText, connection);
+            catch (DbException)
+            {
+                return -1;
+            }
             
-            // so stupid
-            var count = (long)(int)command.ExecuteScalar();
-
-            return count;
-        }
-
-        public static IEnumerable<Table> GetTablesMetadata(string providerName, string connectionString)
-        {
-            var tablesMetadataList = new List<Table>();
-
-            using (var connection = DbCommonHelper.CreateDbConnection(providerName, connectionString))
-            {
-                connection.Open();
-
-                var tablesSchema = connection.GetSchema("Tables");
-                foreach (var tablesSchemaRow in tablesSchema.AsEnumerable())
-                {
-                    var tableName = tablesSchemaRow["TABLE_NAME"].ToString();
-                    var rowsCount = RowsCount(tableName, connection);
-
-                    var columnsMetadata = GetColumnsMetadata(connection, tableName);
-
-                    tablesMetadataList.Add(new Table(tableName, columnsMetadata, rowsCount));
-                }
-            }
-
-            return tablesMetadataList;
         }
 
         // ?? delete ??
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="providerName"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static bool TestConnection(string providerName, string connectionString)
         {
             try
@@ -165,41 +163,61 @@ namespace Escyug.Importer.Data
             }
         }
 
-        /* rework this shit
         /// <summary>
-        /// get data from table 
-        /// **********************!!! WARNING NOT SAFE !!!**********************
-        /// *                                                                  *
-        /// *  if connection to SQl server with server security                *
-        /// *  need to add "Persist Security Info=True;" in connection string  *
-        /// *                                                                  *
-        /// **********************!!! WARNING NOT SAFE !!!**********************
+        /// 
         /// </summary>
-        /// <returns>table data</returns>
-        public static DataTable GetData(Table table)
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public static IEnumerable<Table> GetTablesMetadata(string connectionString, string providerName)
         {
-            // create empty DataTable that going to contain table data
-            DataTable data = new DataTable();
+            var tablesMetadataList = new List<Table>();
 
-            // create DbConnection using provider name and connection string 
-            using (DbConnection connection = DataAccess.CreateDbConnection(table.ProviderName, table.ConnectionString))
+            using (var connection = DbCommonHelper.CreateDbConnection(providerName, connectionString))
             {
-                // create select command text 
-                string selectCommandText = string.Format("SELECT * FROM [{0}]", table.Name);
-
-                // open connection
                 connection.Open();
-                // create DbDatareader
-                using (DbDataReader reader = DataAccess.CreateCommand(selectCommandText, connection).ExecuteReader())
-                    // load table data from DbDataReader to empty DataTable
-                    data.Load(reader);
-                // close connection
-                connection.Close();
+
+                var tablesSchema = connection.GetSchema("Tables");
+                foreach (var tablesSchemaRow in tablesSchema.AsEnumerable())
+                {
+                    var tableName = tablesSchemaRow["TABLE_NAME"].ToString();
+                    var rowsCount = DbCommonHelper.CountRows(tableName, connection);
+
+                    var columnsMetadata = GetColumnsMetadata(connection, tableName);
+
+                    tablesMetadataList.Add(new Table(tableName, columnsMetadata, rowsCount));
+                }
             }
 
-            // return result
-            return data;
+            return tablesMetadataList;
         }
-        */
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public static IEnumerable<Column> GetColumnsMetadata(DbConnection connection, string tableName)
+        {
+            var columnsMetadataList = new List<Column>();
+
+            var columnsSchema = connection.GetSchema("Columns", new string[] { null, null, tableName, null });
+            foreach (var columnsSchemaRow in columnsSchema.AsEnumerable())
+            {
+                var columnName = columnsSchemaRow["COLUMN_NAME"].ToString();
+                var columnDataType = columnsSchemaRow["DATA_TYPE"].ToString();
+
+                var columnLength = -1;
+                int.TryParse(columnsSchemaRow["CHARACTER_MAXIMUM_LENGTH"].ToString(), out columnLength);
+
+                columnsMetadataList.Add(new Column(columnName, columnDataType, columnLength));
+            }
+
+            return columnsMetadataList;
+        }
+
+
+        /*---------------------- ASYNC --------------------*/
+
     }
 }
