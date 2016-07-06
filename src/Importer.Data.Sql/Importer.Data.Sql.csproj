@@ -39,11 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Processors\AsyncSqlDataImportProcessor.cs" />
+    <Compile Include="Processors\AsyncSqlDataReaderProcessor.cs" />
     <Compile Include="Processors\SqlDataImportProcessor.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Processors\SqlDataReaderProcessor.cs" />
     <Compile Include="Processors\SqlMetadataProcessor.cs" />
+    <Compile Include="Processors\SqlProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

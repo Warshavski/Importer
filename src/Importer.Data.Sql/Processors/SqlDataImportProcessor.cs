@@ -22,7 +22,7 @@ namespace Escyug.Importer.Data.Sql.Processors
         }
     }
 
-    public sealed class SqlDataImportProcessor : IDataImportProcessor, IAsyncDataImportProcessor
+    public sealed class SqlDataImportProcessor : IDataImportProcessor
     {
         public event Action<long> RowsCopiedNotify;
 
@@ -56,28 +56,6 @@ namespace Escyug.Importer.Data.Sql.Processors
         #endregion Synchronous execution section
 
 
-        #region Asynchronous execution section
-
-        public async Task ImportAsync(IDataReader sourceDataReader, string targetConnectionString, string targetTableName)
-        {
-            await ImportAsync(sourceDataReader, targetConnectionString, targetTableName, null);
-        }
-
-        public async Task ImportAsync(IDataReader sourceDataReader, string targetConnectionString, 
-            string targetTableName, IEnumerable<ColumnsMapping> columnsMappings)
-        {
-            using (var connection = new SqlConnection(targetConnectionString))
-            {
-                await connection.OpenAsync();
-
-                await BulkCopyExecuteAsync(sourceDataReader, connection, targetTableName, columnsMappings);
-            }
-        }
-
-       
-        #endregion Asynchronous execution section
-
-
         #region Private helper methods 
 
         private void BulkCopyExecute(IDataReader sourceDataReader, SqlConnection targetConnection, string targetTableName,
@@ -96,25 +74,6 @@ namespace Escyug.Importer.Data.Sql.Processors
                 bulkCopy.NotifyAfter = _notifyAfter;
 
                 bulkCopy.WriteToServer(sourceDataReader);
-            }
-        }
-
-        private async Task BulkCopyExecuteAsync(IDataReader sourceDataReader, SqlConnection targetConnection, string targetTableName,
-           IEnumerable<ColumnsMapping> columnsMappings)
-        {
-            using (var bulkCopy = new SqlBulkCopy(targetConnection))
-            {
-                if (columnsMappings != null)
-                {
-                    var bulkMappings = CreateBulkCopyMappings(columnsMappings);
-                    bulkCopy.AddMappings(bulkMappings);
-                }
-
-                bulkCopy.DestinationTableName = targetTableName;
-                bulkCopy.BatchSize = _batchSize;
-                bulkCopy.NotifyAfter = _notifyAfter;
-
-                await bulkCopy.WriteToServerAsync(sourceDataReader);
             }
         }
 

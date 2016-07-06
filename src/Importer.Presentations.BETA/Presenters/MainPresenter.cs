@@ -23,6 +23,9 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
         private IDataService _sourceDataService;
         private IDataService _destinationDataService;
 
+        private IAsyncDataService _asyncSourceDataService;
+        private IAsyncDataService _asyncDestinationDataService;
+
         public MainPresenter(IMainView view, IApplicationController appController)
             : base(view, appController)
         {
@@ -44,17 +47,6 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
 
         private void OnInitializeView()
         {
-            var connectionStringsFilePath = @"C:\test\connectionStrings.txt";
-
-            var connectionStrings = new List<string>();
-            using (var reader = new StreamReader(connectionStringsFilePath, Encoding.UTF8))
-            {
-                while (!reader.EndOfStream)
-                {
-                    connectionStrings.Add(reader.ReadLine());
-                }
-            }
-
             var fileTypes = new FileType[] 
             {
                 new FileType("OleDb", DataServicesTypes.OleDb),
@@ -62,29 +54,11 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             };
 
             View.FileTypes = fileTypes;
-            View.SourceConnectionString = connectionStrings[1];
         }
 
 
         private void OnExecuteImport()
         {
-            //var sourceColumnsNames = View.SourceMarkedColumns;
-            //var destinationColumnsNames = 
-            //    ColumnsNamesFromColumnsData(View.SelectedDestinationTable.Columns);
-
-            //var mappings = new List<Data.ColumnsMapping>();
-            //for (int i = 0; i < sourceColumnsNames.Count; ++i)
-            //{
-            //    if (string.Compare(sourceColumnsNames.ElementAt(i), string.Empty) != 0)
-            //    {
-            //        var mapping =
-            //            new Data.ColumnsMapping(
-            //                sourceColumnsNames.ElementAt(i), destinationColumnsNames.ElementAt(i));
-
-            //        mappings.Add(mapping);
-            //    }
-            //}
-
             var sourceTableName = View.SelectedSourceTable.Name;
             var sourceColumnsNames = View.SourceMarkedColumns;
 
@@ -113,13 +87,16 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
 
             var mappings = CreateMappings(sourceColumnsNames, destinationColumnsNames);
 
-            await Task.Run(() =>
+            //*** eeem... what?!
+            await Task.Run(async () =>
                 {
-                    using (var sourceDataReader = _sourceDataService.GetDataReader(sourceTableName))
+                    using (var sourceDataReader = await _asyncSourceDataService.GetDataReader(sourceTableName))
                     {
-                        _destinationDataService.ImportData(sourceDataReader, destinationTableName, mappings);
+                        await _asyncDestinationDataService.ImportData(sourceDataReader, destinationTableName, mappings);
                     }
                 });
+
+           
            
             View.Error = "Done";
         }
@@ -161,13 +138,13 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
              * if source was uploaded already and an error has occurred
              * should DataService be reseted (set to null)?
              */
-            _sourceDataService = CreateDataService(sourceConnectionString, sourceFileType);
-            if (_sourceDataService != null)
+            _asyncSourceDataService = CreateAsyncDataService(sourceConnectionString, sourceFileType);
+            if (_asyncSourceDataService != null)
             {
                 View.IsLoadingSource = true;
 
                 ICollection<Data.Metadata.Table> metadata =
-                   await LoadMetadataAsync(_sourceDataService);
+                   await LoadMetadataAsync(_asyncSourceDataService);
 
                 View.SourceMetadata = metadata;
 
@@ -221,13 +198,13 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
              * if source was uploaded already and an error has occurred
              * should DataService be reseted (set to null)?
              */
-            _destinationDataService = CreateDataService(destinationConnectionString, destinationFileType);
-            if (_destinationDataService != null)
+            _asyncDestinationDataService = CreateAsyncDataService(destinationConnectionString, destinationFileType);
+            if (_asyncDestinationDataService != null)
             {
                 View.IsLoadingDestination = true;
                 
-                ICollection<Data.Metadata.Table> metadata = 
-                    await LoadMetadataAsync(_destinationDataService);
+                ICollection<Data.Metadata.Table> metadata =
+                    await LoadMetadataAsync(_asyncDestinationDataService);
 
                 View.DestinationMetadata = metadata;
                 View.IsLoadingDestination = false;
@@ -274,6 +251,24 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             }
         }
 
+        private IAsyncDataService CreateAsyncDataService(string connectionString, FileType fileType)
+        {
+            var isEmptyConnectionString = (string.Compare(connectionString, string.Empty) == 0);
+            if (!isEmptyConnectionString)
+            {
+                // hmm... try to avoid useless data type conversions
+                var dataServiceType = (DataServicesTypes)fileType.Type;
+                var dataService = DataServiceFactory.CreateAsync(dataServiceType, connectionString);
+
+                return dataService;
+            }
+            else
+            {
+                View.Error = "Connection string can't be empty.";
+                return null;
+            }
+        }
+
         /// <summary>
         /// Check connection availability and loads metadata from IDataService
         /// </summary>
@@ -297,7 +292,7 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             }
         }
 
-        private async Task<ICollection<Data.Metadata.Table>> LoadMetadataAsync(IDataService dataService)
+        private async Task<ICollection<Data.Metadata.Table>> LoadMetadataAsync(IAsyncDataService dataService)
         {
             // check availability of connection 
             // create IDataService and load metadata if connection is available

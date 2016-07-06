@@ -5,9 +5,10 @@ using Escyug.Importer.Data.Processors;
 
 namespace Escyug.Importer.Data.Sql.Processors
 {
-    public sealed class SqlDataReaderProcessor : IDataReaderProcessor
+    public sealed class SqlDataReaderProcessor : SqlProcessor,
+        IDataReaderProcessor
     {
-        public const string PROVIDER_NAME = "System.Data.SqlClient";
+        
 
         public SqlDataReaderProcessor()
         {
@@ -17,10 +18,9 @@ namespace Escyug.Importer.Data.Sql.Processors
         // (done) - replace implementation to DbHelperClass 
         public IDataReader CreateReader(string tableName, string connectionString)
         {
-            string commandText = "SELECT * FROM dbo.[" + tableName + "]";
-            string dataProviderName = PROVIDER_NAME;
-
-            return DbCommonHelper.CreateDataReader(dataProviderName, connectionString, commandText);
+            string commandText = CreateSelectCommandText(tableName);
+            
+            return DbCommonHelper.CreateDataReader(PROVIDER_NAME, connectionString, commandText);
         }
     }
 }

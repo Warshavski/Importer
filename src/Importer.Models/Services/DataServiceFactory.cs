@@ -26,10 +26,36 @@ namespace Escyug.Importer.Models.Services
                 { DataServicesTypes.Sql, CreateSqlDataService }
             };
 
+        //private static Dictionary<DataServicesTypes, Func<string, IAsyncDataService>> _asyncDataServicesCreators =
+        //    new Dictionary<DataServicesTypes, Func<string, IAsyncDataService>>()
+        //    {
+        //        { DataServicesTypes.OleDb, CreateAsyncOleDbDataService },
+        //        { DataServicesTypes.Sql, CreateAsyncSqlDataService }
+        //    };
+
+        private static List<Func<string, IAsyncDataService>> _asyncDataServicesCreators =
+            new List<Func<string, IAsyncDataService>>() 
+            {
+                CreateAsyncOleDbDataService,
+                CreateAsyncSqlDataService
+            };
 
         public static IDataService Create(DataServicesTypes serviceType, string connectionString)
         {
             return _dataServicesCreators[serviceType].Invoke(connectionString);
+        }
+
+        public static IAsyncDataService CreateAsync(DataServicesTypes serviceType, string connectionString)
+        {
+            switch (serviceType)
+            {
+                case DataServicesTypes.OleDb :
+                    return _asyncDataServicesCreators[0].Invoke(connectionString);
+                case DataServicesTypes.Sql :
+                    return _asyncDataServicesCreators[1].Invoke(connectionString);
+                default :
+                    return null;
+            }
         }
 
         private static IDataService CreateSqlDataService(string connectionString)
@@ -44,6 +70,18 @@ namespace Escyug.Importer.Models.Services
             return sqlDataService;
         }
 
+        private static IAsyncDataService CreateAsyncSqlDataService(string connectionString)
+        {
+            var importProcessor = new AsyncSqlDataImportProcessor();
+            var dataReaderProcessor = new AsyncSqlDataReaderProcessor();
+            var metadataProcessor = new SqlMetadataProcessor();
+
+            var sqlDataService = new AsyncDataService(connectionString,
+                metadataProcessor, importProcessor, dataReaderProcessor);
+
+            return sqlDataService;
+        }
+
         private static IDataService CreateOleDbDataService(string connectionString)
         {
             //var importProcessor = new OleDbDataImportProcessor();
@@ -51,6 +89,18 @@ namespace Escyug.Importer.Models.Services
             var metadataProcessor = new OleDbMetadataProcessor();
 
             var oleDbDataService = new DataService(connectionString,
+                metadataProcessor, null/*importProcessor*/, dataReaderProcessor);
+
+            return oleDbDataService;
+        }
+
+        private static IAsyncDataService CreateAsyncOleDbDataService(string connectionString)
+        {
+            //var importProcessor = new OleDbDataImportProcessor();
+            var dataReaderProcessor = new AsyncOleDbDataReaderProcessor();
+            var metadataProcessor = new OleDbMetadataProcessor();
+
+            var oleDbDataService = new AsyncDataService(connectionString,
                 metadataProcessor, null/*importProcessor*/, dataReaderProcessor);
 
             return oleDbDataService;

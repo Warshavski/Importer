@@ -43,6 +43,7 @@
     <Compile Include="ColumnsMapping.cs" />
     <Compile Include="Metadata\Table.cs" />
     <Compile Include="Processors\IAsyncDataImportProcessor.cs" />
+    <Compile Include="Processors\IAsyncDataReaderProcessor.cs" />
     <Compile Include="Processors\IDataImportProcessor.cs">
       <SubType>Code</SubType>
     </Compile>

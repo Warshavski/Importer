@@ -5,10 +5,9 @@ using Escyug.Importer.Data.Processors;
 
 namespace Escyug.Importer.Data.OleDb.Processors
 {
-    public class OleDbDataReaderProcessor : IDataReaderProcessor
+    public class OleDbDataReaderProcessor : OleDbProcessor,
+        IDataReaderProcessor
     {
-        private const string PROVIDER_NAME = "System.Data.OleDb";
-
         public OleDbDataReaderProcessor()
         {
 
@@ -17,10 +16,9 @@ namespace Escyug.Importer.Data.OleDb.Processors
         // (done) - replace implementation to DbHelperClass
         public IDataReader CreateReader(string tableName, string connectionString)
         {
-            string commandText = "SELECT * FROM [" + tableName + "]";
-            string dataProviderName = PROVIDER_NAME;
+            var commandText = CreateSelectCommandText(tableName);
 
-            return DbCommonHelper.CreateDataReader(dataProviderName, connectionString, commandText);
+            return DbCommonHelper.CreateDataReader(PROVIDER_NAME, connectionString, commandText);
         }
     }
 }

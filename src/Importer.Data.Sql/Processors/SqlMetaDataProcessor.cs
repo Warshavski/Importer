@@ -10,10 +10,9 @@ using Escyug.Importer.Data.Processors;
 namespace Escyug.Importer.Data.Sql.Processors
 {
     // same class implementation in OleDbMetadataProcessor (different connections)
-    public sealed class SqlMetadataProcessor : IMetadataProcessor
+    public sealed class SqlMetadataProcessor : SqlProcessor,
+        IMetadataProcessor
     {
-        public const string PROVIDER_NAME = "System.Data.SqlClient";
-
         public SqlMetadataProcessor()
         {
 

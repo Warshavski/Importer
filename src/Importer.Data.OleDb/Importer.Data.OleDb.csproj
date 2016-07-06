@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Processors\AsyncOleDbDataReaderProcessor.cs" />
     <Compile Include="Processors\OleDbDataReaderProcessor.cs" />
     <Compile Include="Processors\OleDbMetadataProcessor.cs" />
+    <Compile Include="Processors\OleDbProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

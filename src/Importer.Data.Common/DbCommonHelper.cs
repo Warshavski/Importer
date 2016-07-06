@@ -110,6 +110,30 @@ namespace Escyug.Importer.Data.Common
             return reader;
         }
 
+        public static async Task<IDataReader> CreateDataReaderAsync(string providerName, string connectionString, string commandText)
+        {
+            DbConnection connection = null;
+            IDataReader reader = null;
+
+            try
+            {
+                connection = DbCommonHelper.CreateDbConnection(providerName, connectionString);
+
+                var command = DbCommonHelper.CreateCommand(commandText, connection);
+
+                await connection.OpenAsync();
+
+                reader = await command.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+            }
+            catch (DbException ex)
+            {
+                connection.Close();
+                throw ex;
+            }
+
+            return reader;
+        }
+
         /// <summary>
         /// 
         /// </summary>
