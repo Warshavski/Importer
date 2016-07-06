@@ -34,6 +34,15 @@ namespace Escyug.Importer.Models.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="dataReader"></param>
+        /// <param name="destinationTable"></param>
+        /// <param name="columnsMapping"></param>
+        void ImportData(IDataReader dataReader, string destinationTable,
+              IEnumerable<Data.ColumnsMapping> columnsMapping);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         bool TestConnection();
     }

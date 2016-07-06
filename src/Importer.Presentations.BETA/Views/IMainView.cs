@@ -15,20 +15,36 @@ namespace Escyug.Importer.Presentations.BETA.Views
 {
     public interface IMainView : IView
     {
-        event Action InitializeSource;
-
-        event Action SelectSourceTable;
+        event Action InitializeView;
+        event Action ExecuteImport;
 
         ICollection<FileType> FileTypes { get; set; }
 
-        FileType SourceDataType { get; }
+        #region Source
 
+        event Action InitializeSource;
+        event Action SelectSourceTable;
+
+        FileType SourceDataType { get; }
         string SourceConnectionString { get; set; }
 
         ICollection<Table> SourceMetadata { get; set; }
-
         Table SelectedSourceTable { get; }
-
         ICollection<Column> SelectedSourceTableColumns { get; set; }
+
+        ICollection<string> SourceMarkedColumns { get; set; }
+
+        #endregion
+
+        #region Desctination
+
+        event Action InitializeDestination;
+        event Action SelectDestinationTable;
+
+        ICollection<Table> DestinationMetadata { get; set; }
+        Table SelectedDestinationTable { get; }
+        ICollection<Column> SelectedDestinationTableColumns { get; set; }
+
+        #endregion
     }
 }

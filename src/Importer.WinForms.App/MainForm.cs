@@ -23,20 +23,29 @@ namespace Escyug.Importer.WinForms.App
 
             InitializeComponent();
 
+            this.Load += (sender, e) => Invoke(InitializeView);
+            this.buttonImportExecute.Click += (sender, e) => Invoke(ExecuteImport);
+
+            // controls for source data service
             this.buttonLoadSource.Click += (sender, e) => Invoke(InitializeSource);
-
             this.comboBoxSourceTables.SelectionChangeCommitted += (sender, e) => Invoke(SelectSourceTable);
-           
 
-            //this.treeView1.AfterSelect += (sender, e) =>
-            //{
-            //    if (treeView1.SelectedNode.Tag is Models.Table)
-            //        this.SelectedDestinationTableColumns =
-            //            (treeView1.SelectedNode.Tag as Models.Table).Columns;
-            //};
+            // controls for destination data service
+            this.toolStripButtonDestinationLoad.Click += (sender, e) => Invoke(InitializeDestination);
+            this.treeView1.AfterSelect += (sender, e) => Invoke(SelectDestinationTable);
+
+            this.comboBoxSourceTables.SelectedValueChanged += (sender, e) =>
+            {
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    row.Cells["sourceColumn"].Value = null;
+                }
+            };
         }
 
-        public void Invoke(Action action)
+        #region General
+
+        private void Invoke(Action action)
         {
             if (action != null)
             {
@@ -59,11 +68,11 @@ namespace Escyug.Importer.WinForms.App
             }
         }
 
-        public event Action InitializeSource;
-        
-        public event Action SelectSourceTable;
+        public event Action InitializeView;
 
-        public ICollection<FileType> FileTypes 
+        public event Action ExecuteImport;
+
+        public ICollection<FileType> FileTypes
         {
             get
             {
@@ -76,40 +85,52 @@ namespace Escyug.Importer.WinForms.App
             }
         }
 
-        public FileType SourceDataType 
+        #endregion General
+
+
+        //-------------------------------------------------
+
+
+        #region Source 
+
+        public event Action InitializeSource;
+
+        public event Action SelectSourceTable;
+
+        public FileType SourceDataType
         {
-            get 
+            get
             {
                 return comboBoxSourceType.SelectedValue as FileType;
             }
         }
 
-        public string SourceConnectionString 
+        public string SourceConnectionString
         {
-            get 
-            { 
-                return textBoxSourceConnection.Text; 
+            get
+            {
+                return textBoxSourceConnection.Text;
             }
-            set 
-            { 
-                textBoxSourceConnection.Text = value; 
+            set
+            {
+                textBoxSourceConnection.Text = value;
             }
         }
-        
-        public ICollection<Escyug.Importer.Data.Metadata.Table> SourceMetadata
+
+        public ICollection<Data.Metadata.Table> SourceMetadata
         {
             get
             {
                 return comboBoxSourceTables.DataSource as ICollection<Data.Metadata.Table>;
             }
-            set 
+            set
             {
                 comboBoxSourceTables.DataSource = value;
                 comboBoxSourceTables.DisplayMember = "Name";
             }
         }
 
-        public Data.Metadata.Table SelectedSourceTable 
+        public Data.Metadata.Table SelectedSourceTable
         {
             get
             {
@@ -130,6 +151,86 @@ namespace Escyug.Importer.WinForms.App
                 //dataGridView1.DataSource = value;
             }
         }
+
+        public ICollection<string> SourceMarkedColumns 
+        {
+            get
+            {
+                var markedColumnsNames = new List<string>();
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    var cellValue = row.Cells["sourceColumn"].Value;
+                    markedColumnsNames.Add(
+                        cellValue == null ? string.Empty : (string)cellValue);
+                }
+
+                return markedColumnsNames;
+            }
+            set
+            {
+                sourceColumn.DataSource = value;
+                //sourceColumn.DisplayMember = "Name";
+            }
+        }
+
+        #endregion
+
+
+        //-------------------------------------------------
+
+
+        #region Destination
+
+        public event Action InitializeDestination;
+
+        public event Action SelectDestinationTable;
+
+        public ICollection<Data.Metadata.Table> DestinationMetadata
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                treeView1.Nodes.Clear();
+                treeView1.Nodes.AddRange(
+                    CreateTreeViewNodes(value).ToArray());
+
+                dataGridView1.DataSource = null;
+            }
+        }
+
+        public Data.Metadata.Table SelectedDestinationTable
+        {
+            get 
+            {
+                return treeView1.SelectedNode.Tag as Data.Metadata.Table;
+            }
+        }
+
+        public ICollection<Data.Metadata.Column> SelectedDestinationTableColumns
+        {
+            get
+            {
+                return dataGridView1.DataSource as ICollection<Data.Metadata.Column>;
+            }
+            set
+            {
+                if (dataGridView1.DataSource == null)
+                {
+                    sourceColumn.DataSource = null;
+                }
+
+                dataGridView1.DataSource = value;
+            }
+        }
+
+        #endregion Destination
+
+
+        //-------------------------------------------------
+
 
         #region Helper methods
 
@@ -159,9 +260,6 @@ namespace Escyug.Importer.WinForms.App
         }
 
         #endregion Helper methods
-
-
-
-       
     }
 }
+
