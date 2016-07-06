@@ -28,11 +28,14 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
         {
             View.InitializeView += () => OnInitializeView();
             View.ExecuteImport += () => OnExecuteImport();
+            View.ExecuteImportAsync += () => OnExecuteImportAsync();
 
             View.InitializeSource += () => OnInitializeSource();
+            View.InitializeSourceAsync += () => OnInitializeSourceAsync();
             View.SelectSourceTable += () => OnSourceTableSelect();
 
             View.InitializeDestination += () => OnInitializeDestination();
+            View.InitializeDestinationAsync += () => OnInitializeDestinationAsync();
             View.SelectDestinationTable += () => OnDestinationTableSelect();
         }
 
@@ -99,6 +102,28 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             View.Error = "Done";
         }
 
+        private async Task OnExecuteImportAsync()
+        {
+            var sourceTableName = View.SelectedSourceTable.Name;
+            var sourceColumnsNames = View.SourceMarkedColumns;
+
+            var destinationTableName = View.SelectedDestinationTable.Name;
+            var destinationColumnsNames =
+                ColumnsNamesFromColumnsData(View.SelectedDestinationTable.Columns);
+
+            var mappings = CreateMappings(sourceColumnsNames, destinationColumnsNames);
+
+            await Task.Run(() =>
+                {
+                    using (var sourceDataReader = _sourceDataService.GetDataReader(sourceTableName))
+                    {
+                        _destinationDataService.ImportData(sourceDataReader, destinationTableName, mappings);
+                    }
+                });
+           
+            View.Error = "Done";
+        }
+
         #endregion General
 
 
@@ -120,7 +145,33 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             _sourceDataService = CreateDataService(sourceConnectionString, sourceFileType);
             if (_sourceDataService != null)
             {
+                View.IsLoadingSource = true;
                 View.SourceMetadata = LoadMetadata(_sourceDataService);
+                View.IsLoadingSource = false;
+            }
+        }
+
+        private async Task OnInitializeSourceAsync()
+        {
+            var sourceConnectionString = View.SourceConnectionString.Trim();
+            //*** check for correct file type
+            var sourceFileType = View.SourceDataType;
+
+            /***
+             * if source was uploaded already and an error has occurred
+             * should DataService be reseted (set to null)?
+             */
+            _sourceDataService = CreateDataService(sourceConnectionString, sourceFileType);
+            if (_sourceDataService != null)
+            {
+                View.IsLoadingSource = true;
+
+                ICollection<Data.Metadata.Table> metadata =
+                   await LoadMetadataAsync(_sourceDataService);
+
+                View.SourceMetadata = metadata;
+
+                View.IsLoadingSource = false;
             }
         }
 
@@ -152,9 +203,37 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             _destinationDataService = CreateDataService(destinationConnectionString, destinationFileType);
             if (_destinationDataService != null)
             {
+                View.IsLoadingDestination = true;
                 View.DestinationMetadata = LoadMetadata(_destinationDataService);
+                View.IsLoadingDestination = false;
             }
         }
+
+        // doesn't block UI
+        private async Task OnInitializeDestinationAsync()
+        {
+            var destinationConnectionString =
+                ConfigurationManager.ConnectionStrings["test"].ConnectionString;
+
+            var destinationFileType = new FileType("ms sql", DataServicesTypes.Sql);
+
+            /***
+             * if source was uploaded already and an error has occurred
+             * should DataService be reseted (set to null)?
+             */
+            _destinationDataService = CreateDataService(destinationConnectionString, destinationFileType);
+            if (_destinationDataService != null)
+            {
+                View.IsLoadingDestination = true;
+                
+                ICollection<Data.Metadata.Table> metadata = 
+                    await LoadMetadataAsync(_destinationDataService);
+
+                View.DestinationMetadata = metadata;
+                View.IsLoadingDestination = false;
+            }
+        }
+
 
         private void OnDestinationTableSelect()
         {
@@ -209,6 +288,28 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             if (isConnectionAvailable)
             {
                 var metadata = dataService.GetMetaData();
+                return metadata.ToList();
+            }
+            else
+            {
+                View.Error = "Can't initialize connection. Check connection string.";
+                return null;
+            }
+        }
+
+        private async Task<ICollection<Data.Metadata.Table>> LoadMetadataAsync(IDataService dataService)
+        {
+            // check availability of connection 
+            // create IDataService and load metadata if connection is available
+            // show error if connection is not available
+            var isConnectionAvailable = dataService.TestConnection();
+            if (isConnectionAvailable)
+            {
+                IEnumerable<Data.Metadata.Table> metadata = null;
+                await Task.Run(() =>
+                    {
+                        metadata = dataService.GetMetaData();
+                    });
                 return metadata.ToList();
             }
             else

@@ -24,14 +24,26 @@ namespace Escyug.Importer.WinForms.App
             InitializeComponent();
 
             this.Load += (sender, e) => Invoke(InitializeView);
-            this.buttonImportExecute.Click += (sender, e) => Invoke(ExecuteImport);
+            //this.buttonImportExecute.Click += (sender, e) => Invoke(ExecuteImport);
+            this.buttonImportExecute.Click += async (sender, e) => 
+                await Invoker.InvokeAsync(ExecuteImportAsync);
 
-            // controls for source data service
-            this.buttonLoadSource.Click += (sender, e) => Invoke(InitializeSource);
+            /** 
+             * controls for source data service
+             */
+            //this.buttonLoadSource.Click += (sender, e) => Invoke(InitializeSource);
+            this.buttonLoadSource.Click += async (sender, e) => 
+                await Invoker.InvokeAsync(InitializeSourceAsync);
+
             this.comboBoxSourceTables.SelectionChangeCommitted += (sender, e) => Invoke(SelectSourceTable);
 
-            // controls for destination data service
-            this.toolStripButtonDestinationLoad.Click += (sender, e) => Invoke(InitializeDestination);
+            /** 
+             * controls for destination data service
+             */
+            //this.toolStripButtonDestinationLoad.Click += (sender, e) => Invoke(InitializeDestination);
+            this.toolStripButtonDestinationLoad.Click += 
+                async (sender, e) => await Invoker.InvokeAsync(InitializeDestinationAsync);
+
             this.treeView1.AfterSelect += (sender, e) => Invoke(SelectDestinationTable);
 
             this.comboBoxSourceTables.SelectedValueChanged += (sender, e) =>
@@ -44,14 +56,6 @@ namespace Escyug.Importer.WinForms.App
         }
 
         #region General
-
-        private void Invoke(Action action)
-        {
-            if (action != null)
-            {
-                action.Invoke();
-            }
-        }
 
         public new void Show()
         {
@@ -71,6 +75,8 @@ namespace Escyug.Importer.WinForms.App
         public event Action InitializeView;
 
         public event Action ExecuteImport;
+
+        public event Func<Task> ExecuteImportAsync;
 
         public ICollection<FileType> FileTypes
         {
@@ -94,6 +100,8 @@ namespace Escyug.Importer.WinForms.App
         #region Source 
 
         public event Action InitializeSource;
+
+        public event Func<Task> InitializeSourceAsync;
 
         public event Action SelectSourceTable;
 
@@ -173,6 +181,18 @@ namespace Escyug.Importer.WinForms.App
             }
         }
 
+        public bool IsLoadingSource 
+        { 
+            get
+            {
+                return sourceLoadProgress.Visible;
+            }
+            set 
+            {
+                sourceLoadProgress.Visible = value;
+            }
+        }
+
         #endregion
 
 
@@ -182,6 +202,8 @@ namespace Escyug.Importer.WinForms.App
         #region Destination
 
         public event Action InitializeDestination;
+
+        public event Func<Task> InitializeDestinationAsync;
 
         public event Action SelectDestinationTable;
 
@@ -223,6 +245,18 @@ namespace Escyug.Importer.WinForms.App
                 }
 
                 dataGridView1.DataSource = value;
+            }
+        }
+
+        public bool IsLoadingDestination
+        {
+            get
+            {
+                return destinationLoadProgress.Visible;
+            }
+            set
+            {
+                destinationLoadProgress.Visible = value;
             }
         }
 

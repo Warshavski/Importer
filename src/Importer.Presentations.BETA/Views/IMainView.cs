@@ -17,12 +17,14 @@ namespace Escyug.Importer.Presentations.BETA.Views
     {
         event Action InitializeView;
         event Action ExecuteImport;
+        event Func<Task> ExecuteImportAsync;
 
         ICollection<FileType> FileTypes { get; set; }
 
         #region Source
 
         event Action InitializeSource;
+        event Func<Task> InitializeSourceAsync;
         event Action SelectSourceTable;
 
         FileType SourceDataType { get; }
@@ -34,16 +36,21 @@ namespace Escyug.Importer.Presentations.BETA.Views
 
         ICollection<string> SourceMarkedColumns { get; set; }
 
+        bool IsLoadingSource { get; set; }
+
         #endregion
 
         #region Desctination
 
         event Action InitializeDestination;
+        event Func<Task> InitializeDestinationAsync;
         event Action SelectDestinationTable;
 
         ICollection<Table> DestinationMetadata { get; set; }
         Table SelectedDestinationTable { get; }
         ICollection<Column> SelectedDestinationTableColumns { get; set; }
+
+        bool IsLoadingDestination { get; set; }
 
         #endregion
     }

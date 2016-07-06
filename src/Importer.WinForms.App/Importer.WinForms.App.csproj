@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Invoker.cs" />
     <Compile Include="LightInjectAdapter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -93,6 +94,12 @@
       <Project>{c9723cc6-bf6a-4e38-b03e-7c65463a1ec6}</Project>
       <Name>Importer.Presentations.BETA</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\35 %281%29.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\35 %282%29.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
