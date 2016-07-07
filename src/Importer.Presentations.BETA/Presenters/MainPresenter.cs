@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,6 @@ using Escyug.Importer.Models.Services;
 using Escyug.Importer.Presentations.BETA.Common;
 using Escyug.Importer.Presentations.BETA.Views;
 using Escyug.Importer.Presentations.BETA.ViewModels;
-using System.Configuration;
-
 
 namespace Escyug.Importer.Presentations.BETA.Presenters
 {
@@ -87,18 +86,37 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
 
             var mappings = CreateMappings(sourceColumnsNames, destinationColumnsNames);
 
+            var totalRows = View.SelectedSourceTable.RowsCount;
+
+            var isTruncate = View.IsTruncateDestinationTable;
+            
+
+            View.ProgressValue = 0;
+
+            View.ApplicationStatus = "Import in progress...";
+            View.IsImportExecuting = true;
+
             //*** eeem... what?!
             await Task.Run(async () =>
                 {
+                    if (isTruncate)
+                    {
+                        await _asyncDestinationDataService.TruncateTableAsync(destinationTableName);
+                    }
                     using (var sourceDataReader = await _asyncSourceDataService.GetDataReader(sourceTableName))
                     {
-                        await _asyncDestinationDataService.ImportData(sourceDataReader, destinationTableName, mappings);
+                        await _asyncDestinationDataService.ImportData(
+                            sourceDataReader, destinationTableName, mappings, 
+                            (rowsCopied) => 
+                                {
+                                    View.ProgressValue = (int)((100 * rowsCopied) / totalRows);
+                                });
                     }
                 });
 
-           
-           
-            View.Error = "Done";
+            View.ApplicationStatus = "Import is completed!";
+            View.Notify = "Import successfully completed!";
+            View.IsImportExecuting = false;
         }
 
         #endregion General

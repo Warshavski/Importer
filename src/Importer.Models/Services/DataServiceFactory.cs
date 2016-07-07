@@ -75,9 +75,10 @@ namespace Escyug.Importer.Models.Services
             var importProcessor = new AsyncSqlDataImportProcessor();
             var dataReaderProcessor = new AsyncSqlDataReaderProcessor();
             var metadataProcessor = new SqlMetadataProcessor();
+            var queryProcessor = new AsyncSqlTruncateTableProcessor();
 
             var sqlDataService = new AsyncDataService(connectionString,
-                metadataProcessor, importProcessor, dataReaderProcessor);
+                metadataProcessor, importProcessor, dataReaderProcessor, queryProcessor);
 
             return sqlDataService;
         }
@@ -101,7 +102,7 @@ namespace Escyug.Importer.Models.Services
             var metadataProcessor = new OleDbMetadataProcessor();
 
             var oleDbDataService = new AsyncDataService(connectionString,
-                metadataProcessor, null/*importProcessor*/, dataReaderProcessor);
+                metadataProcessor, null/*importProcessor*/, dataReaderProcessor, null);
 
             return oleDbDataService;
         }

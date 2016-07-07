@@ -39,8 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Processors\AsyncSqlCustomQueryProcessor.cs" />
     <Compile Include="Processors\AsyncSqlDataImportProcessor.cs" />
     <Compile Include="Processors\AsyncSqlDataReaderProcessor.cs" />
+    <Compile Include="Processors\AsyncSqlDeleteDataProcessor.cs" />
+    <Compile Include="Processors\AsyncSqlTruncateTableProcessor.cs" />
     <Compile Include="Processors\SqlDataImportProcessor.cs">
       <SubType>Code</SubType>
     </Compile>

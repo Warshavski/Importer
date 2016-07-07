@@ -42,8 +42,12 @@
     <Compile Include="Metadata\Column.cs" />
     <Compile Include="ColumnsMapping.cs" />
     <Compile Include="Metadata\Table.cs" />
+    <Compile Include="Processors\IAsyncCustomQueryProcessor.cs" />
     <Compile Include="Processors\IAsyncDataImportProcessor.cs" />
     <Compile Include="Processors\IAsyncDataReaderProcessor.cs" />
+    <Compile Include="Processors\IAsyncDeleteDataProcessor.cs" />
+    <Compile Include="Processors\IAsyncTruncateTableProcessor.cs" />
+    <Compile Include="Processors\ICustomQueryProcessor.cs" />
     <Compile Include="Processors\IDataImportProcessor.cs">
       <SubType>Code</SubType>
     </Compile>

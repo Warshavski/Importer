@@ -28,5 +28,18 @@ namespace Escyug.Importer.Data.Processors
         /// <returns></returns>
         Task ImportAsync(IDataReader sourceDataReader, string targetConnectionString,
             string targetTableName, IEnumerable<ColumnsMapping> columnsMapping);
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sourceDataReader"></param>
+        /// <param name="targetConnectionString"></param>
+        /// <param name="targetTableName"></param>
+        /// <param name="columnsMappings"></param>
+        /// <param name="rowsCopiedNotify"></param>
+        /// <returns></returns>
+        Task ImportAsync(IDataReader sourceDataReader, string targetConnectionString,
+            string targetTableName, IEnumerable<ColumnsMapping> columnsMappings, Action<long> rowsCopiedNotify);
     }
 }

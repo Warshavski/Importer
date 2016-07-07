@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Escyug.Importer.Data;
 using Escyug.Importer.Data.Metadata;
 using Escyug.Importer.Data.Processors;
 using Escyug.Importer.Data.OleDb.Processors;
@@ -25,16 +27,41 @@ namespace Importer.Console.App
             var connectionStringsFilePath = @"C:\test\connectionStrings.txt";
             var connectionStrings = ReadConnectionStrings(connectionStringsFilePath);
 
-            var sqlDataService = DataServiceFactory.Create(DataServicesTypes.Sql, connectionStrings[1]);
-            var metadata = sqlDataService.GetMetaData();
-            PrintMetaData(metadata);
-
-            using (var reader = sqlDataService.GetDataReader("test3"))
+            var sqlDataService = DataServiceFactory.CreateAsync(DataServicesTypes.Sql, connectionStrings[3]);
+            var excelDataService = DataServiceFactory.CreateAsync(DataServicesTypes.OleDb, connectionStrings[5]);
+            
+            var columnsMappings = new List<ColumnsMapping>()
             {
-                sqlDataService.ImportData(reader, "test1");
-            }
+                new ColumnsMapping("NPP", "NPP"),
+                new ColumnsMapping("MNN", "MNN"),
+                new ColumnsMapping("TRADENAME", "TRADENAME"),
+                new ColumnsMapping("DRUGFORM", "DRUGFORM"),
+                new ColumnsMapping("FIRM", "FIRM"),
+                new ColumnsMapping("QNT", "QNT"),
+                new ColumnsMapping("PRICE", "PRICE"),
+                new ColumnsMapping("MAXPRICE", "MAXPRICE"),
+                new ColumnsMapping("EAN13", "EAN13")
+            };
 
-            System.Console.WriteLine("wat wat");
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
+
+            Task.WaitAll(Import(excelDataService, sqlDataService, columnsMappings));
+          
+            sw.Stop();
+
+            System.Console.WriteLine("Elapsed={0}", sw.Elapsed);
+
+        }
+
+        private async static Task Import(IAsyncDataService source, IAsyncDataService destination,
+            IEnumerable<ColumnsMapping> mappings)
+        {
+            using (var dataReader = await source.GetDataReader("wat$"))
+            {
+                await destination.ImportData(dataReader, "VITAL", mappings);
+            }
         }
 
         private static List<string> ReadConnectionStrings(string path)

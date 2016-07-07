@@ -16,17 +16,20 @@ namespace Escyug.Importer.Models.Services
         private readonly IMetadataProcessor _metadataProcessor;
         private readonly IAsyncDataImportProcessor _importProcessor;
         private readonly IAsyncDataReaderProcessor _readerProcessor;
+        private readonly IAsyncTruncateTableProcessor _truncateProcessor;
 
         internal AsyncDataService(string connectioString,
             IMetadataProcessor metadataProcessor,
             IAsyncDataImportProcessor importProcessor,
-            IAsyncDataReaderProcessor readerProcessor)
+            IAsyncDataReaderProcessor readerProcessor,
+            IAsyncTruncateTableProcessor truncateProcessor)
         {
             _connectionString = connectioString;
 
             _metadataProcessor = metadataProcessor;
             _importProcessor = importProcessor;
             _readerProcessor = readerProcessor;
+            _truncateProcessor = truncateProcessor;
         }
 
         //*** use async
@@ -42,17 +45,29 @@ namespace Escyug.Importer.Models.Services
             return dataReader;
         }
 
-        public async Task ImportData(IDataReader dataReader, string destinationTable)
+        public async Task ImportData(IDataReader dataReader, string destinationTableName)
         {
             await _importProcessor.ImportAsync(
-                dataReader, _connectionString, destinationTable);
+                dataReader, _connectionString, destinationTableName);
         }
 
-        public async Task ImportData(IDataReader dataReader, string destinationTable,
+        public async Task ImportData(IDataReader dataReader, string destinationTableName,
             IEnumerable<ColumnsMapping> columnsMapping)
         {
             await _importProcessor.ImportAsync(
-                dataReader, _connectionString, destinationTable, columnsMapping);
+                dataReader, _connectionString, destinationTableName, columnsMapping);
+        }
+
+        public async Task ImportData(IDataReader dataReader, string destinationTable, 
+            IEnumerable<ColumnsMapping> columnsMapping, Action<long> copyNotify)
+        {
+            await _importProcessor.ImportAsync(
+                dataReader, _connectionString, destinationTable, columnsMapping, copyNotify);
+        }
+
+        public async Task TruncateTableAsync(string tableName)
+        {
+            await _truncateProcessor.TruncateTableAsync(_connectionString, tableName);
         }
 
         public bool TestConnection()
@@ -60,5 +75,8 @@ namespace Escyug.Importer.Models.Services
             //*** use async 
             return _metadataProcessor.TestConnection(_connectionString);
         }
+
+
+        
     }
 }

@@ -72,6 +72,15 @@ namespace Escyug.Importer.WinForms.App
             }
         }
 
+        public string Notify
+        {
+            set
+            {
+                MessageBox.Show(value, "Application information",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         public event Action InitializeView;
 
         public event Action ExecuteImport;
@@ -88,6 +97,39 @@ namespace Escyug.Importer.WinForms.App
             {
                 comboBoxSourceType.DataSource = value;
                 comboBoxSourceType.DisplayMember = "Name";
+            }
+        }
+
+
+        public int ProgressValue
+        {
+            get
+            {
+                return toolStripProgressBar1.Value;
+            }
+            set
+            {
+                toolStripProgressBar1.Value = value;
+            }
+        }
+
+        public bool IsImportExecuting
+        {
+            set
+            {
+                toolStripProgressBar1.Visible = value;
+            }
+        }
+
+        public string ApplicationStatus
+        {
+            get
+            {
+                return toolStripStatusLabel1.Text;
+            }
+            set
+            {
+                toolStripStatusLabel1.Text = value;
             }
         }
 
@@ -257,6 +299,18 @@ namespace Escyug.Importer.WinForms.App
             set
             {
                 destinationLoadProgress.Visible = value;
+            }
+        }
+
+        public bool IsTruncateDestinationTable 
+        {
+            get
+            {
+                return checkBoxTruncate.Checked;
+            }
+            set
+            {
+                checkBoxTruncate.Checked = value;
             }
         }
 

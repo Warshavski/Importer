@@ -25,5 +25,10 @@ namespace Escyug.Importer.Presentations.BETA.Common
         /// Set error message
         /// </summary>
         string Error { set; }
+
+        /// <summary>
+        /// Set notify message
+        /// </summary>
+        string Notify { set; }
     }
 }

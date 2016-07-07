@@ -15,11 +15,25 @@ namespace Escyug.Importer.Presentations.BETA.Views
 {
     public interface IMainView : IView
     {
+        #region General
+
         event Action InitializeView;
         event Action ExecuteImport;
         event Func<Task> ExecuteImportAsync;
 
         ICollection<FileType> FileTypes { get; set; }
+
+        int ProgressValue { get; set; }
+
+        bool IsImportExecuting { set; }
+
+        string ApplicationStatus { get; set; }
+
+        #endregion General
+
+
+        //-------------------------------------------------
+
 
         #region Source
 
@@ -38,9 +52,13 @@ namespace Escyug.Importer.Presentations.BETA.Views
 
         bool IsLoadingSource { get; set; }
 
-        #endregion
+        #endregion Source
 
-        #region Desctination
+
+        //-------------------------------------------------
+
+
+        #region Destination
 
         event Action InitializeDestination;
         event Func<Task> InitializeDestinationAsync;
@@ -52,6 +70,8 @@ namespace Escyug.Importer.Presentations.BETA.Views
 
         bool IsLoadingDestination { get; set; }
 
-        #endregion
+        bool IsTruncateDestinationTable { get; set; }
+
+        #endregion Destination
     }
 }
