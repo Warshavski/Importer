@@ -31,6 +31,7 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             View.InitializeView += () => OnInitializeView();
             View.ExecuteImport += () => OnExecuteImport();
             View.ExecuteImportAsync += () => OnExecuteImportAsync();
+            View.DeleteDataAsync += () => OnDeleteDataAsync();
 
             View.InitializeSource += () => OnInitializeSource();
             View.InitializeSourceAsync += () => OnInitializeSourceAsync();
@@ -117,6 +118,23 @@ namespace Escyug.Importer.Presentations.BETA.Presenters
             View.ApplicationStatus = "Import is completed!";
             View.Notify = "Import successfully completed!";
             View.IsImportExecuting = false;
+        }
+
+        private async Task OnDeleteDataAsync()
+        {
+            var sourceTableName = View.SelectedSourceTable.Name;
+            var destinationTableName = View.SelectedDestinationTable.Name;
+
+            await Task.Run(async () =>
+            {
+                using (var sourceDataReader = await _asyncSourceDataService.GetDataReader(sourceTableName))
+                {
+                    await _asyncDestinationDataService.DeleteTableDataAsync(
+                        sourceDataReader, destinationTableName);
+                }
+            });
+
+            View.Notify = "Data delete completed!";
         }
 
         #endregion General

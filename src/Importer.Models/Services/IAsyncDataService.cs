@@ -59,6 +59,14 @@ namespace Escyug.Importer.Models.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="sourceDataReader"></param>
+        /// <param name="targetTableName"></param>
+        /// <returns></returns>
+        Task DeleteTableDataAsync(IDataReader sourceDataReader, string targetTableName);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         bool TestConnection();
     }

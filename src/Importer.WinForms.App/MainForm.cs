@@ -25,8 +25,8 @@ namespace Escyug.Importer.WinForms.App
 
             this.Load += (sender, e) => Invoke(InitializeView);
             //this.buttonImportExecute.Click += (sender, e) => Invoke(ExecuteImport);
-            this.buttonImportExecute.Click += async (sender, e) => 
-                await Invoker.InvokeAsync(ExecuteImportAsync);
+            this.buttonImportExecute.Click += async (sender, e) => await Invoker.InvokeAsync(ExecuteImportAsync);
+            this.button1.Click += async (sender, e) => await Invoker.InvokeAsync(DeleteDataAsync);
 
             /** 
              * controls for source data service
@@ -85,6 +85,7 @@ namespace Escyug.Importer.WinForms.App
 
         public event Action ExecuteImport;
 
+        public event Func<Task> DeleteDataAsync;
         public event Func<Task> ExecuteImportAsync;
 
         public ICollection<FileType> FileTypes

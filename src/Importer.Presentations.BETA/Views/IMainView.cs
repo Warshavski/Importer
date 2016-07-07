@@ -19,7 +19,9 @@ namespace Escyug.Importer.Presentations.BETA.Views
 
         event Action InitializeView;
         event Action ExecuteImport;
+        
         event Func<Task> ExecuteImportAsync;
+        event Func<Task> DeleteDataAsync;
 
         ICollection<FileType> FileTypes { get; set; }
 

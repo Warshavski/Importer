@@ -10,5 +10,6 @@ namespace Escyug.Importer.Data.Processors
     public interface IAsyncDeleteDataProcessor
     {
         Task DeleteDataAsync(IDataReader dataReader, string targetTableName);
+        Task DeleteDataAsync(IDataReader dataReader, string targetTableName, string targetConnectionString);
     }
 }

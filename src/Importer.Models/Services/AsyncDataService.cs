@@ -17,12 +17,14 @@ namespace Escyug.Importer.Models.Services
         private readonly IAsyncDataImportProcessor _importProcessor;
         private readonly IAsyncDataReaderProcessor _readerProcessor;
         private readonly IAsyncTruncateTableProcessor _truncateProcessor;
+        private readonly IAsyncDeleteDataProcessor _deleteDataProcessor;
 
         internal AsyncDataService(string connectioString,
             IMetadataProcessor metadataProcessor,
             IAsyncDataImportProcessor importProcessor,
             IAsyncDataReaderProcessor readerProcessor,
-            IAsyncTruncateTableProcessor truncateProcessor)
+            IAsyncTruncateTableProcessor truncateProcessor,
+            IAsyncDeleteDataProcessor deleteDataProcessor)
         {
             _connectionString = connectioString;
 
@@ -30,6 +32,7 @@ namespace Escyug.Importer.Models.Services
             _importProcessor = importProcessor;
             _readerProcessor = readerProcessor;
             _truncateProcessor = truncateProcessor;
+            _deleteDataProcessor = deleteDataProcessor;
         }
 
         //*** use async
@@ -68,6 +71,11 @@ namespace Escyug.Importer.Models.Services
         public async Task TruncateTableAsync(string tableName)
         {
             await _truncateProcessor.TruncateTableAsync(_connectionString, tableName);
+        }
+
+        public async Task DeleteTableDataAsync(IDataReader sourceDataReader, string targetTableName)
+        {
+            await _deleteDataProcessor.DeleteDataAsync(sourceDataReader, targetTableName, _connectionString);
         }
 
         public bool TestConnection()
